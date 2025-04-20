@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigram Pattern Analysis</title>
+    <link rel="stylesheet" href="../css/trigram-patterns.css">
+    <style>
+        .symbol-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            background: #fff;
+            padding: 0.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .interpretation-layer {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .interpretation {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .daoist {
+            background: #e3f2fd;
+            border-left: 3px solid #2196f3;
+        }
+        
+        .amazigh {
+            background: #f3e5f5;
+            border-left: 3px solid #9c27b0;
+        }
+        
+        .pattern-path {
+            stroke-dasharray: 5,5;
+            animation: dash 1s linear infinite;
+        }
+        
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 10;
+            }
+        }
+        
+        .yin-yang-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .collapse-zone {
+            position: relative;
+            background: #ffebee;
+            border: 2px dashed #f44336;
+        }
+        
+        .collapse-zone::after {
+            content: '⚡';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5rem;
+            color: #f44336;
+        }
+        
+        .interaction-preview {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .interaction-preview.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="symbol-toggle">
+        <label>
+            <input type="checkbox" id="symbolMode"> Tifinagh Mode
+        </label>
+    </div>
+    
+    <div class="container">
+        <h1>Trigram Pattern Analysis</h1>
+        
+        <section class="matrix-section">
+            <h2>Relationship Matrix</h2>
+            <div id="matrixContainer"></div>
+        </section>
+        
+        <section class="pattern-section">
+            <h2>Pattern Analysis</h2>
+            <div class="pattern-controls">
+                <select id="patternType">
+                    <option value="triadic">Triadic Patterns</option>
+                    <option value="conflict">Conflict Nodes</option>
+                    <option value="cascade">Transformation Cascades</option>
+                </select>
+            </div>
+            <div id="patternContainer"></div>
+        </section>
+        
+        <section class="visualization-section">
+            <h2>Flow Visualization</h2>
+            <div id="yinYangContainer"></div>
+        </section>
+        
+        <section class="glyph-section">
+            <h2>Complementary Pairs</h2>
+            <div id="glyphContainer"></div>
+        </section>
+        
+        <section class="hexagram-section">
+            <h2>Hexagram Analysis</h2>
+            <div class="hexagram-controls">
+                <select id="upperTrigram">
+                    <option value="">Select Upper Trigram</option>
+                </select>
+                <select id="lowerTrigram">
+                    <option value="">Select Lower Trigram</option>
+                </select>
+                <button id="analyzeHexagram">Analyze</button>
+            </div>
+            <div id="hexagramAnalysis"></div>
+        </section>
+    </div>
+    
+    <div class="interaction-preview">
+        <h3>Interaction Preview</h3>
+        <p>Future integration with ritual interactions:</p>
+        <ul>
+            <li>Coin toss patterns</li>
+            <li>Spring mechanism states</li>
+            <li>Finger-trace activation</li>
+        </ul>
+    </div>
+    
+    <script type="module">
+        import { TRIGRAM_MATRIX, getTrigramRelationship } from '../js/core/trigram-matrix.js';
+        import { RELATION_TYPES } from '../js/core/trigram-relations.js';
+        import { analyzeTriadicPatterns, identifyConflictNodes, identifyTransformationCascades, generateQuantumInterpretation } from '../js/core/trigram-pattern-analyzer.js';
+        import { createRelationshipHeatmap, createYinYangFlowDiagram, createGlyphDisplay } from '../js/core/trigram-pattern-visualizer.js';
+        
+        // Initialize UI
+        const matrixContainer = document.getElementById('matrixContainer');
+        const patternContainer = document.getElementById('patternContainer');
+        const yinYangContainer = document.getElementById('yinYangContainer');
+        const glyphContainer = document.getElementById('glyphContainer');
+        const hexagramAnalysis = document.getElementById('hexagramAnalysis');
+        const symbolModeToggle = document.getElementById('symbolMode');
+        
+        // Populate trigram selectors
+        const trigrams = Object.keys(TRIGRAM_MATRIX);
+        const upperSelect = document.getElementById('upperTrigram');
+        const lowerSelect = document.getElementById('lowerTrigram');
+        
+        trigrams.forEach(trigram => {
+            upperSelect.add(new Option(trigram, trigram));
+            lowerSelect.add(new Option(trigram, trigram));
+        });
+        
+        // Initialize visualizations
+        createRelationshipHeatmap(matrixContainer, RELATION_TYPES.RESONANCE);
+        createYinYangFlowDiagram(yinYangContainer);
+        createGlyphDisplay(glyphContainer, 'taoist');
+        
+        // Pattern type change handler
+        document.getElementById('patternType').addEventListener('change', (e) => {
+            const type = e.target.value;
+            let patterns;
+            
+            switch(type) {
+                case 'triadic':
+                    patterns = analyzeTriadicPatterns();
+                    break;
+                case 'conflict':
+                    patterns = identifyConflictNodes();
+                    break;
+                case 'cascade':
+                    patterns = identifyTransformationCascades();
+                    break;
+            }
+            
+            displayPatterns(patterns, type);
+        });
+        
+        // Symbol mode toggle handler
+        symbolModeToggle.addEventListener('change', (e) => {
+            const style = e.target.checked ? 'tifinagh' : 'taoist';
+            glyphContainer.innerHTML = '';
+            createGlyphDisplay(glyphContainer, style);
+        });
+        
+        // Hexagram analysis handler
+        document.getElementById('analyzeHexagram').addEventListener('click', () => {
+            const upper = upperSelect.value;
+            const lower = lowerSelect.value;
+            
+            if (upper && lower) {
+                analyzeHexagram(upper, lower);
+            }
+        });
+        
+        // Display patterns with interpretations
+        function displayPatterns(patterns, type) {
+            patternContainer.innerHTML = '';
+            
+            patterns.forEach(pattern => {
+                const patternElement = document.createElement('div');
+                patternElement.className = `pattern-item ${type}-pattern`;
+                
+                const description = document.createElement('div');
+                description.className = 'pattern-description';
+                description.textContent = pattern.description;
+                
+                const interpretations = document.createElement('div');
+                interpretations.className = 'interpretation-layer';
+                
+                // Daoist interpretation
+                const daoist = document.createElement('div');
+                daoist.className = 'interpretation daoist';
+                daoist.innerHTML = `
+                    <strong>Daoist:</strong><br>
+                    ${pattern.quantum.interpretation}
+                `;
+                
+                // Amazigh interpretation
+                const amazigh = document.createElement('div');
+                amazigh.className = 'interpretation amazigh';
+                amazigh.innerHTML = `
+                    <strong>Amazigh:</strong><br>
+                    ${getAmazighInterpretation(pattern)}
+                `;
+                
+                interpretations.appendChild(daoist);
+                interpretations.appendChild(amazigh);
+                
+                patternElement.appendChild(description);
+                patternElement.appendChild(interpretations);
+                patternContainer.appendChild(patternElement);
+            });
+        }
+        
+        // Get Amazigh interpretation for a pattern
+        function getAmazighInterpretation(pattern) {
+            // Simplified Amazigh interpretations
+            const interpretations = {
+                'generative': 'The wind carries seeds to new lands',
+                'destructive': 'The mountain crumbles to feed the valley',
+                'transformative': 'The river carves new paths through stone',
+                'conflict': 'The desert wind meets the mountain',
+                'cascade': 'The spring becomes stream becomes river'
+            };
+            
+            return interpretations[pattern.type] || 'The patterns of nature reveal themselves';
+        }
+        
+        // Analyze a hexagram
+        function analyzeHexagram(upper, lower) {
+            const relationship = getTrigramRelationship(upper, lower);
+            const quantum = generateQuantumInterpretation(upper, lower);
+            
+            hexagramAnalysis.innerHTML = `
+                <div class="hexagram-display">
+                    <div class="upper-trigram">${upper}</div>
+                    <div class="lower-trigram">${lower}</div>
+                    <div class="relationship-type">${relationship.type}</div>
+                    <div class="interpretation-layer">
+                        <div class="interpretation daoist">
+                            <strong>Daoist:</strong><br>
+                            ${quantum.interpretation}
+                        </div>
+                        <div class="interpretation amazigh">
+                            <strong>Amazigh:</strong><br>
+                            ${getAmazighInterpretation({ type: relationship.type })}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Show interaction preview on hover
+        const interactionPreview = document.querySelector('.interaction-preview');
+        document.addEventListener('mousemove', (e) => {
+            if (e.clientY > window.innerHeight - 100) {
+                interactionPreview.classList.add('active');
+            } else {
+                interactionPreview.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 
