@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "version": "0.1.0-alpha",
+    "last_updated": "2024-11-16",
+    "status": "In active development - structure subject to change",
+    "notes": [
+      "This is a working document capturing the complete structure of Principia Paradoxica",
+      "All elements are subject to revision and expansion",
+      "Cross-references should be verified during implementation"
+    ]
+  },
+  "temporal_matrices": {
+    "ancient_era": {
+      "creation_myth": {
+        "summary": "The emergence of consciousness and first separation",
+        "key_events": [
+          {
+            "name": "TOEOT Manifestation",
+            "significance": "Source of all potential",
+            "i_ching": {
+              "hexagram": 1,
+              "name": "The Creative",
+              "meaning": "Pure potential before differentiation"
+            }
+          },
+          {
+            "name": "First Shattering",
+            "significance": "Creation of duality and the Black Glass Blade",
+            "consequences": [
+              "Ayahuascan Curse",
+              "Birth of Lucifer (the shard)",
+              "Beginning of cyclical hero's journey"
+            ],
+            "quote": "If it doesn\u2019t make a better axe, it\u2019s no use!"
+          }
+        ]
+      },
+      "shamanic_emergence": {
+        "key_figures": {
+          "noolil": {
+            "full_name": "Noolil K'aaxal Yuumtsil",
+            "role": "First Shaman",
+            "significance": "Initiator of humanity's paradoxical journey",
+            "hexagram_journey": {
+              "discovery": {
+                "hexagram": 10,
+                "name": "Treading",
+                "moving_lines": [
+                  {
+                    "position": "6 in 3rd place",
+                    "meaning": "Tiger bite/necessary sacrifice"
+                  },
+                  {
+                    "position": "9 at top",
+                    "meaning": "Perfect outcome"
+                  }
+                ]
+              }
+            },
+            "arc": "From shattering the TOEOT to embodying paradox mastery."
+          },
+          "grandson": {
+            "name": "U lu'umil k'aaxal tak",
+            "role": "Crocodile Slayer",
+            "significance": "First wielder of the Black Glass Blade",
+            "arc": "Continues the cycle of paradox integration."
+          }
+        }
+      }
+    }
+  }
+}
