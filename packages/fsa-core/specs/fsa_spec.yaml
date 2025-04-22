@@ -1,0 +1,21 @@
+fsa_spec:
+  version: "0.3.0-alpha"
+  principles:
+    - flow_over_attention
+    - recursive_ethics
+    - open_algorithms
+  components:
+    perception_layer: kafka_stream
+    user_state_modeller: bayesian_skill_graph
+    challenge_orchestrator: ppo_policy
+    flow_oracle: onchain_sbt_minter
+    feedback_ui: domain_specific_adapters
+    governance_bridge: snapshot_reputation_module
+  domains:
+    game: infinite_weiqi_adapter
+    development: vibecoding_adapter
+    dao: dao_izm_adapter
+  security:
+    privacy_enclave: true
+    audit_log: ipfs_merkle
+    licence: agpl-3.0
