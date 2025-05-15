@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Weiqi - Interactive Narrative Engine</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Infinite Weiqi</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#story">Story</a></li>
+                    <li><a href="#iching">I Ching</a></li>
+                    <li><a href="#weiqi">Weiqi</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="story-container" class="container">
+                <!-- Dynamic story content will be loaded here -->
+            </section>
+            
+            <section id="interaction-panel" class="container">
+                <div id="iching-oracle"></div>
+                <div id="weiqi-board"></div>
+            </section>
+
+            <section id="demo-interface" class="container">
+                <div id="casting-ritual-preview"></div>
+                <div id="narrative-sandbox"></div>
+                <section id="bagua-interface" class="container">
+                    <h2>Bagua Casting Interface</h2>
+                    <div id="bagua-circle">
+                        <!-- Trigram buttons arranged in Later Heaven Bagua layout -->
+                        <button class="trigram" data-trigram="☰">Qian</button>
+                        <button class="trigram" data-trigram="☱">Dui</button>
+                        <button class="trigram" data-trigram="☲">Li</button>
+                        <button class="trigram" data-trigram="☳">Zhen</button>
+                        <button class="trigram" data-trigram="☴">Xun</button>
+                        <button class="trigram" data-trigram="☵">Kan</button>
+                        <button class="trigram" data-trigram="☶">Gen</button>
+                        <button class="trigram" data-trigram="☷">Kun</button>
+                    </div>
+                    <button id="cast-hexagram">Cast Hexagram</button>
+                    <div id="hexagram-result"></div>
+                </section>
+            </section>
+        </main>
+
+        <footer>
+            <div id="status-bar"></div>
+        </footer>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="js/core/engine.js"></script>
+    <script src="js/core/story-manager.js"></script>
+    <script src="js/core/iching.js"></script>
+    <script src="js/core/weiqi.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

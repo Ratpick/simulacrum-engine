@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Weiqi - DAO Visualization</title>
+    <link rel="stylesheet" href="../css/trigram-visualization.css">
+    <link rel="stylesheet" href="../css/dao-visualization.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: #f0f2f5;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .mode-toggle {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .mode-toggle.active {
+            background: #4A90E2;
+            color: white;
+        }
+
+        #visualization-container {
+            width: 100%;
+            height: calc(100vh - 100px);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 300px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button class="mode-toggle active" data-mode="BAGUA">Bagua</button>
+        <button class="mode-toggle" data-mode="TIFINAGH">Tifinagh</button>
+        <button class="mode-toggle" data-mode="GLYPH">Glyph</button>
+        <button class="mode-toggle" data-mode="DAO">DAO Network</button>
+    </div>
+
+    <div id="visualization-container"></div>
+
+    <div class="info-panel">
+        <h3>Infinite Weiqi DAO</h3>
+        <p>Explore the governance flow through symbolic representation. Each node represents a key aspect of decentralized decision-making.</p>
+    </div>
+
+    <script type="module">
+        import { TrigramVisualizationEngine, VISUALIZATION_MODES } from '../js/visualization/trigram-visualization-engine.js';
+
+        // Initialize visualization engine
+        const engine = new TrigramVisualizationEngine('visualization-container');
+
+        // Set up mode toggles
+        document.querySelectorAll('.mode-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('.mode-toggle').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Set visualization mode
+                engine.setMode(button.dataset.mode);
+            });
+        });
+
+        // Simulate some events for testing
+        setTimeout(() => {
+            engine.updatePatternVisualization({
+                trigrams: ['111', '000', '100']
+            });
+        }, 1000);
+
+        setTimeout(() => {
+            engine.animateTransition({
+                from: '111',
+                to: '000'
+            });
+        }, 2000);
+
+        setTimeout(() => {
+            engine.updateRitualState({
+                to: 'INVOCATION'
+            });
+        }, 3000);
+    </script>
+
+    <!-- DEMO: Bagua Interface for Infinite Weiqi -->
+    <div style="margin-top: 40px; padding: 20px; background: #1a1a1a; color: white; border-radius: 8px;">
+        <iframe src="bagua.html" style="width:100%; height:700px; border:none; border-radius: 8px;"></iframe>
+    </div>
+</body>
+</html>

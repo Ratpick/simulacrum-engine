@@ -1,0 +1,168 @@
+.trigram-matrix {
+    border-collapse: collapse;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.trigram-matrix td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.trigram-matrix td.header {
+    background: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+}
+
+.trigram-matrix td.relationship {
+    cursor: pointer;
+    position: relative;
+}
+
+.trigram-matrix td.relationship:hover,
+.trigram-matrix td.relationship.active {
+    transform: scale(1.1);
+    z-index: 2;
+}
+
+.trigram-matrix td.relationship.asymmetric::after {
+    content: '↔';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 0.8em;
+    color: rgba(255,255,255,0.8);
+}
+
+/* Tooltip Panel Styles */
+.tooltip-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 1rem;
+    min-width: 300px;
+    z-index: 10;
+    margin-top: 0.5rem;
+}
+
+.tooltip-panel::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.relationship-type {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.tooltip-section {
+    margin-bottom: 1rem;
+}
+
+.tooltip-section h4 {
+    color: #333;
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.tooltip-section p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #666;
+}
+
+.asymmetric-note {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Expanded View */
+.trigram-matrix td.relationship.expanded {
+    z-index: 20;
+}
+
+.trigram-matrix td.relationship.expanded .tooltip-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.trigram-matrix td.relationship.expanded .tooltip-panel::before {
+    display: none;
+}
+
+/* Legend Styles */
+.trigram-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    width: 90%;
+    max-width: 800px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .trigram-matrix td {
+        padding: 0.5rem;
+        font-size: 0.9em;
+    }
+    
+    .tooltip-panel {
+        min-width: 250px;
+    }
+    
+    .trigram-legend {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+} 

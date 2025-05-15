@@ -1,0 +1,68 @@
+{
+  "epics": [
+    {
+      "title": "Simulacrum Engine: Phase 1 Simulation Plan",
+      "description": "Implement and test the foundational proof-of-possibility simulation for Hexagramic Symbolic Learning (HSL).",
+      "tickets": [
+        {
+          "title": "Environment Simulation",
+          "description": "Develop a Python class to simulate Yi Jing hexagram states with moving line transformation rules.",
+          "folder": "packages/iq-engine",
+          "deliverables": [
+            "Hexagram class with 4-state line encoding (0, 1, \ud83d\udf03, \ud83d\udf01)",
+            "Transformation rule: moving lines change polarity"
+          ]
+        },
+        {
+          "title": "Agent Architecture (HSL Prototype)",
+          "description": "Build a hybrid LSTM/Transformer with a policy network and reinforcement learning loop.",
+          "folder": "packages/iq-engine",
+          "deliverables": [
+            "PyTorch/TensorFlow implementation",
+            "Action prediction head",
+            "PRL loop using PPO or DQN variant"
+          ]
+        },
+        {
+          "title": "Synthetic Sequence Generator",
+          "description": "Script coherent training data for symbolic pattern learning and rule adherence benchmarks.",
+          "folder": "packages/iq-engine/data",
+          "deliverables": [
+            "Lai Zhide inversion/opposition pairs",
+            "Basic rule-following transitions",
+            "Random walks for comparison"
+          ]
+        },
+        {
+          "title": "Coherence Metrics Suite",
+          "description": "Track prediction error, transformation rule adherence, and pattern entropy.",
+          "folder": "packages/iq-engine",
+          "deliverables": [
+            "Cross-entropy loss tracking",
+            "Validation rule pass-rate",
+            "N-gram frequency and entropy comparison"
+          ]
+        },
+        {
+          "title": "Mock Flow-State Oracle",
+          "description": "Implement simplified Flow-State Algorithm logic: Challenge/Skill balance + Gaussian reward model.",
+          "folder": "packages/fsa-core",
+          "deliverables": [
+            "Reward function implementation",
+            "FlowScore decay mechanism",
+            "Basic 'Eureka' token logic"
+          ]
+        },
+        {
+          "title": "Validation Module (AlphaYi Mock)",
+          "description": "Check for correct transformations and structural integrity of output states.",
+          "folder": "packages/iq-engine",
+          "deliverables": [
+            "Rule-checking logic for line movement",
+            "Structural consistency check (6-line validation)"
+          ]
+        }
+      ]
+    }
+  ]
+}

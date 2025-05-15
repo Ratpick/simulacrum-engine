@@ -1,0 +1,1 @@
+# fsa-adapter.ts placeholder
