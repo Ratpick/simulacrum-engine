@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Forbidden Entry</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+            padding: 50px 20px;
+            line-height: 1.6;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0;
+            letter-spacing: 0.5px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .forbidden {
+            font-size: 2.4rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            position: relative;
+            font-family: monospace;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #333;
+        }
+        
+        .forbidden::before,
+        .forbidden::after {
+            content: "FORBIDDEN ENTRY";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+        
+        .forbidden::before {
+            color: #0ff;
+            z-index: -1;
+        }
+        
+        .forbidden::after {
+            color: #f0f;
+            z-index: -2;
+        }
+        
+        .error-code {
+            font-size: 6rem;
+            margin-top: 0;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .error-code::before,
+        .error-code::after {
+            content: "404";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+        
+        .error-code::before {
+            color: #0ff;
+            z-index: -1;
+        }
+        
+        .error-code::after {
+            color: #f0f;
+            z-index: -2;
+        }
+        
+        .scrambling-text {
+            font-family: monospace;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #333;
+            text-align: left;
+            padding: 15px;
+            background-color: rgba(0,0,0,0.03);
+            border-left: 3px solid #666;
+            margin: 20px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 100px;
+            position: relative;
+            display: block; /* Ensure it's visible */
+            overflow: hidden;
+        }
+        
+        .scrambling-text-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 15px;
+            z-index: 1;
+            background-color: rgba(0,0,0,0.03);
+        }
+        
+        .cursor-blink {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #333;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        
+        .message {
+            display: none; /* Hide the original message */
+        }
+        
+        .timestamp {
+            font-size: 0.9rem;
+            color: #444;
+            margin-top: 40px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        
+        .return-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .return-link:hover {
+            background-color: #eee;
+            transform: translateY(-2px);
+        }
+        
+        .flicker-letter {
+            position: relative;
+            animation: flicker-text 4s infinite;
+            display: inline-block;
+        }
+        
+        @keyframes flicker-text {
+            0%, 100% { opacity: 1; }
+            7% { opacity: 0.3; }
+            8% { opacity: 1; }
+            9% { opacity: 0.3; }
+            10% { opacity: 1; }
+            30% { opacity: 1; }
+            31% { opacity: 0.3; }
+            32% { opacity: 1; }
+            33% { opacity: 0.3; }
+            34% { opacity: 1; }
+            73% { opacity: 1; }
+            74% { opacity: 0.3; }
+            75% { opacity: 1; }
+        }
+        
+        .i-ching {
+            font-size: 0.6rem;
+            opacity: 0.3;
+            position: absolute;
+            user-select: none;
+        }
+        
+        #hex1 {
+            top: 20px;
+            left: -40px;
+            animation: timestampShift 13s infinite;
+        }
+        
+        #hex2 {
+            bottom: -30px;
+            right: -30px;
+            animation: timestampShift 17s infinite reverse;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #333 }
+        }
+        
+        @keyframes editing {
+            0%, 100% { content: "FORBIDDEN ENTRY"; }
+            8% { content: "FORBIDDE_ ENTRY"; }
+            12% { content: "FORBIDD_ ENTRY"; }
+            14% { content: "FORBID_ ENTRY"; }
+            16% { content: "FORBI_ ENTRY"; }
+            18% { content: "FORB_ ENTRY"; }
+            20% { content: "FOR_ ENTRY"; }
+            22% { content: "FO_ ENTRY"; }
+            24% { content: "F_ ENTRY"; }
+            26% { content: "_ ENTRY"; }
+            28% { content: "A_ ENTRY"; }
+            30% { content: "AC_ ENTRY"; }
+            32% { content: "ACC_ ENTRY"; }
+            34% { content: "ACCE_ ENTRY"; }
+            36% { content: "ACCES_ ENTRY"; }
+            38% { content: "ACCESS_ ENTRY"; }
+            40% { content: "ACCESS D_ ENTRY"; }
+            42% { content: "ACCESS DE_ ENTRY"; }
+            44% { content: "ACCESS DEN_ ENTRY"; }
+            46% { content: "ACCESS DENI_ ENTRY"; }
+            48% { content: "ACCESS DENIE_ ENTRY"; }
+            50% { content: "ACCESS DENIED ENTRY"; }
+            52% { content: "ACCESS DENIED ENTR_"; }
+            54% { content: "ACCESS DENIED ENT_"; }
+            56% { content: "ACCESS DENIED EN_"; }
+            58% { content: "ACCESS DENIED E_"; }
+            60% { content: "ACCESS DENIED _"; }
+            62% { content: "ACCESS DENIED"; }
+            64% { content: "ACCESS DENIE_"; }
+            66% { content: "ACCESS DENI_"; }
+            68% { content: "ACCESS DEN_"; }
+            70% { content: "ACCESS DE_"; }
+            72% { content: "ACCESS D_"; }
+            74% { content: "ACCESS _"; }
+            76% { content: "ACCES_"; }
+            78% { content: "ACCE_"; }
+            80% { content: "ACC_"; }
+            82% { content: "AC_"; }
+            84% { content: "A_"; }
+            86% { content: "_"; }
+            88% { content: "F_"; }
+            90% { content: "FO_"; }
+            92% { content: "FOR_"; }
+            94% { content: "FORB_"; }
+            96% { content: "FORBI_"; }
+            98% { content: "FORBID_"; }
+        }
+        
+        /* Subtle wobble animations */
+        @keyframes subtleWobble {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-1px) translateY(1px); }
+            75% { transform: translateX(1px) translateY(-1px); }
+        }
+        
+        /* Flickering animation for certain letters */
+        @keyframes letterFlicker {
+            0%, 100% { opacity: 1; }
+            48%, 52% { opacity: 0.8; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Timestamp contradiction animation */
+        @keyframes timestampShift {
+            0%, 100% { opacity: 1; }
+            49%, 51% { opacity: 0; }
+        }
+        
+        /* Glitch effect for FORBIDDEN ENTRY and 404 */
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(0deg); }
+            21% { transform: skew(-2deg); }
+            22% { transform: skew(0deg); }
+            43% { transform: skew(0deg); }
+            44% { transform: skew(3deg); }
+            45% { transform: skew(0deg); }
+            65% { transform: skew(0deg); }
+            66% { transform: skew(2deg); }
+            67% { transform: skew(0deg); }
+            100% { transform: skew(0deg); }
+        }
+        
+        @keyframes glitch-anim1 {
+            0% { clip: rect(29px, 9999px, 80px, 0); transform: translate(0); }
+            10% { clip: rect(29px, 9999px, 80px, 0); transform: translate(-1px, 1px); }
+            20% { clip: rect(92px, 9999px, 20px, 0); transform: translate(1px, -1px); }
+            30% { clip: rect(39px, 9999px, 80px, 0); transform: translate(-3px, 1px); }
+            40% { clip: rect(12px, 9999px, 30px, 0); transform: translate(3px, 1px); }
+            50% { clip: rect(12px, 9999px, 80px, 0); transform: translate(-1px, -1px); }
+            60% { clip: rect(12px, 9999px, 42px, 0); transform: translate(1px, 3px); }
+            70% { clip: rect(92px, 9999px, 80px, 0); transform: translate(-3px, -1px); }
+            80% { clip: rect(12px, 9999px, 12px, 0); transform: translate(0); }
+            100% { clip: rect(29px, 9999px, 80px, 0); transform: translate(0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(84px, 9999px, 34px, 0); transform: translate(0); }
+            15% { clip: rect(28px, 9999px, 94px, 0); transform: translate(-2px, -2px); }
+            30% { clip: rect(14px, 9999px, 14px, 0); transform: translate(2px, 2px); }
+            45% { clip: rect(34px, 9999px, 64px, 0); transform: translate(1px, -1px); }
+            60% { clip: rect(54px, 9999px, 34px, 0); transform: translate(-1px, 1px); }
+            75% { clip: rect(74px, 9999px, 44px, 0); transform: translate(-2px, 2px); }
+            90% { clip: rect(24px, 9999px, 34px, 0); transform: translate(2px, -2px); }
+            100% { clip: rect(84px, 9999px, 34px, 0); transform: translate(0); }
+        }
+        
+        .wobble {
+            animation: subtleWobble 8s infinite ease-in-out;
+            display: inline-block;
+        }
+        
+        .forbidden {
+            animation: glitch-skew 4s infinite linear alternate-reverse;
+        }
+        
+        .forbidden::before {
+            animation: glitch-anim1 2s infinite linear alternate-reverse, editing 15s infinite;
+        }
+        
+        .forbidden::after {
+            animation: glitch-anim2 3s infinite linear alternate-reverse, editing 15s infinite;
+        }
+        
+        .error-code {
+            animation: glitch-skew 5s infinite linear alternate-reverse;
+        }
+        
+        .error-code::before {
+            animation: glitch-anim1 3.5s infinite linear alternate-reverse;
+        }
+        
+        .error-code::after {
+            animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+        }
+        
+        /* Add noise texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAAG3RSTlNAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAvEOwtAAAFVklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92U2hXHF/C1M8uP/ZtYdiuj26UdAdQQSXQErwSOMzt/XWRWAz5GuSBIkwG1H3FabJ2OsUOUhGC6tK4EMtJO0ttC6IBD3kM0ve0tJwMdSfjZo+EEISaeTr9P3wYrGjXqyC1krcKdhMpxEnt5JetoulscpyzhXN5FRpuPHvbeQaKxFAEB6EN+cYN6xD7RYGpXpNndMmZgM5Dcs3YSNFDHUo2LGfZuukSWyUYirJAdYbF3MfqEKmjM+I2EfhA94iG3L7uKrR+GdWD73ydlIB+6hgref1QTlmgmbM3/LeX5GI1Ux1RWpgxpLuZ2+I+IjzZ8wqE4nilvQdkUdfhzI5QDWy+kw5Wgg2pGpeEVeCCA7b85BO3F9DzxB3cdqvBzWcmzbyMiqhzuYqtHRVG2y4x+KOlnyqla8AoWWpuBoYRxzXrfKuILl6SfiWCbjxoZJUaCBj1CjH7GIaDbc9kqBY3W/Rgjda1iqQcOJu2WW+76pZC9QG7M00dffe9hNnseupFL53r8F7YHSwJWUKP2q+k7RdsxyOB11n0xtOvnW4irMMFNV4H0uqwS5ExsmP9AxbDTc9JwgneAT5vTiUSm1E7BSflSt3bfa1tv8Di3R8n3Af7MNWzs49hmauE2wP+ttrq+AsWpFG2awvsuOqbipWHgtuvuaAE+A1Z/7gC9hesnr+7wqCwG8c5yAg3AL1fm8T9AZtp/bbJGwl1pNrE7RuOX7PeMRUERVaPpEs+yqeoSmuOlokqw49pgomjLeh7icHNlG19yjs6XXOMedYm5xH2YxpV2tc0Ro2jJfxC50ApuxGob7lMsxfTbeUv07TyYxpeLucEH1gNd4IKH2LAg5TdVhlCafZvpskfncCfx8pOhJzd76bJWeYFnFciwcYfubRc12Ip/ppIhA1/mSZ/RxjFDrJC5xifFjJpY2Xl5zXdguFqYyTR1zSp1Y9p+tktDYYSNflcxI0iyO4TPBdlRcpeqjK/piF5bklq77VSEaA+z8qmJTFzIWiitbnzR794USKBUaT0NTEsVjZqLaFVqJoPN9ODG70IPbfBHKK+/q/AWR0tJzYHRULOa4MP+W/HfGadZUbfw177G7j/OGbIs8TahLyynl4X4RinF793Oz+BU0saXtUHrVBFT/DnA3ctNPoGbs4hRIjTok8i+algT1lTHi4SxFvONKNrgQFAq2/gFnWMXgwffgYMJpiKYkmW3tTg3ZQ9Jq+f8XN+A5eeUKHWvJWJ2sgJ1Sop+wwhqFVijqWaJhwtD8MNlSBeWNNWTa5Z5kPZw5+LbVT99wqTdx29lMUH4OIG/D86ruKEauBjvH5xy6um/Sfj7ei6UUVk4AIl3MyD4MSSTOFgSwsH/QJWaQ5as7ZcmgBZkzjjU1UrQ74ci1gWBCSGHtuV1H2mhSnO3Wp/3fEV5a+4wz//6qy8JxjZsmxxy5+4w9CDNJY09T072iKG0EnOS0arEYgXqYnXcYHwjTtUNAcMelOd4xpkoqiTYICWFq0JSiPfPDQdnt+4/wuqcXY47QILbgAAAABJRU5ErkJggg==');
+            animation: noise 0.2s infinite;
+        }
+        
+        @keyframes noise {
+            0% { background-position: 0 0; }
+            10% { background-position: -5% -5%; }
+            20% { background-position: -10% 5%; }
+            30% { background-position: 5% -10%; }
+            40% { background-position: -5% 15%; }
+            50% { background-position: -10% 5%; }
+            60% { background-position: 15% 0; }
+            70% { background-position: 0% 10%; }
+            80% { background-position: -15% -5%; }
+            90% { background-position: 10% 5%; }
+            100% { background-position: 5% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="i-ching" id="hex1">☰ ☱ ☲</div>
+        
+        <h1 class="forbidden">
+            FORBIDDEN ENTRY
+        </h1>
+        
+        <h2 class="error-code">404</h2>
+        
+        <p class="message">The path you seek has folded back upon itself, creating a paradox that cannot be traversed through conventional means.</p>
+        <p class="message">This anomaly has been logged. Return to charted territory to continue your journey.</p>
+        
+        <div class="scrambling-text" id="scrambling-text">
+            <div class="scrambling-text-fallback">
+                T̷̴̨̛̫̳̜̫̱̳͍͎̘͙̙̖̩̪̖̩͖͙̻̮h̵̡̡̛̻̭̙̮͕̟̬̦̖̣̠̼͚̯̪̰̣e p@th у0u sеeк hаs f01ded βack υρon !tself, ¢яεαтing α ραяαdøx тћαт cαииøт вε тяαvεяsεd through conventional means.
+                <br><br>
+                <span class="flicker-letter">ⵜⵀⵉⵙ</span> anоmaly <span class="flicker-letter">ћаs</span> bеen lоgged. яетuяи то <span class="flicker-letter">снаятed</span> territory то соитinue <span class="flicker-letter">уour</span> jоurnеу.
+            </div>
+        </div>
+        
+        <div class="timestamp">[PARADOXICON TRAINING REQUIRED]</div>
+        
+        <a href="index.html" class="return-link wobble">Return to Known Space</a>
+        
+        <div class="i-ching" id="hex2">☳ ☴ ☵</div>
+    </div>
+    
+    <div class="noise"></div>
+
+    <script>
+        // Function to simulate typing for the live hacking effect
+        function simulateHacking() {
+            const forbidden = document.querySelector('.forbidden');
+            let currentText = "FORBIDDEN ENTRY";
+            let isDeleting = false;
+            let charIndex = 0;
+            
+            function updateText() {
+                if (Math.random() < 0.1) {
+                    // Randomly show cursor at different positions
+                    const position = Math.floor(Math.random() * currentText.length);
+                    let newText = currentText.substring(0, position) + "_" + currentText.substring(position + 1);
+                    forbidden.textContent = newText;
+                    
+                    // Reset after a brief moment
+                    setTimeout(() => {
+                        forbidden.textContent = currentText;
+                    }, 100 + Math.random() * 200);
+                }
+                
+                // Occasionally simulate typing/deleting sequence
+                if (Math.random() < 0.01) {
+                    isDeleting = true;
+                    charIndex = currentText.length;
+                    
+                    const deleteInterval = setInterval(() => {
+                        if (charIndex > 0) {
+                            charIndex--;
+                            forbidden.textContent = currentText.substring(0, charIndex) + "_";
+                        } else {
+                            clearInterval(deleteInterval);
+                            
+                            // Choose a new text to type
+                            const options = [
+                                "FORBIDDEN ENTRY",
+                                "ACCESS DENIED",
+                                "SYSTEM FAILURE",
+                                "SECURITY BREACH",
+                                "NO ACCESS",
+                                "PERMISSION DENIED"
+                            ];
+                            
+                            // Choose a different option than current
+                            let newOption;
+                            do {
+                                newOption = options[Math.floor(Math.random() * options.length)];
+                            } while (newOption === currentText);
+                            
+                            currentText = newOption;
+                            charIndex = 0;
+                            
+                            // Start typing the new text
+                            const typeInterval = setInterval(() => {
+                                if (charIndex <= currentText.length) {
+                                    forbidden.textContent = currentText.substring(0, charIndex) + "_";
+                                    charIndex++;
+                                } else {
+                                    forbidden.textContent = currentText;
+                                    clearInterval(typeInterval);
+                                    isDeleting = false;
+                                }
+                            }, 50 + Math.random() * 100);
+                        }
+                    }, 50 + Math.random() * 100);
+                }
+            }
+            
+            setInterval(updateText, 300);
+        }
+        
+        // Function to randomly alter text with a small probability
+        function subtlyGlitchText() {
+            const glitchTargets = document.querySelectorAll('.wobble, .flicker-letter');
+            
+            glitchTargets.forEach(element => {
+                // Only glitch occasionally (1% chance per check)
+                if (Math.random() < 0.01) {
+                    const originalText = element.textContent;
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    
+                    // Randomly choose a glitch type
+                    const glitchType = Math.floor(Math.random() * 3);
+                    
+                    if (glitchType === 0 && originalText.length > 0) {
+                        // Duplicate a random letter
+                        const pos = Math.floor(Math.random() * originalText.length);
+                        const glitchedText = originalText.substring(0, pos) + 
+                                           originalText.charAt(pos) + 
+                                           originalText.substring(pos);
+                        element.textContent = glitchedText;
+                    } 
+                    else if (glitchType === 1 && originalText.length > 1) {
+                        // Swap two adjacent letters
+                        const pos = Math.floor(Math.random() * (originalText.length - 1));
+                        const glitchedText = originalText.substring(0, pos) + 
+                                           originalText.charAt(pos + 1) + 
+                                           originalText.charAt(pos) + 
+                                           originalText.substring(pos + 2);
+                        element.textContent = glitchedText;
+                    }
+                    else if (glitchType === 2 && originalText.length > 0) {
+                        // Replace a letter with a random one
+                        const pos = Math.floor(Math.random() * originalText.length);
+                        const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+                        const glitchedText = originalText.substring(0, pos) + 
+                                           randomLetter + 
+                                           originalText.substring(pos + 1);
+                        element.textContent = glitchedText;
+                    }
+                    
+                    // Reset back to original text after a brief moment
+                    setTimeout(() => {
+                        element.textContent = originalText;
+                    }, 150);
+                }
+            });
+        }
+        
+        // Function to create more pronounced glitches on the main elements
+        function stutterMainElements() {
+            // Target the main elements
+            const forbidden = document.querySelector('.forbidden');
+            const errorCode = document.querySelector('.error-code');
+            
+            if (Math.random() < 0.05) {
+                // Apply a random offset to the glitch layers
+                const xOffset = (Math.random() * 10 - 5) + 'px';
+                const yOffset = (Math.random() * 10 - 5) + 'px';
+                
+                if (forbidden.pseudoStyle) {
+                    forbidden.pseudoStyle("before", "transform", `translate(${xOffset}, ${yOffset})`);
+                    forbidden.pseudoStyle("after", "transform", `translate(${-xOffset}, ${-yOffset})`);
+                }
+                
+                if (errorCode.pseudoStyle) {
+                    errorCode.pseudoStyle("before", "transform", `translate(${yOffset}, ${xOffset})`);
+                    errorCode.pseudoStyle("after", "transform", `translate(${-yOffset}, ${-xOffset})`);
+                }
+                
+                // Occasionally stutter by briefly hiding and showing
+                if (Math.random() < 0.3) {
+                    errorCode.style.visibility = 'hidden';
+                    setTimeout(() => {
+                        errorCode.style.visibility = 'visible';
+                    }, 50 + Math.random() * 100);
+                }
+                
+                if (Math.random() < 0.3) {
+                    forbidden.style.visibility = 'hidden';
+                    setTimeout(() => {
+                        forbidden.style.visibility = 'visible';
+                    }, 50 + Math.random() * 100);
+                }
+            }
+        }
+        
+        // Scrambling text function
+        function scramblingText() {
+            const originalText = [
+                "The path you seek has folded back upon itself, creating a paradox that cannot be traversed through conventional means.",
+                "This anomaly has been logged. Return to charted territory to continue your journey."
+            ];
+            
+            // Different language versions and typo versions
+            const variations = [
+                // English with typos and errors
+                "The paht you sek has floded back upon itsself, creating a prdaox that cannot be travresed through conventionl means.",
+                "Th path u seek

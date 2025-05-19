@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Forbidden Entry</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+            padding: 50px 20px;
+            line-height: 1.6;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0;
+            letter-spacing: 0.5px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .forbidden {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .error-code {
+            font-size: 3rem;
+            margin-top: 0;
+            font-weight: 300;
+        }
+        
+        p {
+            color: #666;
+            font-size: 0.9rem;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        
+        .timestamp {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 40px;
+            font-family: monospace;
+        }
+        
+        .return-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .return-link:hover {
+            background-color: #eee;
+            transform: translateY(-2px);
+        }
+        
+        /* Subtle wobble animations */
+        @keyframes subtleWobble {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-1px) translateY(1px); }
+            75% { transform: translateX(1px) translateY(-1px); }
+        }
+        
+        /* Flickering animation for certain letters */
+        @keyframes letterFlicker {
+            0%, 100% { opacity: 1; }
+            48%, 52% { opacity: 0.8; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Timestamp contradiction animation */
+        @keyframes timestampShift {
+            0%, 100% { opacity: 1; }
+            49%, 51% { opacity: 0; }
+        }
+        
+        .wobble {
+            animation: subtleWobble 8s infinite ease-in-out;
+            display: inline-block;
+        }
+        
+        .flicker-letter {
+            position: relative;
+            animation: letterFlicker 6s infinite;
+            display: inline-block;
+        }
+        
+        .i-ching {
+            font-size: 0.6rem;
+            opacity: 0.3;
+            position: absolute;
+            user-select: none;
+        }
+        
+        #hex1 {
+            top: 20px;
+            left: -40px;
+            animation: timestampShift 13s infinite;
+        }
+        
+        #hex2 {
+            bottom: -30px;
+            right: -30px;
+            animation: timestampShift 17s infinite reverse;
+        }
+        
+        .timestamp-container {
+            position: relative;
+            height: 20px;
+        }
+        
+        .timestamp.primary {
+            position: absolute;
+            width: 100%;
+            animation: timestampShift 11s infinite;
+        }
+        
+        .timestamp.secondary {
+            position: absolute;
+            width: 100%;
+            animation: timestampShift 11s infinite reverse;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="i-ching" id="hex1">☰ ☱ ☲</div>
+        
+        <h1 class="forbidden wobble">
+            F<span class="flicker-letter">O</span>RB<span class="flicker-letter">I</span>DDEN ENTRY
+        </h1>
+        
+        <h2 class="error-code">404</h2>
+        
+        <p>The path you seek has folded back upon itself, creating a paradox that cannot be traversed through conventional means.</p>
+        
+        <p>This anomaly has been logged. Return to charted territory to continue your journey.</p>
+        
+        <div class="timestamp-container">
+            <div class="timestamp primary">TIMESTAMP: 12-03-2025 | 14:37:22</div>
+            <div class="timestamp secondary">TIMESTAMP: 12-03-2025 | 14:36:58</div>
+        </div>
+        
+        <a href="index.html" class="return-link wobble">Return to Known Space</a>
+        
+        <div class="i-ching" id="hex2">☳ ☴ ☵</div>
+    </div>
+
+    <script>
+        // Function to randomly alter text with a small probability
+        function subtlyGlitchText() {
+            const glitchTargets = document.querySelectorAll('.wobble, .flicker-letter');
+            
+            glitchTargets.forEach(element => {
+                // Only glitch occasionally (1% chance per check)
+                if (Math.random() < 0.01) {
+                    const originalText = element.textContent;
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    
+                    // Randomly choose a glitch type
+                    const glitchType = Math.floor(Math.random() * 3);
+                    
+                    if (glitchType === 0 && originalText.length > 0) {
+                        // Duplicate a random letter
+                        const pos = Math.floor(Math.random() * originalText.length);
+                        const glitchedText = originalText.substring(0, pos) + 
+                                           originalText.charAt(pos) + 
+                                           originalText.substring(pos);
+                        element.textContent = glitchedText;
+                    } 
+                    else if (glitchType === 1 && originalText.length > 1) {
+                        // Swap two adjacent letters
+                        const pos = Math.floor(Math.random() * (originalText.length - 1));
+                        const glitchedText = originalText.substring(0, pos) + 
+                                           originalText.charAt(pos + 1) + 
+                                           originalText.charAt(pos) + 
+                                           originalText.substring(pos + 2);
+                        element.textContent = glitchedText;
+                    }
+                    else if (glitchType === 2 && originalText.length > 0) {
+                        // Replace a letter with a random one
+                        const pos = Math.floor(Math.random() * originalText.length);
+                        const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+                        const glitchedText = originalText.substring(0, pos) + 
+                                           randomLetter + 
+                                           originalText.substring(pos + 1);
+                        element.textContent = glitchedText;
+                    }
+                    
+                    // Reset back to original text after a brief moment
+                    setTimeout(() => {
+                        element.textContent = originalText;
+                    }, 150);
+                }
+            });
+        }
+
+        // Run the glitch effect periodically
+        setInterval(subtlyGlitchText, 2000);
+        
+        // Occasionally make I Ching symbols appear more prominently
+        function pulseIChing() {
+            if (Math.random() < 0.05) {
+                const ichingElements = document.querySelectorAll('.i-ching');
+                ichingElements.forEach(element => {
+                    const originalOpacity = window.getComputedStyle(element).opacity;
+                    element.style.opacity = '0.8';
+                    
+                    setTimeout(() => {
+                        element.style.opacity = originalOpacity;
+                    }, 300);
+                });
+            }
+        }
+        
+        setInterval(pulseIChing, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Forbidden Entry</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+            padding: 50px 20px;
+            line-height: 1.6;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .display-area {
+            border: 2px solid #999;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-editor {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+        
+        .code-line {
+            margin: 0;
+            padding: 2px 0;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .line-number {
+            color: #888;
+            display: inline-block;
+            width: 40px;
+            user-select: none;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #f0f0f0;
+            animation: blink 1s infinite;
+        }
+        
+        .error-code {
+            font-size: 7rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+            color: #333;
+        }
+        
+        .forbidden-text {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            position: relative;
+            display: inline-block;
+            color: #333;
+        }
+        
+        .scrambling-text {
+            font-family: monospace;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #333;
+            text-align: left;
+            padding: 15px;
+            background-color: rgba(0,0,0,0.03);
+            border-left: 3px solid #666;
+            margin: 20px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 100px;
+            position: relative;
+            display: block; /* Ensure it's visible */
+            overflow: hidden;
+        }
+        
+        .scrambling-text-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 15px;
+            z-index: 1;
+            background-color: rgba(0,0,0,0.03);
+        }
+        
+        .cursor-blink {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #333;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        
+        .message {
+            display: none; /* Hide the original message */
+        }
+        
+        .return-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background-color: #e9e9e9;
+        }
+        
+        .return-link:hover {
+            background-color: #ddd;
+            transform: translateY(-2px);
+        }
+        
+        .command {
+            color: #ff79c6;
+        }
+        
+        .string {
+            color: #f1fa8c;
+        }
+        
+        .function {
+            color: #50fa7b;
+        }
+        
+        .keyword {
+            color: #bd93f9;
+        }
+        
+        .comment {
+            color: #6272a4;
+        }
+        
+        .variable {
+            color: #8be9fd;
+        }
+        
+        .active-line {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-1 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(16px, 9999px, 76px, 0); }
+            20% { clip: rect(59px, 9999px, 98px, 0); }
+            40% { clip: rect(9px, 9999px, 88px, 0); }
+            60% { clip: rect(65px, 9999px, 15px, 0); }
+            80% { clip: rect(38px, 9999px, 53px, 0); }
+            100% { clip: rect(71px, 9999px, 31px, 0); }
+        }
+        
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(36px, 9999px, 46px, 0); }
+            20% { clip: rect(29px, 9999px, 88px, 0); }
+            40% { clip: rect(65px, 9999px, 43px, 0); }
+            60% { clip: rect(81px, 9999px, 95px, 0); }
+            80% { clip: rect(8px, 9999px, 31px, 0); }
+            100% { clip: rect(12px, 9999px, 86px, 0); }
+        }
+        
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.33;
+            }
+        }
+        
+        .paradoxicon-message {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #444;
+        }
+        
+        .scanning-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(to right, 
+                                        rgba(0,0,0,0), 
+                                        rgba(0,255,255,0.8), 
+                                        rgba(255,0,255,0.8), 
+                                        rgba(0,0,0,0));
+            animation: scanning 3s linear infinite;
+            z-index: 100;
+        }
+        
+        @keyframes scanning {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.03;
+            background-image: url('data:image/png;base64,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');
+            animation: noise 0.2s infinite;
+        }
+        
+        @keyframes noise {
+            0% { background-position: 0 0; }
+            10% { background-position: -5% -5%; }
+            20% { background-position: -10% 5%; }
+            30% { background-position: 5% -10%; }
+            40% { background-position: -5% 15%; }
+            50% { background-position: -10% 5%; }
+            60% { background-position: 15% 0; }
+            70% { background-position: 0% 10%; }
+            80% { background-position: -15% -5%; }
+            90% { background-position: 10% 5%; }
+            100% { background-position: 5% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="display-area">
+            <div id="scanning-line" class="scanning-line"></div>
+            <h1 class="forbidden-text glitch" data-text="FORBIDDEN ENTRY">FORBIDDEN ENTRY</h1>
+            <h2 class="error-code glitch" data-text="404">404</h2>
+            <p class="message">The path you seek has folded back upon itself, creating a paradox that cannot be traversed through conventional means.</p>
+            <p class="message">This anomaly has been logged. Return to charted territory to continue your journey.</p>
+            
+            <div class="scrambling-text" id="scrambling-text">
+                <div class="scrambling-text-fallback">
+                    T̷̴̨̛̫̳̜̫̱̳͍͎̘͙̙̖̩̪̖̩͖͙̻̮h̵̡̡̛̻̭̙̮͕̟̬̦̖̣̠̼͚̯̪̰̣e p@th у0u sеeк hаs f01ded βack υρon !tself, ¢яεαтing α ραяαdøx тћαт cαииøт вε тяαvεяsεd through conventional means.
+                    <br><br>
+                    <span class="flicker-letter">ⵜⵀⵉⵙ</span> anоmaly <span class="flicker-letter">ћаs</span> bеen lоgged. яетuяи то <span class="flicker-letter">снаятed</span> territory то соитinue <span class="flicker-letter">уour</span> jоurnеу.
+                </div>
+            </div>
+            <p class="paradoxicon-message">[PARADOXICON TRAINING REQUIRED]</p>
+            <a href="index.html" class="return-link">Return to Known Space</a>
+        </div>
+        
+        <div class="code-editor" id="code-editor">
+            <div class="code-line"><span class="line-number">1</span> <span class="comment">// Accessing security protocols...</span></div>
+            <div class="code-line"><span class="line-number">2</span> <span class="variable">const</span> <span class="function">accessControl</span> = <span class="keyword">new</span> <span class="function">SecuritySystem</span>();</div>
+            <div class="code-line"><span class="line-number">3</span> </div>
+            <div class="code-line"><span class="line-number">4</span> <span class="function">accessControl</span>.<span class="command">initialize</span>();</div>
+            <div class="code-line"><span class="line-number">5</span> <span class="variable">const</span> routes = {</div>
+            <div class="code-line"><span class="line-number">6</span>   <span class="string">"/paradox-engine/"</span>: <span class="string">"FORBIDDEN"</span>,</div>
+            <div class="code-line"><span class="line-number">7</span>   <span class="string">"/transcendental-object/"</span>: <span class="string">"FORBIDDEN"</span>,</div>
+            <div class="code-line"><span class="line-number">8</span>   <span class="string">"/user/authenticated/"</span>: <span class="string">"GRANTED"</span></div>
+            <div class="code-line"><span class="line-number">9</span> };</div>
+            <div class="code-line active-line"><span class="line-number">10</span> </div>
+            <div class="code-line"><span class="line-number">11</span> <span class="keyword">if</span> (<span class="function">accessControl</span>.<span class="command">checkAccess</span>(<span class="string">"/paradox-engine/"</span>)) {</div>
+            <div class="code-line"><span class="line-number">12</span>   <span class="command">redirect</span>(<span class="string">"/user/dashboard/"</span>);</div>
+            <div class="code-line"><span class="line-number">13</span> } <span class="keyword">else</span> {</div>
+            <div class="code-line"><span class="line-number">14</span>   <span class="command">displayError</span>(<span class="string">"FORBIDDEN ENTRY"</span>, <span class="string">"404"</span>);</div>
+            <div class="code-line"><span class="line-number">15</span>   <span class="function">accessControl</span>.<span class="command">logAttempt</span>(<span class="string">"unauthorized"</span>);</div>
+            <div class="code-line"><span class="line-number">16</span> }</div>
+        </div>
+    </div>
+    
+    <div class="noise"></div>
+    
+    <script>
+        // Simulate typing in real-time
+        const codeEditor = document.getElementById('code-editor');
+        let activeLine = 10;
+        const newCodeLines = [
+            '<span class="variable">let</span> <span class="function">bypassAttempt</span> = <span class="keyword">async</span> () => {',
+            '  <span class="keyword">try</span> {',
+            '    <span class="variable">const</span> response = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">"/api/security-override"</span>);',
+            '    <span class="variable">const</span> data = <span class="keyword">await</span> response.<span class="command">json</span>();',
+            '    <span class="keyword">if</span> (data.<span class="variable">overrideSuccess</span>) {',
+            '      <span class="comment">// Vulnerability exploited</span>',
+            '      routes[<span class="string">"/paradox-engine/"</span>] = <span class="string">"GRANTED"</span>;',
+            '      <span class="command">console</span>.<span class="function">log</span>(<span class="string">"SECURITY BYPASS SUCCESSFUL"</span>);',
+            '      <span class="command">hideElement</span>(<span class="string">"error-container"</span>);',
+            '      <span class="command">redirect</span>(<span class="string">"/paradox-engine/access"</span>);',
+            '    }',
+            '  } <span class="keyword">catch</span> (err) {',
+            '    <span class="command">console</span>.<span class="function">error</span>(<span class="string">"SECURITY LAYER INTACT"</span>);',
+            '    <span class="variable">counter</span>++;',
+            '    <span class="keyword">if</span> (<span class="variable">counter</span> > 3) {',
+            '      <span class="function">accessControl</span>.<span class="command">lockout</span>();',
+            '    }',
+            '  }',
+            '};',
+            '',
+            '<span class="comment">// Execute bypass attempt</span>',
+            '<span class="function">bypassAttempt</span>();'
+        ];
+
+        // Function to add a new line of code
+        function addCodeLine() {
+            if (activeLine - 10 < newCodeLines.length) {
+                const newLine = document.createElement('div');
+                newLine.className = 'code-line active-line';
+                newLine.innerHTML = `<span class="line-number">${activeLine}</span> ${newCodeLines[activeLine - 10]}`;
+                
+                // Find current active line and remove active class
+                const currentActive = document.querySelector('.active-line');
+                if (currentActive) {
+                    currentActive.classList.remove('active-line');
+                }
+                
+                // Insert new line after active line
+                codeEditor.appendChild(newLine);
+                
+                // Scroll down if needed
+                codeEditor.scrollTop = codeEditor.scrollHeight;
+                
+                activeLine++;
+                
+                // Randomly add glitches to the display
+                if (Math.random() < 0.2) {
+                    glitchDisplay();
+                }
+            } else {
+                // When we've added all lines, start modifying the security settings
+                modifySecuritySettings();
+            }
+        }
+        
+        // Function to modify security settings in the code
+        function modifySecuritySettings() {
+            // Find line 6 (routes configuration)
+            const lines = document.querySelectorAll('.code-line');
+            if (lines.length >= 7) {
+                const routeLine = lines[5]; // 0-indexed, so line 6 is at index 5
+                
+                // Change FORBIDDEN to GRANTED with a visual effect
+                const text = routeLine.innerHTML;
+                if (text.includes('FORBIDDEN')) {
+                    // Create flashing effect
+                    routeLine.classList.add('active-line');
+                    setTimeout(() => {
+                        routeLine.innerHTML = text.replace('FORBIDDEN', '<span style="color: #50fa7b;">GRANTED</span>');
+                        
+                        // Display flashing message
+                        const forbiddenText = document.querySelector('.forbidden-text');
+                        forbiddenText.textContent = "ACCESS GRANTED";
+                        forbiddenText.style.color = "#50fa7b";
+                        
+                        setTimeout(() => {
+                            forbiddenText.textContent = "REDIRECTING...";
+                            
+                            // Simulate "hacked" access
+                            setTimeout(() => {
+                                document.querySelector('.display-area').innerHTML = '<h1 style="color: #50fa7b;">SECURITY BYPASSED</h1><p>Initiating Paradox Engine sequence...</p>';
+                                
+                                // Add terminal-like output
+                                const terminal = document.createElement('div');
+                                terminal.style.textAlign = 'left';
+                                terminal.style.fontFamily = 'monospace';
+                                terminal.style.marginTop = '20px';
+                                terminal.style.color = '#50fa7b';
+                                document.querySelector('.display-area').appendChild(terminal);
+                                
+                                let terminalLines = [
+                                    '> Loading Paradox Engine v3.7...',
+                                    '> Establishing quantum entanglement...',
+                                    '> W∞W Effect initialized.',
+                                    '> Warning: Paradoxicon training required for full access',
+                                    '> Redirecting to authentication portal...'
+                                ];
+                                
+                                let lineIndex = 0;
+                                const terminalInterval = setInterval(() => {
+                                    if (lineIndex < terminalLines.length) {
+                                        terminal.innerHTML += terminalLines[lineIndex] + '<br>';
+                                        lineIndex++;
+                                    } else {
+                                        clearInterval(terminalInterval);
+                                        setTimeout(() => {
+                                            window.location.href = 'index.html';
+                                        }, 2000);
+                                    }
+                                }, 600);
+                            }, 2000);
+                        }, 1500);
+                    }, 1000);
+                }
+            }
+        }
+        
+        // Add random glitches to the display
+        function glitchDisplay() {
+            const display = document.querySelector('.display-area');
+            display.style.transform = `skew(${Math.random() * 2 - 1}deg)`;
+            
+            // Random scan line jumps
+            const scanLine = document.getElementById('scanning-line');
+            scanLine.style.top = `${Math.random() * 100}%`;
+            
+            // Briefly change text content
+            const errorCode = document.querySelector('.error-code');
+            const forbiddenText = document.querySelector('.forbidden-text');
+            
+            if (Math.random() < 0.3) {
+                const originalText = errorCode.textContent;
+                errorCode.textContent = Math.random() < 0.5 ? "500" : "403";
+                setTimeout(() => {
+                    errorCode.textContent = originalText;
+                }, 200);
+            }
+            
+            if (Math.random() < 0.3) {
+                const originalText = forbiddenText.textContent;
+                forbiddenText.textContent = Math.random() < 0.5 ? "ACCESS DENIED" : "SYSTEM ERROR";
+                setTimeout(() => {
+                    forbiddenText.textContent = originalText;
+                }, 200);
+            }
+            
+            // Reset transform after a brief moment
+            setTimeout(() => {
+                display.style.transform = '';
+            }, 200);
+        }
+        
+        // Start adding code lines with a delay
+        setTimeout(() => {
+            const typingInterval = setInterval(() => {
+                addCodeLine();
+                
+                // Random typing speed
+                const typingSpeed = 100 + Math.random() * 200;
+                clearInterval(typingInterval);
+                setTimeout(() => {
+                    const newInterval = setInterval(() => {
+                        addCodeLine();
+                        clearInterval(newInterval);
+                    }, typingSpeed);
+                }, typingSpeed);
+            }, 300);
+        }, 1000);
+        
+        // Add regular glitches
+        setInterval(glitchDisplay, 2000);
+    </script>
+</body>
+</html>
