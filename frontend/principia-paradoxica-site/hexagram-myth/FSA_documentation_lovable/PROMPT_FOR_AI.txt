@@ -1,0 +1,33 @@
+I am building a modular Flow-State Algorithm (FSA) for a narrative/game/DAO engine.
+The FSA must:
+- Accept and process “perception events” (JSON with user, domain, timestamp, payload).
+- Maintain and update a state vector (`skill_est`, `challenge_est`, `c_sms`).
+- Expose a function or class to process events and recommend challenge adjustments.
+- Be easy to call from both frontend (TypeScript/React) and backend (Python/FastAPI).
+- Use type-safe interfaces (TypeScript) or dataclasses/models (Python).
+- Follow the minimal contract below:
+  - Log all events
+  - Update state per event (stub logic OK for now)
+  - Output current state and recommended adaptation
+
+Provide:
+- A ready-to-run Python (Pydantic or Dataclass) implementation
+- A ready-to-run TypeScript implementation with types/interfaces
+- Exportable function signatures and basic usage example for each
+
+Minimal FSA event contract:
+{
+  "id": "uuid",
+  "ts": "iso8601",
+  "domain": "game | narrative | dao",
+  "user_hash": "sha256",
+  "payload": {}
+}
+State vector:
+{
+  "skill_est": 0.0,
+  "challenge_est": 0.0,
+  "c_sms": 0.0
+}
+
+Document clearly and keep the code clean and modular.
