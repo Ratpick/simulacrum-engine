@@ -3,3 +3,5 @@ node_modules/
 .env
 dist/
 .vscode/
+node_modules/
+frontend/paradox-foundry/node_modules/

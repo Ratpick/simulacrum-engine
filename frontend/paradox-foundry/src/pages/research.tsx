@@ -2,8 +2,6 @@
 
 import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import NavBar from '../components/NavBar'; // Assuming NavBar.tsx is already in place
 
 const Research: React.FC = () => {
   return (
@@ -14,12 +12,7 @@ const Research: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      {/* Main container with global dark mode styles */}
-      <div className="min-h-screen bg-neutral-950 text-amber-400 font-inter antialiased flex flex-col">
-        {/* NavBar Component */}
-        <NavBar />
-
-        {/* Hero-like Introduction for Research */}
+      {/* Hero-like Introduction for Research */}
         <section className="relative flex flex-col items-center justify-center text-center py-24 px-4 sm:px-6 lg:px-8 flex-grow overflow-hidden">
           {/* Placeholder for subtle background graphics related to data/networks */}
           <div className="absolute inset-0 z-0 overflow-hidden">
@@ -41,10 +34,10 @@ const Research: React.FC = () => {
           </div>
         </section>
 
-        {/* Vibe Principle/Paradox Tagging (subtle, visible on hover/metadata) */}
-        <div className="absolute top-28 right-8 z-20 text-neutral-600 text-sm opacity-0 hover:opacity-100 transition-opacity duration-300 hidden md:block" title="Current Principle">
-            You are in: Paradox Fold 2 – Emergence of Intelligence
-        </div>
+      {/* Vibe Principle/Paradox Tagging */}
+      <div className="absolute top-28 right-8 z-20 text-neutral-600 text-sm opacity-0 hover:opacity-100 transition-opacity duration-300 hidden md:block" title="Current Principle">
+        You are in: Paradox Fold 2 – Emergence of Intelligence
+      </div>
 
         {/* Content Sections for Research Areas */}
         <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -57,7 +50,7 @@ const Research: React.FC = () => {
               <div className="bg-neutral-900 border border-amber-800 p-8 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300">
                 <h3 className="text-3xl font-semibold text-amber-300 mb-4">AI²: Anticipatory & Adaptive AI</h3>
                 <p className="text-lg leading-relaxed text-neutral-200 mb-4">
-                  This research focuses on developing AI systems that can not only react to current data but also anticipate future states and adapt proactively. Beyond mere prediction, we aim for systems that model complex emergent behaviors, assisting in navigating the uncertain futures intrinsic to the *Principia Paradoxica* narrative. It directly informs spinouts like `Solving AI Futurescape`.
+                  This research focuses on developing AI systems that can not only react to current data but also anticipate future states and adapt proactively. Beyond mere prediction, we aim for systems that model complex emergent behaviors, assisting in navigating the uncertain futures intrinsic to the <em>Principia Paradoxica</em> narrative. It directly informs spinouts like <code>Solving AI Futurescape</code>.
                 </p>
                 {/* Placeholder for AI² data visualization (e.g., dynamic flow map) */}
                 <div className="w-full h-48 bg-neutral-800 border border-amber-700 flex items-center justify-center text-neutral-500 italic mt-6">
@@ -81,7 +74,7 @@ const Research: React.FC = () => {
               <div className="bg-neutral-900 border border-amber-800 p-8 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300">
                 <h3 className="text-3xl font-semibold text-amber-300 mb-4">Ethical AI Frameworks & W∞W Credentials</h3>
                 <p className="text-lg leading-relaxed text-neutral-200 mb-4">
-                  This stream translates the philosophical principles of *Principia Paradoxica* into operational ethical guidelines and a unique system for recognizing and verifying ethical conduct: **W∞W Credentials** (Soul-Bound Tokens). These non-transferable tokens represent achievements, skills, and ethical certifications, enhancing trust and accountability within the ecosystem.
+                  This stream translates the philosophical principles of <em>Principia Paradoxica</em> into operational ethical guidelines and a unique system for recognizing and verifying ethical conduct: <strong>W∞W Credentials</strong> (Soul-Bound Tokens). These non-transferable tokens represent achievements, skills, and ethical certifications, enhancing trust and accountability within the ecosystem.
                 </p>
                 {/* Placeholder for W∞W Credentials data visualization (e.g., network graph) */}
                 <div className="w-full h-48 bg-neutral-800 border border-amber-700 flex items-center justify-center text-neutral-500 italic mt-6">
@@ -121,14 +114,6 @@ const Research: React.FC = () => {
             </div>
           </section>
         </main>
-
-        {/* Footer */}
-        <footer className="bg-neutral-950 py-8 text-center text-neutral-500 text-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            &copy; {new Date().getFullYear()} Paradox Foundry. All Rights Reserved.
-          </div>
-        </footer>
-      </div>
     </>
   );
 };
