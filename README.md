@@ -123,6 +123,12 @@ The project fuses cutting-edge narrative design, decentralised governance, and A
 
 ---
 
+---
+## Further Reading & Documentation
+
+- [Agentic ToM & Automation Spec](./AGENTIC-TOM-AUTOMATION.md)
+- [BMAD: Breakthrough Method of Agile AI-Driven Development](./docs/BMAD.md)
+
 **Contact:**  
 Patrick Treloar  
 Paradox Foundry / Principia Paradoxica / DAO IZM CIC  
