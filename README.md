@@ -122,16 +122,27 @@ The project fuses cutting-edge narrative design, decentralised governance, and A
 - Assist in resolving open bugs and supporting internationalisation rollout.
 
 ---
+
 ##  How to Get Involved
 
 We encourage all new contributors to start by reading the [BMAD](./docs/BMAD.md) and [Agentic ToM & Automation](./AGENTIC-TOM-AUTOMATION.md) docs.  
 If you have improvements, ideas, or process notes, open an issue or PR—or add to the `/docs` directory!
+
 ---
+
 ## Further Reading & Documentation
 
 - [Agentic ToM & Automation Spec](./AGENTIC-TOM-AUTOMATION.md)
 - [BMAD: Breakthrough Method of Agile AI-Driven Development](./docs/BMAD.md)
 
+---
+
+## Documentation Guidelines
+
+- Use the `/docs` directory for all process notes, architecture diagrams, and methodology write-ups.
+- Every collaborator is invited to add and update documentation as the project evolves.
+
+---
 **Contact:**  
 Patrick Treloar  
 Paradox Foundry / Principia Paradoxica / DAO IZM CIC  
