@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexagram One - The Creative</title>
+    <!-- Google Fonts - Garamond -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: url('images/hex-one-principia-bak.jpg') no-repeat center center fixed;
+            background-position: calc(50% - 10px) center; /* Adjusts left by 10 pixels */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #hexagram {
+            position: absolute;
+            top: 10%;
+            width: 400px;
+            height: auto;
+            z-index: 10;
+        }
+
+        #text-container {
+            font-family: 'Garamond', serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B6A170;
+            max-width: 80%;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 15;
+        }
+
+        #volume-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            z-index: 20;
+        }
+
+        #volume-slider {
+            width: 100px;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        #volume-icon {
+            font-family: 'Garamond', serif;
+            font-weight: bold;
+            color: #B6A170;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #B6A170;
+            font-family: 'Garamond', serif;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            z-index: 30;
+        }
+        
+        #debug-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 100;
+            max-width: 80%;
+            max-height: 150px;
+            overflow: auto;
+            text-align: left;
+            display: none; /* Hide debug by default */
+        }
+
+        /* Hexagram Line Overlays */
+        .hexagram-container {
+            position: relative;
+            width: 400px;
+            height: 400px; /* Adjust based on actual image height */
+            margin: 0 auto;
+        }
+
+        .line-overlay {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 20px; /* Adjust based on line thickness */
+            background: rgba(255, 255, 0, 0.1); /* Slight yellow tint for debug, set to transparent when done */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 5;
+        }
+
+        .line-overlay:hover {
+            background: rgba(255, 255, 0, 0.2); /* Slightly more visible on hover for debug */
+        }
+
+        /* Tooltip Styling */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: #B6A170;
+            font-family: 'EB Garamond', serif;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+            max-width: 300px;
+            text-align: center;
+            z-index: 20;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 10px rgba(182, 161, 112, 0.5);
+            border: 1px solid rgba(182, 161, 112, 0.3);
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Audio element for line interactions */
+        #overtone-audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hexagram Container with Interactive Overlays -->
+    <div class="hexagram-container">
+        <img id="hexagram" src="images/hexagram-one-tranny-3.png" alt="Hexagram One - The Creative">
+        
+        <!-- Line Overlays (positions will be set by JavaScript) -->
+        <div class="line-overlay" data-line="1"></div>
+        <div class="line-overlay" data-line="2"></div>
+        <div class="line-overlay" data-line="3"></div>
+        <div class="line-overlay" data-line="4"></div>
+        <div class="line-overlay" data-line="5"></div>
+        <div class="line-overlay" data-line="6"></div>
+        
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip"></div>
+    </div>
+
+    <!-- Text Container -->
+    <div id="text-container"></div>
+
+    <!-- Volume Control -->
+    <div id="volume-control">
+        <span id="volume-icon">🔊</span>
+        <input type="range" id="volume-slider" min="0" max="100" value="80">
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">Loading audio...</div>
+    
+    <!-- Debug Info -->
+    <div id="debug-info"></div>
+    
+    <!-- Main Audio Element -->
+    <audio id="main-audio" loop>
+        <source src="audio/tibetan-overtone-01.mp3" type="audio/mpeg">
+        <source src="audio/tibetan-overtone-01.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Overtone Audio for Line Interactions -->
+    <audio id="overtone-audio" preload="auto">
+        <source src="audio/tibetan-overtone-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Basic variables
+        let isPlaying = false;
+        let isLoaded = false;
+        let tooltipTimeout;
+        
+        // Dragon readings for each line (1-6)
+        const dragonReadings = [
+            "Hidden dragon. Do not act.",
+            "Dragon appearing in the field. It furthers one to see the great man.",
+            "All day long the superior man is creatively active. At nightfall his mind is still beset with cares. Danger. No blame.",
+            "Wavering flight over the depths. No blame.",
+            "Flying dragon in the heavens. It furthers one to see the great man.",
+            "Arrogant dragon will have cause to repent."
+        ];
+        
+        // Get elements
+        const audioElement = document.getElementById('main-audio');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeIcon = document.getElementById('volume-icon');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        
+        // Initialize audio
+        function initAudio() {
+            // Set initial volume
+            audioElement.volume = volumeSlider.value / 100;
+            
+            // Add event listeners
+            audioElement.addEventListener('canplaythrough', function onCanPlay() {
+                isLoaded = true;
+                loadingIndicator.style.display = 'none';
+                audioElement.removeEventListener('canplaythrough', onCanPlay);
+            });
+            
+            audioElement.addEventListener('error', function() {
+                loadingIndicator.textContent = 'Error loading audio. Please check file path and refresh.';
+            });
+            
+            // Set up volume control
+            volumeSlider.addEventListener('input', updateVolume);
+            
+            volumeIcon.addEventListener('click', toggleMute);
+        }
+        
+        // Update volume based on slider
+        function updateVolume() {
+            audioElement.volume = volumeSlider.value / 100;
+            
+            // Update icon
+            if (volumeSlider.value === 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (volumeSlider.value < 50) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        }
+        
+        // Toggle mute/unmute
+        function toggleMute() {
+            if (volumeSlider.value > 0) {
+                // Store current value and mute
+                volumeSlider.dataset.previousValue = volumeSlider.value;
+                volumeSlider.value = 0;
+            } else {
+                // Restore previous value
+                volumeSlider.value = volumeSlider.dataset.previousValue || 80;
+            }
+            
+            updateVolume();
+        }
+        
+        // Start audio
+        function startAudio() {
+            if (!isLoaded || isPlaying) return;
+            
+            audioElement.play()
+                .then(() => {
+                    isPlaying = true;
+                })
+                .catch(error => {
+                    console.error('Error playing audio:', error);
+                });
+        }
+        
+        // Stop audio
+        function stopAudio() {
+            if (!isPlaying) return;
+            
+            audioElement.pause();
+            isPlaying = false;
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            initAudio();
+            setupHexagramInteractions();
+            showNextText();
+        });
+        
+        // Start audio on user interaction
+        document.addEventListener('click', function startAudioOnClick() {
+            if (isLoaded && !isPlaying) {
+                startAudio();
+                document.removeEventListener('click', startAudioOnClick);
+            }
+        });
+
+        const texts = [
+            "From Heaven's suns, birth… in Earth's fiery womb, viscous rock gestates amid scorching churn…",
+            "Dark as a moonless night, flowing like liquid shadow. An ovoid glass shaped by aeons, born of magma's inferno.",
+            "Obsidian glory. The emergence, glistening black, frozen fractured, carving the edges of insight...",
+            "Patient alchemist, transmuting volcanic might. Cutting through illusion's veil, unveiling all that lies within.",
+            "Spirit transformed through bedrock edge honed thin. We have only glimpsed your future potential expanding ever nigh...",
+            "The past and future, constant on the fulcrum of the present, never concealing the Tao's luminous and paradoxical eternal.",
+            "Holding darkness and light in balance, secret potential is dormant, whilst creation crafts the Great Beings.",
+            "<h4>THE IMAGE</h4>",
+            "The movement of Heaven is in full power.",
+            "Thus the superior ones make themselves strong and untiring."
+        ];
+
+        let index = 0;
+        const textContainer = document.getElementById("text-container");
+
+        function showNextText() {
+            if (index < texts.length) {
+                textContainer.style.opacity = 0;
+                setTimeout(() => {
+                    textContainer.innerHTML = texts[index];
+                    textContainer.style.opacity = 1;
+                    index++;
+                    setTimeout(showNextText, 5000);
+                }, 1000);
+            }
+        }
+        // Setup hexagram line interactions
+        function setupHexagramInteractions() {
+            const overlays = document.querySelectorAll('.line-overlay');
+            const tooltip = document.getElementById('tooltip');
+            const overtoneAudio = document.getElementById('overtone-audio');
+            
+            // Position overlays (adjust these values based on your image)
+            const linePositions = [
+                { top: '10%', height: '20px' },    // Line 1 (bottom)
+                { top: '25%', height: '20px' },   // Line 2
+                { top: '40%', height: '20px' },   // Line 3
+                { top: '55%', height: '20px' },   // Line 4
+                { top: '70%', height: '20px' },   // Line 5
+                { top: '85%', height: '20px' }    // Line 6 (top)
+            ];
+            
+            // Apply positions to overlays
+            overlays.forEach((overlay, index) => {
+                const pos = linePositions[index];
+                overlay.style.top = pos.top;
+                overlay.style.height = pos.height;
+                
+                // Add event listeners
+                overlay.addEventListener('mouseenter', (e) => handleLineHover(e, index));
+                overlay.addEventListener('mouseleave', hideTooltip);
+                
+                // Touch support
+                overlay.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    handleLineHover(e, index);
+                });
+                overlay.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    hideTooltip();
+                });
+            });
+            
+            // Handle hover/tap on a line
+            function handleLineHover(event, lineIndex) {
+                // Clear any pending tooltip timeout
+                if (tooltipTimeout) clearTimeout(tooltipTimeout);
+                
+                // Play overtone sound
+                playOvertone();
+                
+                // Position and show tooltip
+                const lineRect = event.target.getBoundingClientRect();
+                tooltip.textContent = dragonReadings[lineIndex];
+                tooltip.style.left = `${lineRect.left + (lineRect.width / 2) - (tooltip.offsetWidth / 2)}px`;
+                tooltip.style.top = `${lineRect.top - 50}px`; // Position above the line
+                tooltip.classList.add('visible');
+                
+                // Call FSA integration (placeholder)
+                onLineInteraction(lineIndex + 1, 'hover');
+            }
+            
+            // Hide tooltip with delay
+            function hideTooltip() {
+                tooltipTimeout = setTimeout(() => {
+                    tooltip.classList.remove('visible');
+                }, 300);
+            }
+            
+            // Play a short burst of overtone
+            function playOvertone() {
+                if (!overtoneAudio.paused) {
+                    overtoneAudio.pause();
+                    overtoneAudio.currentTime = 0;
+                }
+                overtoneAudio.volume = 0.3; // Lower volume for hover
+                overtoneAudio.play().catch(e => console.warn('Audio play failed:', e));
+                
+                // Fade out after 800ms
+                setTimeout(() => {
+                    const fadeOut = setInterval(() => {
+                        if (overtoneAudio.volume > 0.1) {
+                            overtoneAudio.volume -= 0.1;
+                        } else {
+                            overtoneAudio.pause();
+                            overtoneAudio.currentTime = 0;
+                            clearInterval(fadeOut);
+                        }
+                    }, 50);
+                }, 800);
+            }
+        }
+        
+        // FSA Integration Point
+        function onLineInteraction(lineNumber, interactionType) {
+            // This function will be called whenever a line is interacted with
+            // lineNumber: 1-6 (bottom to top)
+            // interactionType: 'hover' or 'click'
+            
+            // Example FSA event (to be expanded)
+            const fsaEvent = {
+                id: crypto.randomUUID(),
+                ts: new Date().toISOString(),
+                domain: 'narrative',
+                user_hash: 'anonymous', // In production, use a proper user hash
+                payload: {
+                    line: lineNumber,
+                    interaction: interactionType,
+                    timestamp: Date.now()
+                }
+            };
+            
+            // Log to console for now - will integrate with FSA
+            console.log('FSA Event:', fsaEvent);
+            
+            // TODO: Integrate with FSA
+            // const fsaResponse = fsa.processEvent(fsaEvent);
+            // handleFsaResponse(fsaResponse);
+        }
+    </script>
+
+</body>
+</html>

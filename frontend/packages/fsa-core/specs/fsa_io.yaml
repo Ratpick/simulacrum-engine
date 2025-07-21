@@ -1,0 +1,19 @@
+fsa_io:
+  perception_input:
+    - event_id
+    - domain_tag   # game | dev | dao
+    - user_id_hash
+    - context_blob # domain‑specific metrics
+  state_output:   # from modeller
+    skill_estimate: float
+    challenge_estimate: float
+    csms: float          # Challenge‑Skill Match Score
+    affect_proxy: float  # optional physio indicator
+  orchestrator_action:
+    difficulty_delta: float | enum
+    content_pointer: uri
+    hint_pointer: uri
+  oracle_emission:
+    flow_peak: bool
+    eureka_token_id: string | null
+    minted_izm: int

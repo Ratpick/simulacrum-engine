@@ -1,0 +1,197 @@
+// src/components/NavBar.tsx
+
+import React, { useState, useEffect, useContext } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { languageOptions, getDirection, LanguageCode, getTranslated } from '../utils/i18n';
+
+// Create a context for language
+const LanguageContext = React.createContext<{
+  currentLanguage: LanguageCode;
+  setCurrentLanguage: (lang: LanguageCode) => void;
+}>({
+  currentLanguage: 'en',
+  setCurrentLanguage: () => {},
+});
+
+// Define types for lens options
+type LensOption = 'researcher' | 'investor' | 'oracle' | 'shadow';
+
+type NavLink = {
+  name: Record<LanguageCode, string>;
+  href: string;
+};
+
+// Data for navigation links with translations
+const navLinks: NavLink[] = [
+  { 
+    name: {
+      en: 'Principia Paradoxica',
+      fr: 'Principia Paradoxica',
+      es: 'Principia Paradoxica',
+      ar: 'برينسيبيا بارادوكسيكا'
+    }, 
+    href: '/principia' 
+  },
+  { 
+    name: {
+      en: 'Our Research',
+      fr: 'Notre Recherche',
+      es: 'Nuestra Investigación',
+      ar: 'بحثنا'
+    }, 
+    href: '/research' 
+  },
+  { 
+    name: {
+      en: 'The Paradox Engine',
+      fr: 'Le Moteur du Paradoxe',
+      es: 'El Motor de la Paradoja',
+      ar: 'محرك المفارقة'
+    }, 
+    href: '/engine' 
+  },
+  { 
+    name: {
+      en: 'Constructing Consciousness',
+      fr: 'Construire la Conscience',
+      es: 'Construyendo Conciencia',
+      ar: 'بناء الوعي'
+    }, 
+    href: '/magazine' 
+  },
+  { 
+    name: {
+      en: 'Ecosystem',
+      fr: 'Écosystème',
+      es: 'Ecosistema',
+      ar: 'النظام البيئي'
+    }, 
+    href: '/ecosystem' 
+  },
+  { 
+    name: {
+      en: 'Engage',
+      fr: 'Engagez-vous',
+      es: 'Participa',
+      ar: 'انضم إلينا'
+    }, 
+    href: '/engage' 
+  },
+];
+
+// Data for lens options (for the ritualized switcher)
+const lensOptions: { value: LensOption; label: string; prelude: string }[] = [
+  { 
+    value: 'researcher', 
+    label: 'Researcher', 
+    prelude: 'Entering the realm of empirical inquiry...' 
+  },
+  { 
+    value: 'investor', 
+    label: 'Investor', 
+    prelude: 'Illuminating the pathways of strategic investment...' 
+  },
+  { 
+    value: 'oracle', 
+    label: 'Oracle', 
+    prelude: 'Consulting the depths of emergent truths...' 
+  },
+  { 
+    value: 'shadow', 
+    label: 'Shadow', 
+    prelude: 'Navigating the unseen currents of reality...' 
+  },
+];
+
+
+    // Sticky navigation bar with deep black background and subtle shadow
+    <nav className="sticky top-0 z-50 w-full bg-neutral-950 bg-opacity-95 backdrop-blur-sm shadow-lg py-4 px-6 sm:px-8 lg:px-12 transition-all duration-300 ease-in-out">
+      <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap">
+        {/* Logo/Site Title */}
+        <Link href="/" className="text-3xl font-bold text-amber-400 hover:text-amber-300 transition-colors duration-200 cursor-pointer flex-shrink-0">
+          Paradox Foundry
+        </Link>
+
+        {/* Navigation Links (hidden on small screens, revealed by a future mobile menu) */}
+        <div className="hidden lg:flex items-center space-x-8 flex-grow justify-center">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.name} 
+              href={link.href} 
+              className="text-lg font-medium text-amber-300 hover:text-amber-100 relative group cursor-pointer"
+            >
+              {link.name}
+              {/* Underline effect on hover */}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Controls: Lens Switcher & Language Selector */}
+        <div className="flex items-center space-x-4 ml-auto lg:ml-0 flex-shrink-0">
+          {/* Lens Switcher (Ritualized) */}
+          <div className="relative group">
+            <button
+              className="flex items-center px-4 py-2 bg-neutral-800 text-amber-200 rounded-full text-sm font-medium hover:bg-neutral-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              aria-haspopup="true"
+              aria-expanded="true"
+            >
+              <span className="mr-2 capitalize">{currentLens}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            {/* Dropdown for lens options */}
+            <div className="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-lg shadow-xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform scale-95 group-hover:scale-100 origin-top-right">
+              {lensOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => handleLensChange(option.value)}
+                  className={`block w-full text-left px-4 py-2 text-sm ${currentLens === option.value ? 'bg-amber-700 text-white' : 'text-amber-100 hover:bg-neutral-700'} capitalize`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Language Selector */}
+          <div className="relative group">
+            <button
+              className="flex items-center px-4 py-2 bg-neutral-800 text-amber-200 rounded-full text-sm font-medium hover:bg-neutral-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              aria-haspopup="true"
+              aria-expanded="true"
+            >
+              <span className="mr-2">{currentLanguage.toUpperCase()}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            {/* Dropdown for language options */}
+            <div className="absolute right-0 mt-2 w-32 bg-neutral-800 rounded-lg shadow-xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform scale-95 group-hover:scale-100 origin-top-right">
+              {languageOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => handleLanguageChange(option.value)}
+                  className={`block w-full text-left px-4 py-2 text-sm ${currentLanguage === option.value ? 'bg-amber-700 text-white' : 'text-amber-100 hover:bg-neutral-700'}`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Ritual Prelude Message Display */}
+      {preludeMessage && (
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-4 py-2 bg-amber-900 text-amber-100 text-sm rounded-lg shadow-lg animate-fade-in-out">
+          {preludeMessage}
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default NavBar;

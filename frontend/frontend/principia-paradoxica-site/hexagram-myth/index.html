@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexagram One</title>
+    <style>
+        body {
+            background: url('images/hex-one-principia-bak.jpg') no-repeat center center fixed;
+            background-position: calc(50% - 10px) center; /* Adjusts left by 10 pixels */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #hexagram {
+            position: absolute;
+            top: 10%;
+            width: 400px;
+            height: auto;
+            z-index: 10;
+        }
+
+        #text-container {
+            font-family: 'Garamond', serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B6A170;
+            max-width: 80%;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 15;
+        }
+
+        #volume-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            z-index: 20;
+        }
+
+        #volume-slider {
+            width: 100px;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        #volume-icon {
+            font-family: 'Garamond', serif;
+            font-weight: bold;
+            color: #B6A170;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #B6A170;
+            font-family: 'Garamond', serif;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            z-index: 30;
+        }
+        
+        #debug-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 100;
+            max-width: 80%;
+            max-height: 150px;
+            overflow: auto;
+            text-align: left;
+            display: none; /* Hide debug by default */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed Hexagram -->
+    <img id="hexagram" src="images/hexagram-one-tranny-3.png" alt="Hexagram Symbol">
+
+    <!-- Text Container -->
+    <div id="text-container"></div>
+
+    <!-- Volume Control -->
+    <div id="volume-control">
+        <span id="volume-icon">🔊</span>
+        <input type="range" id="volume-slider" min="0" max="100" value="80">
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">Loading audio...</div>
+    
+    <!-- Debug Info -->
+    <div id="debug-info"></div>
+    
+    <!-- Main Audio Element -->
+    <audio id="main-audio" loop>
+        <source src="audio/tibetan-overtone-01.mp3" type="audio/mpeg">
+        <source src="audio/tibetan-overtone-01.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Basic variables
+        let isPlaying = false;
+        let isLoaded = false;
+        
+        // Get elements
+        const audioElement = document.getElementById('main-audio');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeIcon = document.getElementById('volume-icon');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        
+        // Initialize audio
+        function initAudio() {
+            // Set initial volume
+            audioElement.volume = volumeSlider.value / 100;
+            
+            // Add event listeners
+            audioElement.addEventListener('canplaythrough', function onCanPlay() {
+                isLoaded = true;
+                loadingIndicator.style.display = 'none';
+                audioElement.removeEventListener('canplaythrough', onCanPlay);
+            });
+            
+            audioElement.addEventListener('error', function() {
+                loadingIndicator.textContent = 'Error loading audio. Please check file path and refresh.';
+            });
+            
+            // Set up volume control
+            volumeSlider.addEventListener('input', updateVolume);
+            
+            volumeIcon.addEventListener('click', toggleMute);
+        }
+        
+        // Update volume based on slider
+        function updateVolume() {
+            audioElement.volume = volumeSlider.value / 100;
+            
+            // Update icon
+            if (volumeSlider.value === 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (volumeSlider.value < 50) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        }
+        
+        // Toggle mute/unmute
+        function toggleMute() {
+            if (volumeSlider.value > 0) {
+                // Store current value and mute
+                volumeSlider.dataset.previousValue = volumeSlider.value;
+                volumeSlider.value = 0;
+            } else {
+                // Restore previous value
+                volumeSlider.value = volumeSlider.dataset.previousValue || 80;
+            }
+            
+            updateVolume();
+        }
+        
+        // Start audio
+        function startAudio() {
+            if (!isLoaded || isPlaying) return;
+            
+            audioElement.play()
+                .then(() => {
+                    isPlaying = true;
+                })
+                .catch(error => {
+                    console.error('Error playing audio:', error);
+                });
+        }
+        
+        // Stop audio
+        function stopAudio() {
+            if (!isPlaying) return;
+            
+            audioElement.pause();
+            isPlaying = false;
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            initAudio();
+            showNextText();
+        });
+        
+        // Start audio on user interaction
+        document.addEventListener('click', function startAudioOnClick() {
+            if (isLoaded && !isPlaying) {
+                startAudio();
+                document.removeEventListener('click', startAudioOnClick);
+            }
+        });
+
+        const texts = [
+            "From Heaven's suns, birth… in Earth's fiery womb, viscous rock gestates amid scorching churn…",
+            "Dark as a moonless night, flowing like liquid shadow. An ovoid glass shaped by aeons, born of magma's inferno.",
+            "Obsidian glory. The emergence, glistening black, frozen fractured, carving the edges of insight...",
+            "Patient alchemist, transmuting volcanic might. Cutting through illusion's veil, unveiling all that lies within.",
+            "Spirit transformed through bedrock edge honed thin. We have only glimpsed your future potential expanding ever nigh...",
+            "The past and future, constant on the fulcrum of the present, never concealing the Tao's luminous and paradoxical eternal.",
+            "Holding darkness and light in balance, secret potential is dormant, whilst creation crafts the Great Beings.",
+            "<h4>THE IMAGE</h4>",
+            "The movement of Heaven is in full power.",
+            "Thus the superior ones make themselves strong and untiring."
+        ];
+
+        let index = 0;
+        const textContainer = document.getElementById("text-container");
+
+        function showNextText() {
+            if (index < texts.length) {
+                textContainer.style.opacity = 0;
+                setTimeout(() => {
+                    textContainer.innerHTML = texts[index];
+                    textContainer.style.opacity = 1;
+                    index++;
+                    setTimeout(showNextText, 5000);
+                }, 1000);
+            }
+        }
+    </script>
+
+</body>
+</html>

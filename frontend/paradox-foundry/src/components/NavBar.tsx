@@ -68,6 +68,15 @@ const navLinks: NavLink[] = [
     }, 
     href: '/engage' 
   },
+  {
+    name: {
+      en: 'Secret',
+      fr: 'Secret',
+      es: 'Secreto',
+      ar: 'سري'
+    },
+    href: '/secret-entrance/index.html'
+  },
 ];
 
 const NavBar = () => {

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigram Narrative Sandbox</title>
+    <link rel="stylesheet" href="../css/trigram-patterns.css">
+    <style>
+        .sandbox-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .sandbox-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .sandbox-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .sandbox-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .sandbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .pattern-panel {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        
+        .bagua-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 2rem auto;
+        }
+        
+        .bagua-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bagua-center {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 2;
+        }
+        
+        .bagua-trigram {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: #fff;
+            border: 2px solid #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .bagua-trigram.selected {
+            background: #2196f3;
+            color: #fff;
+        }
+        
+        .pattern-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pattern-select {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .pattern-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #2196f3;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .pattern-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .pattern-item {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .pattern-item.selected {
+            background: #2196f3;
+            color: #fff;
+        }
+        
+        .narrative-panel {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        
+        .narrative-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .narrative-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        .narrative-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #2196f3;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .narrative-output {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 4px;
+            min-height: 200px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="sandbox-container">
+        <div class="sandbox-header">
+            <h1>Trigram Narrative Sandbox</h1>
+            <p>Explore trigram patterns and generate stories inspired by their relationships.</p>
+        </div>
+        
+        <div class="sandbox-grid">
+            <div class="pattern-panel">
+                <h2>Pattern Explorer</h2>
+                <div class="bagua-container" id="baguaContainer">
+                    <div class="bagua-circle">
+                        <div class="bagua-center">☯</div>
+                    </div>
+                </div>
+                <div class="pattern-controls">
+                    <select class="pattern-select" id="patternType">
+                        <option value="triadic">Triadic Patterns</option>
+                        <option value="conflict">Conflict Nodes</option>
+                        <option value="cascade">Transformation Cascades</option>
+                        <option value="paradox">Paradox Transitions</option>
+                    </select>
+                    <button class="pattern-button" id="analyzeButton">Analyze</button>
+                </div>
+                <ul class="pattern-list" id="patternList"></ul>
+            </div>
+            
+            <div class="narrative-panel">
+                <h2>Narrative Generator</h2>
+                <div class="narrative-controls">
+                    <input type="text" class="narrative-input" id="narrativePrompt" placeholder="Enter a story prompt...">
+                    <button class="narrative-button" id="generateButton">Generate</button>
+                </div>
+                <div class="narrative-output" id="narrativeOutput"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module">
+        // Later Heaven Bagua arrangement
+        const LATER_HEAVEN_BAGUA = [
+            { trigram: '☰', name: 'Heaven', position: 0 },
+            { trigram: '☱', name: 'Lake', position: 1 },
+            { trigram: '☲', name: 'Fire', position: 2 },
+            { trigram: '☳', name: 'Thunder', position: 3 },
+            { trigram: '☴', name: 'Wind', position: 4 },
+            { trigram: '☵', name: 'Water', position: 5 },
+            { trigram: '☶', name: 'Mountain', position: 6 },
+            { trigram: '☷', name: 'Earth', position: 7 }
+        ];
+        
+        // Initialize Bagua circle
+        const baguaContainer = document.getElementById('baguaContainer');
+        let selectedTrigrams = [];
+        
+        function initializeBagua() {
+            LATER_HEAVEN_BAGUA.forEach((bagua, index) => {
+                const angle = (index * 45) * (Math.PI / 180);
+                const radius = 120;
+                const x = Math.cos(angle) * radius + 150;
+                const y = Math.sin(angle) * radius + 150;
+                
+                const trigramElement = document.createElement('div');
+                trigramElement.className = 'bagua-trigram';
+                trigramElement.textContent = bagua.trigram;
+                trigramElement.dataset.trigram = bagua.trigram;
+                trigramElement.style.left = `${x - 20}px`;
+                trigramElement.style.top = `${y - 20}px`;
+                
+                trigramElement.addEventListener('click', () => selectTrigram(trigramElement));
+                baguaContainer.appendChild(trigramElement);
+            });
+        }
+        
+        function selectTrigram(element) {
+            if (!element.classList.contains('selected')) {
+                element.classList.add('selected');
+                selectedTrigrams.push(element.dataset.trigram);
+                updatePatternList();
+            }
+        }
+        
+        function updatePatternList() {
+            const patternList = document.getElementById('patternList');
+            patternList.innerHTML = '';
+            
+            if (selectedTrigrams.length > 0) {
+                const pattern = {
+                    description: `Selected: ${selectedTrigrams.join(' ')}`,
+                    trigrams: selectedTrigrams
+                };
+                
+                const item = document.createElement('li');
+                item.className = 'pattern-item';
+                item.textContent = pattern.description;
+                item.addEventListener('click', () => selectPattern(pattern));
+                patternList.appendChild(item);
+            }
+        }
+        
+        function selectPattern(pattern) {
+            document.querySelectorAll('.pattern-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            const prompt = document.getElementById('narrativePrompt');
+            prompt.value = `Generate a story inspired by ${pattern.description}`;
+        }
+        
+        // Initialize controls
+        const analyzeButton = document.getElementById('analyzeButton');
+        const generateButton = document.getElementById('generateButton');
+        
+        analyzeButton.addEventListener('click', () => {
+            const type = document.getElementById('patternType').value;
+            analyzePatterns(type);
+        });
+        
+        generateButton.addEventListener('click', () => {
+            const prompt = document.getElementById('narrativePrompt').value;
+            generateNarrative(prompt);
+        });
+        
+        function analyzePatterns(type) {
+            // Placeholder for pattern analysis
+            console.log(`Analyzing ${type} patterns...`);
+        }
+        
+        function generateNarrative(prompt) {
+            // Placeholder for narrative generation
+            const narrative = `Once upon a time, in a world shaped by ancient patterns...`;
+            document.getElementById('narrativeOutput').textContent = narrative;
+        }
+        
+        // Initialize the Bagua circle
+        initializeBagua();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexagram One</title>
+    <style>
+        body {
+            background: url('images/Hex One Principia Bak.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-position: calc(50% - 10px) center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #hexagram {
+            position: absolute;
+            top: 10%;
+            width: 400px;
+            height: auto;
+            z-index: 10;
+        }
+
+        #text-container {
+            font-family: 'Garamond', serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B6A170;
+            max-width: 80%;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 15;
+        }
+
+        #audio-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-family: 'Garamond', serif;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #B6A170;
+            border: none;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        #audio-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <img id="hexagram" src="images/hexagram_one_tranny-3.png" alt="Hexagram Symbol">
+    <div id="text-container"></div>
+
+    <button id="audio-toggle">🔇 Unmute</button>
+
+    <script>
+        let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let gainNode1 = audioCtx.createGain();
+        let gainNode2 = audioCtx.createGain();
+        let crossfadeTime = 1.5;
+        let audioBuffer = null;
+        let isPlayingFirst = true;
+        let hasStarted = false;
+
+        gainNode1.connect(audioCtx.destination);
+        gainNode2.connect(audioCtx.destination);
+
+        async function loadAudio() {
+            try {
+                const response = await fetch("audio/Tibetan Overtone_01.mp3");
+                if (!response.ok) throw new Error("Audio file not found!");
+                const arrayBuffer = await response.arrayBuffer();
+                audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            } catch (error) {
+                console.error("Error loading audio:", error);
+            }
+        }
+
+        function playBuffer(gainNode, startTime, fadeIn = true) {
+            let bufferSource = audioCtx.createBufferSource();
+            bufferSource.buffer = audioBuffer;
+            bufferSource.connect(gainNode);
+            bufferSource.start(startTime);
+
+            if (fadeIn) {
+                gainNode.gain.setValueAtTime(0, startTime);
+                gainNode.gain.linearRampToValueAtTime(1, startTime + crossfadeTime);
+            } else {
+                gainNode.gain.setValueAtTime(1, startTime);
+                gainNode.gain.linearRampToValueAtTime(0, startTime + crossfadeTime);
+            }
+
+            return bufferSource;
+        }
+
+        function startCrossfadeLoop() {
+            if (!audioBuffer) {
+                console.error("Audio buffer not loaded!");
+                return;
+            }
+
+            function scheduleNext() {
+                let now = audioCtx.currentTime;
+
+                if (isPlayingFirst) {
+                    playBuffer(gainNode1, now, true);
+                    playBuffer(gainNode2, now + audioBuffer.duration - crossfadeTime, false);
+                } else {
+                    playBuffer(gainNode2, now, true);
+                    playBuffer(gainNode1, now + audioBuffer.duration - crossfadeTime, false);
+                }
+
+                isPlayingFirst = !isPlayingFirst;
+                setTimeout(scheduleNext, (audioBuffer.duration - crossfadeTime) * 1000);
+            }
+
+            scheduleNext();
+        }
+
+        document.addEventListener("click", function startAudio() {
+            if (!hasStarted) {
+                audioCtx.resume().then(() => {
+                    loadAudio().then(() => {
+                        startCrossfadeLoop();
+                    });
+                    hasStarted = true;
+                });
+            }
+        });
+
+        document.getElementById("audio-toggle").addEventListener("click", function () {
+            if (audioCtx.state === "running") {
+                audioCtx.suspend();
+                this.textContent = "🔇 Unmute";
+            } else {
+                audioCtx.resume();
+                this.textContent = "🔊 Mute";
+            }
+        });
+
+        const texts = [
+            "From Heaven’s suns, birth… in Earth's fiery womb, viscous rock gestates amid scorching churn…",
+            "Dark as a moonless night, flowing like liquid shadow. An ovoid glass shaped by aeons, born of magma's inferno.",
+            "Obsidian glory. The emergence, glistening black, frozen fractured, carving the edges of insight...",
+            "<h4>THE IMAGE</h4>",
+            "The movement of Heaven is in full power.",
+            "Thus the superior ones make themselves strong and untiring."
+        ];
+
+        let index = 0;
+        const textContainer = document.getElementById("text-container");
+
+        function showNextText() {
+            if (index < texts.length) {
+                textContainer.style.opacity = 0;
+                setTimeout(() => {
+                    textContainer.innerHTML = texts[index];
+                    textContainer.style.opacity = 1;
+                    index++;
+                    setTimeout(showNextText, 5000);
+                }, 1000);
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            showNextText();
+        });
+    </script>
+
+</body>
+</html>

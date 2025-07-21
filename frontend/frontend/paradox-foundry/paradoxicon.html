@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Paradoxicon Collective | An Assembly of the Rare Few</title>
+    <meta name="description" content="We are building the first living intelligence engine where fiction becomes function, myth animates code, and paradox drives breakthrough. This is realistically demanding the impossible.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0a !important;
+            color: #e0e0e0 !important;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* FSA Canvas */
+        #fsaCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        /* Hyperbolic geometry background */
+        .hyperbolic-geometry {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hyperbolic-circle {
+            position: absolute;
+            border: 1px solid #d4af37;
+            border-radius: 50%;
+            animation: hyperbolic-float 20s infinite ease-in-out;
+        }
+
+        @keyframes hyperbolic-float {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.03; }
+            25% { transform: translate(-30px, -40px) scale(1.2) rotate(90deg); opacity: 0.08; }
+            50% { transform: translate(20px, -60px) scale(0.8) rotate(180deg); opacity: 0.05; }
+            75% { transform: translate(-40px, 30px) scale(1.1) rotate(270deg); opacity: 0.06; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            padding: 4rem 0 2rem 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 4rem;
+        }
+
+        .logo {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #d4af37 !important;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+            text-shadow: 0 0 20px #d4af37;
+        }
+
+        .tagline {
+            font-style: italic;
+            color: #a0a0a0 !important;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.8rem;
+            color: #d4af37 !important;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #e0e0e0 !important;
+        }
+
+        .emphasis {
+            color: #d4af37 !important;
+            font-weight: 500;
+        }
+
+        .criteria-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .criterion {
+            padding: 1.5rem;
+            background: #1a1a1a !important;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .criterion:hover {
+            border-color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .criterion-title {
+            font-weight: 600;
+            color: #d4af37 !important;
+            margin-bottom: 0.5rem;
+        }
+
+        .criterion p {
+            color: #e0e0e0 !important;
+        }
+
+        .threshold-questions {
+            background: linear-gradient(135deg, #1a1a1a 0%, transparent 100%) !important;
+            border: 1px dashed #d4af37;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid #008080;
+            font-style: italic;
+            color: #e0e0e0 !important;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: #1a1a1a !important;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .apply-button {
+            display: inline-block;
+            background: #d4af37 !important;
+            color: #0a0a0a !important;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 1rem;
+        }
+
+        .apply-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .contact-info {
+            background: #1a1a1a !important;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-title {
+            color: #d4af37 !important;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-details {
+            line-height: 1.8;
+            color: #e0e0e0 !important;
+        }
+
+        .contact-details a {
+            color: #e0e0e0 !important;
+            text-decoration: none;
+        }
+
+        .contact-details a:hover {
+            color: #d4af37 !important;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 0 2rem 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            color: #a0a0a0 !important;
+        }
+
+        .footer-logo {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .easter-egg {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 3px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 50%;
+            opacity: 0.3;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            z-index: 30;
+        }
+
+        .easter-egg:hover {
+            opacity: 1;
+            transform: scale(3);
+        }
+
+        .easter-egg.activated {
+            animation: paradox-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes paradox-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(20); opacity: 0.8; box-shadow: 0 0 50px #d4af37; }
+        }
+
+        .hidden-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #0a0a0a !important;
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            text-align: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s ease;
+            color: #e0e0e0 !important;
+        }
+
+        .hidden-message.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #e0e0e0 !important;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { padding: 2rem 0 1rem 0; }
+            .logo { font-size: 2.2rem; }
+            .cta-section { padding: 2rem 1rem; }
+            .apply-button { display: block; margin: 1rem auto; padding: 1.2rem 2rem; font-size: 1.2rem; }
+            .easter-egg { width: 6px; height: 6px; bottom: 30px; left: 30px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        h1, h2, h3 { color: #d4af37 !important; }
+        p, li, div, span { color: #e0e0e0 !important; }
+    </style>
+</head>
+<body>
+    <canvas id="fsaCanvas"></canvas>
+    <div class="hyperbolic-geometry" id="geometryBg"></div>
+    <div class="easter-egg" onclick="activateEasterEgg()"></div>
+    
+    <div class="hidden-message" id="hiddenMessage">
+        <button class="close-button" onclick="closeEasterEgg()">&times;</button>
+        <h3 style="color: #d4af37; margin-bottom: 1rem;">The Zoan Recognition</h3>
+        <p>You've just experienced adaptive technology that responds to the quality of your attention.</p>
+        <p style="margin-top: 1rem; font-style: italic; color: #a0a0a0;">"Technology that serves consciousness, not the other way around."</p>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="logo" onclick="logoClick()">THE PARADOXICON COLLECTIVE</h1>
+            <p class="tagline">An Assembly of the Rare Few</p>
+        </header>
+
+        <main class="main-content">
+            <section class="section">
+                <div class="intro-text">
+                    We are building the first living intelligence engine where <span class="emphasis">fiction becomes function</span>, myth animates code, and paradox drives breakthrough.
+                </div>
+                
+                <div class="intro-text">
+                    <strong>This is not crowdsourcing. This is realistically demanding the impossible.</strong>
+                </div>
+                
+                <div class="intro-text">
+                    We seek 6-12 founding collaborators who can think in paradox, build with rigour, and ship reality from impossibility. If you are comfortable with creative chaos, allergic to conventional wisdom, and can transform vision into working systems—step forward.
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">The Ideal Collaborator</h2>
+                
+                <div class="criteria-grid">
+                    <div class="criterion">
+                        <div class="criterion-title">Philosophically Dangerous</div>
+                        <p>Can hold contradictions without breaking, loves thought experiments that others fear</p>
+                    </div>
+                    
+                    <div class="criterion">
+                        <div class="criterion-title">Technically Fearless</div>
+                        <p>Builds rapid prototypes, embraces open source, navigates AI/web3 territories (or hungers to learn)</p>
+                    </div>
+                    
+                    <div class="criterion">
+                        <div class="criterion-title">Artistically Radical</div>
+                        <p>Shapes narratives, creates striking visuals, or orchestrates emotional experiences</p>
+                    </div>
+                    
+                    <div class="criterion">
+                        <div class="criterion-title">Practically Ruthless</div>
+                        <p>Ships work, iterates fast, shows up when it matters, cuts through nonsense</p>
+                    </div>
+                    
+                    <div class="criterion">
+                        <div class="criterion-title">Collaboratively Honest</div>
+                        <p>Prefers rigorous dialogue to safe agreement, checks ego at the door</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">The Threshold Questions</h2>
+                
+                <div class="threshold-questions">
+                    <p style="margin-bottom: 1.5rem; font-weight: 500; color: #e0e0e0;">Choose one. Answer with depth, not length.</p>
+                    
+                    <div class="question">
+                        "Describe the most paradoxical insight you've ever encountered. What did it destroy in you, and what did it liberate?"
+                    </div>
+                    
+                    <div class="question">
+                        "Show us a project where you turned fiction into function—where something 'impossible' became real through your work."
+                    </div>
+                    
+                    <div class="question">
+                        "What's the most beautiful problem you've never solved, and why does it haunt you?"
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">What You Get</h2>
+                
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;">
+                        <span style="position: absolute; left: 0; color: #d4af37;">→</span>
+                        Co-founder equity in a movement that will reshape how intelligence operates
+                    </li>
+                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;">
+                        <span style="position: absolute; left: 0; color: #d4af37;">→</span>
+                        Collaboration with minds that operate at the intersection of art, technology, and philosophy
+                    </li>
+                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;">
+                        <span style="position: absolute; left: 0; color: #d4af37;">→</span>
+                        The chance to build something that has never existed before
+                    </li>
+                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;">
+                        <span style="position: absolute; left: 0; color: #d4af37;">→</span>
+                        A platform for impossible work that becomes inevitable reality
+                    </li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">What We Build Together</h2>
+                
+                <div class="intro-text">
+                    Our first collective challenge: create a compelling demonstration of impossible realism that attracts institutional support. If we can't manifest the vision together, we're not the right assembly.
+                </div>
+            </section>
+
+            <div class="cta-section">
+                <h2 style="color: #d4af37; margin-bottom: 1rem;">The Collective Threshold</h2>
+                <p style="margin-bottom: 2rem; color: #e0e0e0;">Submit your threshold response + one creative artefact that speaks your language</p>
+                
+                <a href="mailto:paradoxicon@paradoxfoundry.com?subject=Threshold Response" class="apply-button">
+                    Apply: Threshold Response
+                </a>
+                
+                <p style="margin-top: 2rem; font-style: italic; color: #a0a0a0;">
+                    <strong>All Hail Dyaxis.</strong><br>
+                    Step forward, if you dare.
+                </p>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-title">Contact Details</div>
+                <div class="contact-details">
+                    <strong>Paradox Foundry</strong><br>
+                    2 Charles Busby House<br>
+                    Brighton BN1 1UA<br><br>
+                    
+                    <strong>Phone/WhatsApp:</strong> <a href="tel:+447311507707">07311 507 707</a><br>
+                    <strong>Email:</strong> <a href="mailto:paradoxicon@paradoxfoundry.com">paradoxicon@paradoxfoundry.com</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-logo">Part of the Paradoxical Group</div>
+            <div>Creating Reality from the Unbelievable</div>
+        </footer>
+    </div>
+
+    <script>
+        // FSA System - Complete Implementation
+        class FlowStateDetector {
+            constructor() {
+                this.startTime = Date.now();
+                this.scrollDepth = 0;
+                this.flowScore = 0;
+                this.isInFlow = false;
+                this.initTracking();
+            }
+            
+            initTracking() {
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    this.scrollDepth = Math.max(this.scrollDepth, 
+                        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => this.calculateFlow(), 1000);
+                });
+            }
+            
+            calculateFlow() {
+                const timeOnPage = (Date.now() - this.startTime) / 1000;
+                if (timeOnPage > 10) {
+                    const readingSpeed = this.scrollDepth / timeOnPage;
+                    let speedScore = 0;
+                    if (readingSpeed >= 0.5 && readingSpeed <= 2.0) {
+                        speedScore = 1 - Math.abs(readingSpeed - 1.25) / 0.75;
+                    }
+                    const dwellScore = Math.min(timeOnPage / 120, 1);
+                    this.flowScore = speedScore * 0.6 + dwellScore * 0.4;
+                    
+                    const wasInFlow = this.isInFlow;
+                    this.isInFlow = this.flowScore > 0.65;
+                    
+                    if (this.isInFlow && !wasInFlow) {
+                        this.onFlowEntered();
+                    }
+                    
+                    if (window.fsaParticles) {
+                        window.fsaParticles.updateFlow(this.flowScore);
+                    }
+                }
+            }
+            
+            onFlowEntered() {
+                setTimeout(() => {
+                    if (this.isInFlow) this.revealZoan();
+                }, 120000);
+            }
+            
+            revealZoan() {
+                const msg = document.createElement('div');
+                msg.style.cssText = `position:fixed;top:20px;right:20px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);color:#d4af37;padding:1rem;border-radius:8px;font-size:0.8rem;max-width:250px;z-index:1000;opacity:0;transition:opacity 1s`;
+                msg.innerHTML = `<div style="font-weight:600;margin-bottom:0.5rem;">The Zoan Recognition</div><div style="font-size:0.75rem;">You've experienced adaptive technology.</div>`;
+                document.body.appendChild(msg);
+                setTimeout(() => msg.style.opacity = '1', 100);
+                setTimeout(() => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 1000);
+                }, 10000);
+            }
+        }
+
+        class FSAParticleSystem {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.flowScore = 0;
+                this.mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+                
+                this.resizeCanvas();
+                this.createParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resizeCanvas());
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                const count = window.innerWidth < 768 ? 15 : 25;
+                this.particles = [];
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        size: Math.random() * 1.5 + 0.5,
+                        opacity: Math.random() * 0.2 + 0.05,
+                        baseOpacity: Math.random() * 0.2 + 0.05,
+                        coherence: 0
+                    });
+                }
+            }
+            
+            updateFlow(flowScore) {
+                this.flowScore = flowScore;
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    if (this.flowScore > 0.65) {
+                        const dx = this.mouse.x - particle.x;
+                        const dy = this.mouse.y - particle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance > 0 && distance < 300) {
+                            const force = Math.min(0.0005, 20 / distance);
+                            particle.vx += (dx / distance) * force;
+                            particle.vy += (dy / distance) * force;
+                        }
+                        particle.coherence = Math.min(1, particle.coherence + 0.01);
+                        particle.opacity = Math.min(particle.baseOpacity * 2.5, particle.opacity + 0.003);
+                    } else {
+                        particle.vx += (Math.random() - 0.5) * 0.002;
+                        particle.vy += (Math.random() - 0.5) * 0.002;
+                        particle.coherence = Math.max(0, particle.coherence - 0.005);
+                        particle.opacity = Math.max(particle.baseOpacity * 0.5, particle.opacity - 0.002);
+                    }
+                    
+                    particle.vx *= 0.995;
+                    particle.vy *= 0.995;
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    
+                    if (particle.x < -10) particle.x = this.canvas.width + 10;
+                    if (particle.x > this.canvas.width + 10) particle.x = -10;
+                    if (particle.y < -10) particle.y = this.canvas.height + 10;
+                    if (particle.y > this.canvas.height + 10) particle.y = -10;
+                });
+            }
+            
+            drawParticles() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.particles.forEach(particle => {
+                    const hue = 45 + (particle.coherence * 15);
+                    const sat = 20 + (particle.coherence * 30);
+                    const light = 40 + (particle.coherence * 25);
+                    
+                    this.ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${particle.opacity})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+            
+            animate() {
+                this.updateParticles();
+                this.drawParticles();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        function createGeometry() {
+            const container = document.getElementById('geometryBg');
+            if (!container) return;
+            
+            const circles = window.innerWidth < 768 ? 8 : 15;
+            for (let i = 0; i < circles; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'hyperbolic-circle';
+                const size = Math.random() * 200 + 50;
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                circle.style.left = Math.random() * window.innerWidth + 'px';
+                circle.style.top = Math.random() * window.innerHeight + 'px';
+                circle.style.animationDelay = Math.random() * 20 + 's';
+                container.appendChild(circle);
+            }
+        }
+
+        let easterEggActivated = false;
+        
+        function activateEasterEgg() {
+            if (!easterEggActivated) {
+                easterEggActivated = true;
+                document.querySelector('.easter-egg').classList.add('activated');
+                document.getElementById('hiddenMessage').classList.add('visible');
+            }
+        }
+        
+        function closeEasterEgg() {
+            document.getElementById('hiddenMessage').classList.remove('visible');
+            setTimeout(() => {
+                easterEggActivated = false;
+                document.querySelector('.easter-egg').classList.remove('activated');
+            }, 500);
+        }
+        
+        function logoClick() {
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                logo.style.transform = 'scale(1.05) rotate(1deg)';
+                setTimeout(() => logo.style.transform = 'scale(1) rotate(0deg)', 200);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            createGeometry();
+            
+            const canvas = document.getElementById('fsaCanvas');
+            window.fsaDetector = new FlowStateDetector();
+            window.fsaParticles = new FSAParticleSystem(canvas);
+            
+            window.addEventListener('resize', () => {
+                const geometryBg = document.getElementById('geometryBg');
+                if (geometryBg) {
+                    geometryBg.innerHTML = '';
+                    createGeometry();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

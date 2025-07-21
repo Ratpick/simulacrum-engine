@@ -1,0 +1,25 @@
+module.exports = {
+  extends: 'next/core-web-vitals',
+  rules: {
+    'react/no-unescaped-entities': 'off',
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'JSXText[value*="**"]',
+        message: 'Use <strong> or <span className="font-bold"> instead of ** ** for bold text',
+      },
+      {
+        selector: 'JSXText[value*="* "]',
+        message: 'Use <em> or <span className="italic"> instead of * * for italic text',
+      },
+      {
+        selector: 'JSXText[value*=" *"]',
+        message: 'Use <em> or <span className="italic"> instead of * * for italic text',
+      },
+      {
+        selector: 'JSXText[value*="`"]',
+        message: 'Use <code> or <span className="font-mono"> instead of backticks for code',
+      },
+    ],
+  },
+};

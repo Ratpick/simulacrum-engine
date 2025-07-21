@@ -1,0 +1,258 @@
+:root {
+    /* Color Palette - inspired by traditional ink painting and parchment */
+    --color-bg: #f5f5f0;
+    --color-text: #2c2c2c;
+    --color-primary: #3a3a3a;
+    --color-accent: #8b4513;
+    --color-light: #e8e8e8;
+    
+    /* I Ching specific colors */
+    --color-yang: #2c2c2c;
+    --color-yin: #e8e8e8;
+    --color-changing: #8b4513;
+    
+    /* Typography */
+    --font-main: 'Source Sans Pro', system-ui, sans-serif;
+    --font-heading: 'Noto Serif', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    padding: 1rem 2rem;
+    background: var(--color-light);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--color-accent);
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#story-container {
+    min-height: 400px;
+}
+
+#interaction-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#iching-oracle, #weiqi-board {
+    min-height: 200px;
+    border: 1px solid var(--color-light);
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+footer {
+    padding: 1rem;
+    background: var(--color-light);
+    text-align: center;
+}
+
+/* I Ching Oracle Styles */
+.iching-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.casting-area {
+    text-align: center;
+}
+
+.casting-area button {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.casting-area button:hover {
+    background: var(--color-accent);
+}
+
+.hexagram-display {
+    border: 1px solid var(--color-light);
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.hexagram-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.hexagram-content h3 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.hexagram-lines {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.line {
+    width: 100px;
+    height: 8px;
+    background: var(--color-yin);
+    position: relative;
+}
+
+.line.yang {
+    background: var(--color-yang);
+}
+
+.line.changing {
+    position: relative;
+    overflow: hidden;
+}
+
+.line.changing::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--color-changing),
+        transparent
+    );
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+
+.interpretation {
+    text-align: center;
+    max-width: 300px;
+}
+
+.interpretation h4 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.interpretation p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--color-text);
+}
+
+/* Nuclear hexagram specific styles */
+.hexagram-display.nuclear {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.hexagram-display.nuclear .line {
+    opacity: 0.7;
+}
+
+/* Transformation hexagram specific styles */
+.hexagram-display.transformation {
+    border-color: var(--color-accent);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .iching-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .casting-area {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (min-width: 1024px) {
+    .iching-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+} 

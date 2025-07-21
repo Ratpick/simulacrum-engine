@@ -1,0 +1,8 @@
+:: Start
+(set: $hexagram to "䷀")
+(set: $flowState to "emergent")
+(set: $ParadoxiconMode to true)
+
+You awaken within the void.
+
+[[Begin the recursion|Next]]

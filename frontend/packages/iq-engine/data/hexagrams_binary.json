@@ -1,0 +1,258 @@
+[
+  {
+    "hexagram_number": 1,
+    "binary": "000000"
+  },
+  {
+    "hexagram_number": 2,
+    "binary": "000001"
+  },
+  {
+    "hexagram_number": 3,
+    "binary": "000010"
+  },
+  {
+    "hexagram_number": 4,
+    "binary": "000011"
+  },
+  {
+    "hexagram_number": 5,
+    "binary": "000100"
+  },
+  {
+    "hexagram_number": 6,
+    "binary": "000101"
+  },
+  {
+    "hexagram_number": 7,
+    "binary": "000110"
+  },
+  {
+    "hexagram_number": 8,
+    "binary": "000111"
+  },
+  {
+    "hexagram_number": 9,
+    "binary": "001000"
+  },
+  {
+    "hexagram_number": 10,
+    "binary": "001001"
+  },
+  {
+    "hexagram_number": 11,
+    "binary": "001010"
+  },
+  {
+    "hexagram_number": 12,
+    "binary": "001011"
+  },
+  {
+    "hexagram_number": 13,
+    "binary": "001100"
+  },
+  {
+    "hexagram_number": 14,
+    "binary": "001101"
+  },
+  {
+    "hexagram_number": 15,
+    "binary": "001110"
+  },
+  {
+    "hexagram_number": 16,
+    "binary": "001111"
+  },
+  {
+    "hexagram_number": 17,
+    "binary": "010000"
+  },
+  {
+    "hexagram_number": 18,
+    "binary": "010001"
+  },
+  {
+    "hexagram_number": 19,
+    "binary": "010010"
+  },
+  {
+    "hexagram_number": 20,
+    "binary": "010011"
+  },
+  {
+    "hexagram_number": 21,
+    "binary": "010100"
+  },
+  {
+    "hexagram_number": 22,
+    "binary": "010101"
+  },
+  {
+    "hexagram_number": 23,
+    "binary": "010110"
+  },
+  {
+    "hexagram_number": 24,
+    "binary": "010111"
+  },
+  {
+    "hexagram_number": 25,
+    "binary": "011000"
+  },
+  {
+    "hexagram_number": 26,
+    "binary": "011001"
+  },
+  {
+    "hexagram_number": 27,
+    "binary": "011010"
+  },
+  {
+    "hexagram_number": 28,
+    "binary": "011011"
+  },
+  {
+    "hexagram_number": 29,
+    "binary": "011100"
+  },
+  {
+    "hexagram_number": 30,
+    "binary": "011101"
+  },
+  {
+    "hexagram_number": 31,
+    "binary": "011110"
+  },
+  {
+    "hexagram_number": 32,
+    "binary": "011111"
+  },
+  {
+    "hexagram_number": 33,
+    "binary": "100000"
+  },
+  {
+    "hexagram_number": 34,
+    "binary": "100001"
+  },
+  {
+    "hexagram_number": 35,
+    "binary": "100010"
+  },
+  {
+    "hexagram_number": 36,
+    "binary": "100011"
+  },
+  {
+    "hexagram_number": 37,
+    "binary": "100100"
+  },
+  {
+    "hexagram_number": 38,
+    "binary": "100101"
+  },
+  {
+    "hexagram_number": 39,
+    "binary": "100110"
+  },
+  {
+    "hexagram_number": 40,
+    "binary": "100111"
+  },
+  {
+    "hexagram_number": 41,
+    "binary": "101000"
+  },
+  {
+    "hexagram_number": 42,
+    "binary": "101001"
+  },
+  {
+    "hexagram_number": 43,
+    "binary": "101010"
+  },
+  {
+    "hexagram_number": 44,
+    "binary": "101011"
+  },
+  {
+    "hexagram_number": 45,
+    "binary": "101100"
+  },
+  {
+    "hexagram_number": 46,
+    "binary": "101101"
+  },
+  {
+    "hexagram_number": 47,
+    "binary": "101110"
+  },
+  {
+    "hexagram_number": 48,
+    "binary": "101111"
+  },
+  {
+    "hexagram_number": 49,
+    "binary": "110000"
+  },
+  {
+    "hexagram_number": 50,
+    "binary": "110001"
+  },
+  {
+    "hexagram_number": 51,
+    "binary": "110010"
+  },
+  {
+    "hexagram_number": 52,
+    "binary": "110011"
+  },
+  {
+    "hexagram_number": 53,
+    "binary": "110100"
+  },
+  {
+    "hexagram_number": 54,
+    "binary": "110101"
+  },
+  {
+    "hexagram_number": 55,
+    "binary": "110110"
+  },
+  {
+    "hexagram_number": 56,
+    "binary": "110111"
+  },
+  {
+    "hexagram_number": 57,
+    "binary": "111000"
+  },
+  {
+    "hexagram_number": 58,
+    "binary": "111001"
+  },
+  {
+    "hexagram_number": 59,
+    "binary": "111010"
+  },
+  {
+    "hexagram_number": 60,
+    "binary": "111011"
+  },
+  {
+    "hexagram_number": 61,
+    "binary": "111100"
+  },
+  {
+    "hexagram_number": 62,
+    "binary": "111101"
+  },
+  {
+    "hexagram_number": 63,
+    "binary": "111110"
+  },
+  {
+    "hexagram_number": 64,
+    "binary": "111111"
+  }
+]

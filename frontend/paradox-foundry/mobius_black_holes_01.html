@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Black Hole Figure-8</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+        }
+
+        #canvas {
+            display: block;
+            background: #000;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .title {
+            font-family: Georgia, serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.7;
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+        }
+
+        .title, .subtitle {
+            opacity: 0;
+            animation: fadeIn 3s ease-in-out 4s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <div class="header-overlay">
+        <h1 class="title">THE PARADOXICON COLLECTIVE</h1>
+        <p class="subtitle">Where Logic Folds Into Infinity</p>
+    </div>
+
+    <script>
+        class BinaryBlackHoleFigure8 {
+            constructor() {
+                this.canvas = document.getElementById('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.time = 0;
+                
+                this.resizeCanvas();
+                this.initParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resizeCanvas());
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.centerX = this.canvas.width / 2;
+                this.centerY = this.canvas.height / 2;
+                
+                // Scale based on screen size
+                this.scale = Math.min(this.canvas.width, this.canvas.height) * 0.35;
+                
+                // Black hole positions (left and right)
+                this.blackHole1 = {
+                    x: this.centerX - this.scale * 0.6,
+                    y: this.centerY,
+                    radius: 25
+                };
+                this.blackHole2 = {
+                    x: this.centerX + this.scale * 0.6,
+                    y: this.centerY,
+                    radius: 25
+                };
+            }
+            
+            // Figure-8 trajectory around two black holes
+            figure8Position(t, streamWidth = 0) {
+                // Parameter t goes from 0 to 2π for complete figure-8
+                // streamWidth adds variation across the stream
+                
+                const a = this.scale * 0.8; // Size of the figure-8
+                const separation = this.scale * 1.2; // Distance between black holes
+                
+                // Classic figure-8 (lemniscate) equations
+                const denominator = 1 + Math.sin(t) * Math.sin(t);
+                let x = (separation * Math.cos(t)) / denominator;
+                let y = (a * Math.sin(t) * Math.cos(t)) / denominator;
+                
+                // Add stream width variation
+                const normal_x = -Math.sin(t);
+                const normal_y = Math.cos(t);
+                
+                x += normal_x * streamWidth;
+                y += normal_y * streamWidth;
+                
+                return {
+                    x: this.centerX + x,
+                    y: this.centerY + y
+                };
+            }
+            
+            initParticles() {
+                const numStreams = 8; // Multiple streams of particles
+                const particlesPerStream = 200;
+                this.particles = [];
+                
+                for (let stream = 0; stream < numStreams; stream++) {
+                    const streamWidth = (stream - numStreams/2) * 8; // Spread streams out
+                    
+                    for (let i = 0; i < particlesPerStream; i++) {
+                        const t = (i / particlesPerStream) * Math.PI * 2;
+                        const pos = this.figure8Position(t, streamWidth);
+                        
+                        this.particles.push({
+                            t: t,
+                            streamWidth: streamWidth,
+                            x: pos.x,
+                            y: pos.y,
+                            speed: 0.008 + Math.random() * 0.004,
+                            size: 0.5 + Math.random() * 1.5,
+                            opacity: 0.3 + Math.random() * 0.7,
+                            phase: Math.random() * Math.PI * 2,
+                            baseStreamWidth: streamWidth,
+                            brightness: Math.random()
+                        });
+                    }
+                }
+                
+                // Add some chaotic outer particles
+                for (let i = 0; i < 300; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const radius = this.scale * (1.5 + Math.random() * 0.8);
+                    const x = this.centerX + Math.cos(angle) * radius;
+                    const y = this.centerY + Math.sin(angle) * radius;
+                    
+                    this.particles.push({
+                        t: Math.random() * Math.PI * 2,
+                        streamWidth: (Math.random() - 0.5) * 60,
+                        x: x,
+                        y: y,
+                        speed: 0.002 + Math.random() * 0.003,
+                        size: 0.3 + Math.random() * 1,
+                        opacity: 0.1 + Math.random() * 0.4,
+                        phase: Math.random() * Math.PI * 2,
+                        baseStreamWidth: (Math.random() - 0.5) * 60,
+                        brightness: Math.random() * 0.5,
+                        chaotic: true
+                    });
+                }
+            }
+            
+            updateParticles() {
+                for (let particle of this.particles) {
+                    // Update position along figure-8
+                    particle.t += particle.speed;
+                    if (particle.t > Math.PI * 2) {
+                        particle.t -= Math.PI * 2;
+                    }
+                    
+                    // Add subtle stream width oscillation
+                    const oscillation = Math.sin(this.time * 0.01 + particle.phase) * 5;
+                    particle.streamWidth = particle.baseStreamWidth + oscillation;
+                    
+                    // Calculate new position
+                    const pos = this.figure8Position(particle.t, particle.streamWidth);
+                    particle.x = pos.x;
+                    particle.y = pos.y;
+                    
+                    // Calculate distance to black holes for brightness
+                    const dist1 = Math.sqrt(
+                        (particle.x - this.blackHole1.x) ** 2 + 
+                        (particle.y - this.blackHole1.y) ** 2
+                    );
+                    const dist2 = Math.sqrt(
+                        (particle.x - this.blackHole2.x) ** 2 + 
+                        (particle.y - this.blackHole2.y) ** 2
+                    );
+                    
+                    const minDist = Math.min(dist1, dist2);
+                    
+                    // Brighter near black holes
+                    particle.brightness = particle.opacity * (1 + 100 / (minDist + 20));
+                    
+                    // Remove particles that get too close to black holes
+                    if (minDist < 30) {
+                        // Respawn particle
+                        const newT = Math.random() * Math.PI * 2;
+                        const newPos = this.figure8Position(newT, particle.baseStreamWidth);
+                        particle.t = newT;
+                        particle.x = newPos.x;
+                        particle.y = newPos.y;
+                    }
+                }
+            }
+            
+            drawBlackHoles() {
+                [this.blackHole1, this.blackHole2].forEach(bh => {
+                    // Accretion disk glow
+                    const gradient = this.ctx.createRadialGradient(
+                        bh.x, bh.y, 0, 
+                        bh.x, bh.y, bh.radius * 3
+                    );
+                    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                    gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.4)');
+                    gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.1)');
+                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(bh.x, bh.y, bh.radius * 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Event horizon (pure black)
+                    this.ctx.fillStyle = '#000000';
+                    this.ctx.beginPath();
+                    this.ctx.arc(bh.x, bh.y, bh.radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Photon sphere ring
+                    this.ctx.strokeStyle = `rgba(255, 255, 255, ${0.6 + Math.sin(this.time * 0.02) * 0.3})`;
+                    this.ctx.lineWidth = 2;
+                    this.ctx.beginPath();
+                    this.ctx.arc(bh.x, bh.y, bh.radius + 8, 0, Math.PI * 2);
+                    this.ctx.stroke();
+                });
+            }
+            
+            drawParticles() {
+                for (let particle of this.particles) {
+                    const alpha = Math.min(1, particle.brightness);
+                    
+                    // Main particle
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Add glow for bright particles
+                    if (alpha > 0.7) {
+                        this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.2})`;
+                        this.ctx.beginPath();
+                        this.ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    }
+                }
+            }
+            
+            drawFigure8Guide() {
+                // Draw faint figure-8 guide lines
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                this.ctx.lineWidth = 1;
+                
+                for (let streamOffset = -40; streamOffset <= 40; streamOffset += 20) {
+                    this.ctx.beginPath();
+                    
+                    for (let i = 0; i <= 200; i++) {
+                        const t = (i / 200) * Math.PI * 2;
+                        const pos = this.figure8Position(t, streamOffset);
+                        
+                        if (i === 0) {
+                            this.ctx.moveTo(pos.x, pos.y);
+                        } else {
+                            this.ctx.lineTo(pos.x, pos.y);
+                        }
+                    }
+                    this.ctx.stroke();
+                }
+            }
+            
+            animate() {
+                this.time++;
+                
+                // Clear canvas
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw faint guide
+                this.drawFigure8Guide();
+                
+                // Update and draw particles
+                this.updateParticles();
+                this.drawParticles();
+                
+                // Draw black holes on top
+                this.drawBlackHoles();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new BinaryBlackHoleFigure8();
+        });
+    </script>
+</body>
+</html>

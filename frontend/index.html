@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulacrum Engine Glitch Gateway</title>
+  <style>
+    body { font-family: monospace; background: #191b22; color: #efeaea; padding: 3em; }
+    h1 { color: #ff00cc; }
+    button { font-size: 1.2em; padding: 0.6em 1.2em; background: #111; color: #fff; border: 2px solid #ff00cc; border-radius: 5px; margin-top: 1em; cursor: pointer; }
+    ul { margin-top: 1em; }
+    a { color: #73ffe4; text-decoration: none; }
+    a:hover { color: #ff00cc; }
+  </style>
+</head>
+<body>
+  <h1>Simulacrum Engine Glitch Gateway</h1>
+  <p>Choose your glitch, or press the button for a random one:</p>
+  <ul>
+    <li><a href="frontend/principia-paradoxica-site/glitches/404-classic-index.html">404 Classic</a></li>
+    <li><a href="frontend/principia-paradoxica-site/glitches/glitchy-entry-500.html">Glitchy 500</a></li>
+    <li><a href="frontend/principia-paradoxica-site/glitches/paradox-folded-error.html">Paradox Folded</a></li>
+    <li><a href="frontend/principia-paradoxica-site/glitches/quantum-coherence-404.html">Quantum Coherence</a></li>
+    <li><a href="frontend/principia-paradoxica-site/glitches/terminal-effect-403.html">Terminal Effect</a></li>
+  </ul>
+  <button id="glitchBtn">DO NOT PRESS</button>
+  <script>
+    const glitches = [
+      "frontend/principia-paradoxica-site/glitches/404-classic-index.html",
+      "frontend/principia-paradoxica-site/glitches/glitchy-entry-500.html",
+      "frontend/principia-paradoxica-site/glitches/paradox-folded-error.html",
+      "frontend/principia-paradoxica-site/glitches/quantum-coherence-404.html",
+      "frontend/principia-paradoxica-site/glitches/terminal-effect-403.html"
+    ];
+    document.getElementById("glitchBtn").onclick = function() {
+      const randomPage = glitches[Math.floor(Math.random() * glitches.length)];
+      window.location.href = randomPage;
+    };
+  </script>
+</body>
+</html>

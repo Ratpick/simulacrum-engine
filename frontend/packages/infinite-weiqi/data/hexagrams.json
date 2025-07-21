@@ -1,0 +1,58 @@
+[
+  {
+    "name": "乾 (Qián)",
+    "symbol": "☰",
+    "lines": [1, 1, 1],
+    "element": "Heaven",
+    "meaning": "Creative force, strong and initiating energy"
+  },
+  {
+    "name": "兑 (Duì)",
+    "symbol": "☱",
+    "lines": [1, 1, 0],
+    "element": "Lake",
+    "meaning": "Joy, openness, communication"
+  },
+  {
+    "name": "离 (Lí)",
+    "symbol": "☲",
+    "lines": [1, 0, 1],
+    "element": "Fire",
+    "meaning": "Clarity, brightness, dependence"
+  },
+  {
+    "name": "震 (Zhèn)",
+    "symbol": "☳",
+    "lines": [0, 1, 1],
+    "element": "Thunder",
+    "meaning": "Arousal, action, initiation"
+  },
+  {
+    "name": "巽 (Xùn)",
+    "symbol": "☴",
+    "lines": [1, 0, 0],
+    "element": "Wind",
+    "meaning": "Gentleness, penetration, influence"
+  },
+  {
+    "name": "坎 (Kǎn)",
+    "symbol": "☵",
+    "lines": [0, 1, 0],
+    "element": "Water",
+    "meaning": "Danger, depth, flow, adaptability"
+  },
+  {
+    "name": "艮 (Gèn)",
+    "symbol": "☶",
+    "lines": [0, 0, 1],
+    "element": "Mountain",
+    "meaning": "Stillness, boundaries, contemplation"
+  },
+  {
+    "name": "坤 (Kūn)",
+    "symbol": "☷",
+    "lines": [0, 0, 0],
+    "element": "Earth",
+    "meaning": "Receptivity, support, nurturing"
+  }
+]

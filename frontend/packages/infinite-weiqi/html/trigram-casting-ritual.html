@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigram Casting Ritual</title>
+    <link rel="stylesheet" href="../css/trigram-patterns.css">
+    <link rel="stylesheet" href="../css/trigram-enhanced-visualizer.css">
+    <style>
+        .ritual-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .ritual-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .ritual-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .ritual-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .ritual-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .ritual-paper {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .paper-fold {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .paper-fold.folded {
+            transform: rotateX(180deg);
+        }
+        
+        .paper-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid #333;
+            border-radius: 4px;
+        }
+        
+        .paper-back {
+            transform: rotateX(180deg);
+        }
+        
+        .tifinagh-square {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 400px;
+        }
+        
+        .tifinagh-cell {
+            aspect-ratio: 1;
+            background: #f5f5f5;
+            border: 2px solid #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tifinagh-cell:hover {
+            background: #e0e0e0;
+            transform: scale(1.05);
+        }
+        
+        .tifinagh-cell.selected {
+            background: #2196f3;
+            color: #fff;
+        }
+        
+        .ritual-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .ritual-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #2196f3;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .ritual-button:hover {
+            background: #1976d2;
+        }
+        
+        .ritual-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .reading-result {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .reading-result.visible {
+            display: block;
+        }
+        
+        .reading-hexagram {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .reading-interpretation {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .reading-metaphors {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .metaphor-card {
+            padding: 1rem;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .metaphor-card.daoist {
+            background: #e3f2fd;
+            border-left: 3px solid #2196f3;
+        }
+        
+        .metaphor-card.sufi {
+            background: #f3e5f5;
+            border-left: 3px solid #9c27b0;
+        }
+        
+        .metaphor-card.amazigh {
+            background: #fff3e0;
+            border-left: 3px solid #ff9800;
+        }
+        
+        .bagua-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+        
+        .bagua-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bagua-center {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 2;
+        }
+        
+        .bagua-trigram {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: #fff;
+            border: 2px solid #333;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .bagua-trigram:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .bagua-trigram.selected {
+            background: #2196f3;
+            color: #fff;
+        }
+        
+        .bagua-line {
+            position: absolute;
+            background: #333;
+            transform-origin: center;
+            pointer-events: none;
+        }
+        
+        .tifinagh-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .tifinagh-symbol {
+            position: absolute;
+            font-size: 1.2rem;
+            color: #666;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="ritual-container">
+        <div class="ritual-header">
+            <h1>Trigram Casting Ritual</h1>
+            <p>Experience the ancient art of trigram casting through the Later Heaven Bagua arrangement.</p>
+        </div>
+        
+        <div class="ritual-grid">
+            <div class="ritual-paper">
+                <h2>Bagua Casting Circle</h2>
+                <div class="bagua-container" id="baguaContainer">
+                    <div class="bagua-circle">
+                        <div class="bagua-center">☯</div>
+                    </div>
+                    <!-- Bagua trigrams will be inserted here -->
+                </div>
+                <div class="ritual-controls">
+                    <button class="ritual-button" id="castButton">Cast Reading</button>
+                    <button class="ritual-button" id="resetButton">Reset Circle</button>
+                </div>
+            </div>
+            
+            <div class="ritual-paper">
+                <h2>Hexagram Formation</h2>
+                <div class="paper-fold" id="paperFold">
+                    <div class="paper-face paper-front">
+                        <div class="trigram-symbol">☰</div>
+                    </div>
+                    <div class="paper-face paper-back">
+                        <div class="trigram-symbol">☷</div>
+                    </div>
+                </div>
+                <div class="ritual-controls">
+                    <button class="ritual-button" id="foldButton">Fold Paper</button>
+                    <button class="ritual-button" id="unfoldButton" disabled>Unfold Paper</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="reading-result" id="readingResult">
+            <div class="reading-hexagram" id="readingHexagram"></div>
+            <div class="reading-interpretation" id="readingInterpretation"></div>
+            <div class="reading-metaphors" id="readingMetaphors"></div>
+        </div>
+    </div>
+    
+    <script type="module">
+        import { createPhaseShiftAnimation } from '../js/core/trigram-enhanced-visualizer.js';
+        import { analyzeParadoxTransition } from '../js/core/trigram-advanced-patterns.js';
+        
+        // Later Heaven Bagua arrangement
+        const LATER_HEAVEN_BAGUA = [
+            { trigram: '☰', name: 'Heaven', position: 0, tifinagh: 'ⵣ' },
+            { trigram: '☱', name: 'Lake', position: 1, tifinagh: 'ⴰ' },
+            { trigram: '☲', name: 'Fire', position: 2, tifinagh: 'ⴱ' },
+            { trigram: '☳', name: 'Thunder', position: 3, tifinagh: 'ⴳ' },
+            { trigram: '☴', name: 'Wind', position: 4, tifinagh: 'ⴷ' },
+            { trigram: '☵', name: 'Water', position: 5, tifinagh: 'ⴹ' },
+            { trigram: '☶', name: 'Mountain', position: 6, tifinagh: 'ⴻ' },
+            { trigram: '☷', name: 'Earth', position: 7, tifinagh: 'ⴼ' }
+        ];
+        
+        // Initialize Bagua circle
+        const baguaContainer = document.getElementById('baguaContainer');
+        let selectedTrigrams = [];
+        
+        function initializeBagua() {
+            LATER_HEAVEN_BAGUA.forEach((bagua, index) => {
+                const angle = (index * 45) * (Math.PI / 180);
+                const radius = 150;
+                const x = Math.cos(angle) * radius + 200;
+                const y = Math.sin(angle) * radius + 200;
+                
+                // Create trigram element
+                const trigramElement = document.createElement('div');
+                trigramElement.className = 'bagua-trigram';
+                trigramElement.textContent = bagua.trigram;
+                trigramElement.dataset.trigram = bagua.trigram;
+                trigramElement.dataset.tifinagh = bagua.tifinagh;
+                trigramElement.style.left = `${x - 30}px`;
+                trigramElement.style.top = `${y - 30}px`;
+                
+                // Create connecting line
+                const line = document.createElement('div');
+                line.className = 'bagua-line';
+                line.style.width = '2px';
+                line.style.height = `${radius}px`;
+                line.style.left = '200px';
+                line.style.top = '200px';
+                line.style.transform = `rotate(${angle}rad)`;
+                
+                // Create Tifinagh overlay
+                const tifinaghElement = document.createElement('div');
+                tifinaghElement.className = 'tifinagh-symbol';
+                tifinaghElement.textContent = bagua.tifinagh;
+                tifinaghElement.style.left = `${x - 10}px`;
+                tifinaghElement.style.top = `${y - 40}px`;
+                
+                baguaContainer.appendChild(line);
+                baguaContainer.appendChild(trigramElement);
+                baguaContainer.appendChild(tifinaghElement);
+                
+                trigramElement.addEventListener('click', () => selectTrigram(trigramElement));
+            });
+        }
+        
+        function selectTrigram(element) {
+            if (selectedTrigrams.length < 6 && !element.classList.contains('selected')) {
+                element.classList.add('selected');
+                selectedTrigrams.push({
+                    trigram: element.dataset.trigram,
+                    tifinagh: element.dataset.tifinagh
+                });
+                
+                if (selectedTrigrams.length === 3) {
+                    // Trigger paper fold for upper trigram
+                    document.getElementById('foldButton').click();
+                } else if (selectedTrigrams.length === 6) {
+                    // Enable casting
+                    document.getElementById('castButton').disabled = false;
+                }
+            }
+        }
+        
+        // Initialize controls
+        const castButton = document.getElementById('castButton');
+        const resetButton = document.getElementById('resetButton');
+        
+        castButton.addEventListener('click', () => {
+            if (selectedTrigrams.length === 6) {
+                const hexagram = generateHexagram(selectedTrigrams);
+                displayReading(hexagram);
+            }
+        });
+        
+        resetButton.addEventListener('click', () => {
+            selectedTrigrams = [];
+            document.querySelectorAll('.bagua-trigram').forEach(trigram => {
+                trigram.classList.remove('selected');
+            });
+            document.getElementById('unfoldButton').click();
+            castButton.disabled = true;
+        });
+        
+        function generateHexagram(selections) {
+            const upperTrigram = selections.slice(0, 3).map(s => s.trigram).join('');
+            const lowerTrigram = selections.slice(3, 6).map(s => s.trigram).join('');
+            return upperTrigram + lowerTrigram;
+        }
+        
+        // Initialize the Bagua circle
+        initializeBagua();
+        
+        // Initialize paper fold
+        const paperFold = document.getElementById('paperFold');
+        const foldButton = document.getElementById('foldButton');
+        const unfoldButton = document.getElementById('unfoldButton');
+        
+        foldButton.addEventListener('click', () => {
+            paperFold.classList.add('folded');
+            foldButton.disabled = true;
+            unfoldButton.disabled = false;
+        });
+        
+        unfoldButton.addEventListener('click', () => {
+            paperFold.classList.remove('folded');
+            foldButton.disabled = false;
+            unfoldButton.disabled = true;
+        });
+        
+        function displayReading(hexagram) {
+            const readingResult = document.getElementById('readingResult');
+            const readingHexagram = document.getElementById('readingHexagram');
+            const readingInterpretation = document.getElementById('readingInterpretation');
+            const readingMetaphors = document.getElementById('readingMetaphors');
+            
+            readingHexagram.textContent = hexagram;
+            readingInterpretation.textContent = getHexagramInterpretation(hexagram);
+            
+            const metaphors = getHexagramMetaphors(hexagram);
+            readingMetaphors.innerHTML = Object.entries(metaphors).map(([type, text]) => `
+                <div class="metaphor-card ${type}">${text}</div>
+            `).join('');
+            
+            readingResult.classList.add('visible');
+        }
+        
+        function getHexagramInterpretation(hexagram) {
+            // This would be expanded with actual interpretations
+            return `The hexagram ${hexagram} represents a moment of transformation...`;
+        }
+        
+        function getHexagramMetaphors(hexagram) {
+            // This would be expanded with actual metaphors
+            return {
+                daoist: 'The way flows like water...',
+                sufi: 'The heart opens to truth...',
+                amazigh: 'The desert reveals its secrets...'
+            };
+        }
+    </script>
+</body>
+</html> 

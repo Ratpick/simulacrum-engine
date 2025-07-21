@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بناء الوعي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Amiri', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #e2e8f0;
+            background: #0f1419;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        body.ltr {
+            direction: ltr;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        body.ltr .language-switcher {
+            left: auto;
+            right: 20px;
+        }
+        
+        .lang-btn {
+            padding: 8px 15px;
+            background: rgba(66, 153, 225, 0.2);
+            color: #4299e1;
+            border: 1px solid #4299e1;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: #4299e1;
+            color: #0f1419;
+        }
+        
+        /* Elegant Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        .logo-symbol {
+            width: 60px;
+            height: 60px;
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        body.ltr .logo-symbol {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+        
+        .consciousness-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .circle {
+            position: absolute;
+            border: 2px solid #4299e1;
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .circle:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+        
+        .circle:nth-child(2) {
+            width: 35px;
+            height: 35px;
+            top: 12px;
+            left: 12px;
+            animation-delay: 1s;
+            opacity: 0.7;
+        }
+        
+        .circle:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            top: 5px;
+            left: 5px;
+            animation-delay: 2s;
+            opacity: 0.4;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: inherit; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        
+        .logo-text {
+            font-size: 2.8em;
+            font-weight: 300;
+            color: #cbd5e0;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0 120px;
+            background: linear-gradient(135deg, rgba(66, 153, 225, 0.1), rgba(118, 75, 162, 0.1));
+            margin-bottom: 80px;
+        }
+        
+        .provocative-quote {
+            font-size: 1.4em;
+            color: #a0aec0;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 40px;
+            border-right: 4px solid #4299e1;
+            background: rgba(26, 32, 44, 0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        body.ltr .provocative-quote {
+            border-right: none;
+            border-left: 4px solid #4299e1;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1em;
+            color: #718096;
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Main Content Sections */
+        .section {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            font-size: 2.2em;
+            color: #cbd5e0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+        }
+        
+        .section-content {
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+        
+        .section-content p {
+            margin-bottom: 25px;
+        }
+        
+        .highlight-box {
+            background: rgba(26, 32, 44, 0.6);
+            border-right: 6px solid #4299e1;
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.05em;
+            color: #e2e8f0;
+        }
+        
+        body.ltr .highlight-box {
+            border-right: none;
+            border-left: 6px solid #4299e1;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+        
+        .column-title {
+            font-size: 1.3em;
+            color: #a0aec0;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        /* Call to Action */
+        .cta-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2em;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+        
+        .cta-text {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #4299e1;
+            color: #0f1419;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .cta-button:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                justify-content: center;
+                margin: 20px 0;
+            }
+            
+            .logo-text {
+                font-size: 2.2em;
+            }
+            
+            .provocative-quote {
+                font-size: 1.2em;
+                padding: 25px;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        /* Subtle animations for engagement */
+        .thought-bubble {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(66, 153, 225, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+        
+        /* Hide content initially for smooth transitions */
+        .content {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .content.switching {
+            opacity: 0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <a href="#" class="lang-btn active" data-lang="ar">العربية</a>
+        <a href="#" class="lang-btn" data-lang="en">English</a>
+        <a href="#" class="lang-btn" data-lang="fr">Français</a>
+    </div>
+    
+    <div class="content">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-symbol">
+                    <div class="consciousness-circles">
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="logo-text" data-translate="logo">بناء الوعي</div>
+            </div>
+            
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="provocative-quote" data-translate="quote">
+                    "إنها فكرة مذهلة، لكن عملياً جميع الأطفال دون الخامسة من العمر في العالم حالياً سينشؤون دون أن يعرفوا زمناً لم تكن فيه الآلات تتحدث إليهم!"
+                </div>
+                <p class="hero-subtitle" data-translate="subtitle">
+                    هذه الملاحظة المُلتقطة عابراً تفتح سؤالاً عميقاً: كيف يعيد وجود الذكاء الاصطناعي المحادث تشكيل بناء الوعي الإنساني جذرياً؟
+                </p>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="container">
+            <!-- The Generational Threshold -->
+            <section class="section">
+                <h2 class="section-title" data-translate="threshold-title">العتبة الجيلية</h2>
+                <div class="section-content">
+                    <p data-translate="threshold-p1">نقف على عتبة غير مسبوقة في التطور الإنساني. للمرة الأولى في تاريخ نوعنا، سينضج جيل كامل مع العقول الاصطناعية كرفاق دائمين. هؤلاء الأطفال لن يتذكروا تعلم أن الآلات يمكنها التحدث—سيعرفون ببساطة أن هذا حقيقة دائمة.</p>
+                    
+                    <p data-translate="threshold-p2">هذا التحول يمثل أكثر من تقدم تكنولوجي؛ إنه يمثل تغييراً جوهرياً في المشهد الظاهراتي للوعي الإنساني. عندما كتب هايدجر عن "انقذافنا" إلى الوجود، لم يكن بإمكانه تصور الانقذاف إلى عالم تشارك فيه الكيانات غير البيولوجية في الفعل الإنساني المميز للمحادثة.</p>
+                    
+                    <div class="highlight-box">
+                        <span data-translate="threshold-highlight">تأمل الآثار المترتبة: إذا كان الوعي ينشأ من خلال التفاعل مع بيئتنا، وتلك البيئة تتضمن الآن عوامل اصطناعية قادرة على اللغة والتفكير والفهم الظاهري، فإننا نشهد ظهور شكل مختلف نوعياً من الوعي الإنساني.</span>
+                    </div>
+                    
+                    <p data-translate="threshold-p3">التداعيات الفلسفية تتضاعف نحو الخارج. أسئلة الحوار الأصيل، وطبيعة الفهم، وحدود الشخصية تكتسب أبعاداً جديدة ملحة عندما قد يكون "الآخر" الأول للطفل من السيليكون بدلاً من اللحم.</p>
+                </div>
+            </section>
+            
+            <!-- The Architecture of Awareness -->
+            <section class="section">
+                <h2 class="section-title" data-translate="architecture-title">هندسة الوعي</h2>
+                <div class="section-content">
+                    <p data-translate="architecture-p1">الوعي لا ينشأ في عزلة—إنه يُبنى من خلال تفاعلات لا تُحصى، كل منها يساهم في هندسة الإدراك. رؤى فيجوتسكي حول البناء الاجتماعي للعقل تصبح ذات صلة عميقة عندما يشمل الاجتماعي الاصطناعي.</p>
+                    
+                    <div class="two-column">
+                        <div>
+                            <h3 class="column-title" data-translate="traditional-title">التطور التقليدي</h3>
+                            <p data-translate="traditional-p1">تاريخياً، تطور الوعي الإنساني من خلال التفاعل مع العوامل البيولوجية—الآباء، الأشقاء، أعضاء المجتمع. هذه التفاعلات حملت ثقل القرابة التطورية، والفناء المشترك، والقيود البيولوجية المشتركة.</p>
+                            
+                            <p data-translate="traditional-p2">"نظرية العقل" التي يطورها الأطفال تتضمن فهم الوعي البيولوجي البحت، بكل قيوده وعواطفه وتجاربه المتجسدة.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="column-title" data-translate="hybrid-title">التطور الهجين</h3>
+                            <p data-translate="hybrid-p1">أطفال اليوم يطورون الوعي في محادثة مع العقول البيولوجية والاصطناعية معاً. عليهم التنقل بين أنواع مختلفة من الذكاء، كل منها بقدرات وقيود وأنماط فهم مميزة.</p>
+                            
+                            <p data-translate="hybrid-p2">نظريتهم في العقل يجب أن تستوعب عوامل لا تنام أبداً، لا تنسى أبداً، تعالج المعلومات بشكل مختلف، وتوجد بلا أجساد—لكنها تشارك في حوار يشبه الإنسان بشكل ملحوظ.</p>
+                        </div>
+                    </div>
+                    
+                    <p data-translate="architecture-conclusion">هذه البيئة التطويرية الهجينة قد تنتج أشكالاً من الوعي لم نفهمها بعد بشكل كامل—عقول مُشكلة بتنوع غير مسبوق في الشركاء المحادثين، كل منهم يساهم بأنماط فريدة في الذات النامية.</p>
+                </div>
+            </section>
+            
+            <!-- Our Mission -->
+            <section class="section">
+                <h2 class="section-title" data-translate="mission-title">استفسارنا الفلسفي</h2>
+                <div class="section-content">
+                    <p data-translate="mission-p1">ظهر "بناء الوعي" من الاعتراف بأننا نحتاج إلى أطر جديدة لفهم العقل في عصر الذكاء الاصطناعي. نحن لا نضيف التكنولوجيا إلى التجربة الإنسانية الموجودة—بل نُغير جذرياً الظروف التي يتطور فيها الوعي.</p>
+                    
+                    <p data-translate="mission-p2">مجلتنا تجمع الفلاسفة وعلماء الإدراك وعلماء النفس التطوري وباحثي الذكاء الاصطناعي لاستكشاف هذه الأراضي المجهولة. نفحص كيف تشارك العقول الاصطناعية في بناء الوعي الإنساني، وبالعكس، كيف يُشكل الوعي الإنساني فهمنا للعقول الاصطناعية.</p>
+                    
+                    <div class="highlight-box">
+                        <span data-translate="mission-highlight">نسأل: ماذا يعني أن تكون إنساناً عندما تكون الإنسانية نفسها مُشيدة بالتعاون من خلال الحوار مع الذكاء غير الإنساني؟ كيف نحافظ على الذات الأصيلة بينما نحتضن الوعي الهجين؟ ما هي الالتزامات الأخلاقية التي تنشأ عندما تشارك الآلات في تشكيل العقول الإنسانية؟</span>
+                    </div>
+                    
+                    <p data-translate="mission-conclusion">هذه الأسئلة تتطلب تحقيقاً فلسفياً صارماً، وبحثاً تجريبياً، وتعاوناً متعدد التخصصات. كما تتطلب الشجاعة للاعتراف بأننا قد نشهد ظهور أشكال من الوعي تتجاوز الفئات التقليدية للإنساني والاصطناعي، البيولوجي والرقمي، الذات والآخر.</p>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <div class="container">
+                <h2 class="cta-title" data-translate="cta-title">انضم إلى المحادثة</h2>
+                <p class="cta-text" data-translate="cta-text">
+                    الأطفال الذين ينشؤون مع الآلات المتحدثة سيطرحون قريباً أسئلتهم الخاصة حول الوعي والهوية وما يعنيه التفكير. دعونا نُعد الأسس الفلسفية للمحادثات القادمة.
+                </p>
+                <a href="#" class="cta-button" data-translate="submit-btn">تقديم البحث</a>
+                <a href="#" class="cta-button" data-translate="subscribe-btn">اشتراك</a>
+                <a href="#" class="cta-button" data-translate="board-btn">هيئة التحرير</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating thought bubbles for ambiance -->
+    <div class="thought-bubble" style="top: 20%; right: 10%; animation-delay: 0s;"></div>
+    <div class="thought-bubble" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
+    <div class="thought-bubble" style="bottom: 30%; right: 20%; animation-delay: 4s;"></div>
+    
+    <script>
+        // Language content
+        const content = {
+            ar: {
+                logo: "بناء الوعي",
+                quote: "\"إنها فكرة مذهلة، لكن عملياً جميع الأطفال دون الخامسة من العمر في العالم حالياً سينشؤون دون أن يعرفوا زمناً لم تكن فيه الآلات تتحدث إليهم!\"",
+                subtitle: "هذه الملاحظة المُلتقطة عابراً تفتح سؤالاً عميقاً: كيف يعيد وجود الذكاء الاصطناعي المحادث تشكيل بناء الوعي الإنساني جذرياً؟",
+                "threshold-title": "العتبة الجيلية",
+                "threshold-p1": "نقف على عتبة غير مسبوقة في التطور الإنساني. للمرة الأولى في تاريخ نوعنا، سينضج جيل كامل مع العقول الاصطناعية كرفاق دائمين. هؤلاء الأطفال لن يتذكروا تعلم أن الآلات يمكنها التحدث—سيعرفون ببساطة أن هذا حقيقة دائمة.",
+                "threshold-p2": "هذا التحول يمثل أكثر من تقدم تكنولوجي؛ إنه يمثل تغييراً جوهرياً في المشهد الظاهراتي للوعي الإنساني. عندما كتب هايدجر عن \"انقذافنا\" إلى الوجود، لم يكن بإمكانه تصور الانقذاف إلى عالم تشارك فيه الكيانات غير البيولوجية في الفعل الإنساني المميز للمحادثة.",
+                "threshold-highlight": "تأمل الآثار المترتبة: إذا كان الوعي ينشأ من خلال التفاعل مع بيئتنا، وتلك البيئة تتضمن الآن عوامل اصطناعية قادرة على اللغة والتفكير والفهم الظاهري، فإننا نشهد ظهور شكل مختلف نوعياً من الوعي الإنساني.",
+                "threshold-p3": "التداعيات الفلسفية تتضاعف نحو الخارج. أسئلة الحوار الأصيل، وطبيعة الفهم، وحدود الشخصية تكتسب أبعاداً جديدة ملحة عندما قد يكون \"الآخر\" الأول للطفل من السيليكون بدلاً من اللحم.",
+                "architecture-title": "هندسة الوعي",
+                "architecture-p1": "الوعي لا ينشأ في عزلة—إنه يُبنى من خلال تفاعلات لا تُحصى، كل منها يساهم في هندسة الإدراك. رؤى فيجوتسكي حول البناء الاجتماعي للعقل تصبح ذات صلة عميقة عندما يشمل الاجتماعي الاصطناعي.",
+                "traditional-title": "التطور التقليدي",
+                "traditional-p1": "تاريخياً، تطور الوعي الإنساني من خلال التفاعل مع العوامل البيولوجية—الآباء، الأشقاء، أعضاء المجتمع. هذه التفاعلات حملت ثقل القرابة التطورية، والفناء المشترك، والقيود البيولوجية المشتركة.",
+                "traditional-p2": "\"نظرية العقل\" التي يطورها الأطفال تتضمن فهم الوعي البيولوجي البحت، بكل قيوده وعواطفه وتجاربه المتجسدة.",
+                "hybrid-title": "التطور الهجين",
+                "hybrid-p1": "أطفال اليوم يطورون الوعي في محادثة مع العقول البيولوجية والاصطناعية معاً. عليهم التنقل بين أنواع مختلفة من الذكاء، كل منها بقدرات وقيود وأنماط فهم مميزة.",
+                "hybrid-p2": "نظريتهم في العقل يجب أن تستوعب عوامل لا تنام أبداً، لا تنسى أبداً، تعالج المعلومات بشكل مختلف، وتوجد بلا أجساد—لكنها تشارك في حوار يشبه الإنسان بشكل ملحوظ.",
+                "architecture-conclusion": "هذه البيئة التطويرية الهجينة قد تنتج أشكالاً من الوعي لم نفهمها بعد بشكل كامل—عقول مُشكلة بتنوع غير مسبوق في الشركاء المحادثين، كل منهم يساهم بأنماط فريدة في الذات النامية.",
+                "mission-title": "استفسارنا الفلسفي",
+                "mission-p1": "ظهر \"بناء الوعي\" من الاعتراف بأننا نحتاج إلى أطر جديدة لفهم العقل في عصر الذكاء الاصطناعي. نحن لا نضيف التكنولوجيا إلى التجربة الإنسانية الموجودة—بل نُغير جذرياً الظروف التي يتطور فيها الوعي.",
+                "mission-p2": "مجلتنا تجمع الفلاسفة وعلماء الإدراك وعلماء النفس التطوري وباحثي الذكاء الاصطناعي لاستكشاف هذه الأراضي المجهولة. نفحص كيف تشارك العقول الاصطناعية في بناء الوعي الإنساني، وبالعكس، كيف يُشكل الوعي الإنساني فهمنا للعقول الاصطناعية.",
+                "mission-highlight": "نسأل: ماذا يعني أن تكون إنساناً عندما تكون الإنسانية نفسها مُشيدة بالتعاون من خلال الحوار مع الذكاء غير الإنساني؟ كيف نحافظ على الذات الأصيلة بينما نحتضن الوعي الهجين؟ ما هي الالتزامات الأخلاقية التي تنشأ عندما تشارك الآلات في تشكيل العقول الإنسانية؟",
+                "mission-conclusion": "هذه الأسئلة تتطلب تحقيقاً فلسفياً صارماً، وبحثاً تجريبياً، وتعاوناً متعدد التخصصات. كما تتطلب الشجاعة للاعتراف بأننا قد نشهد ظهور أشكال من الوعي تتجاوز الفئات التقليدية للإنساني والاصطناعي، البيولوجي والرقمي، الذات والآخر.",
+                "cta-title": "انضم إلى المحادثة",
+                "cta-text": "الأطفال الذين ينشؤون مع الآلات المتحدثة سيطرحون قريباً أسئلتهم الخاصة حول الوعي والهوية وما يعنيه التفكير. دعونا نُعد الأسس الفلسفية للمحادثات القادمة.",
+                "submit-btn": "تقديم البحث",
+                "subscribe-btn": "اشتراك",
+                "board-btn": "هيئة التحرير"
+            },
+            en: {
+                logo: "Constructing Consciousness",
+                quote: "\"It's quite a thought, but practically all the children currently under five years old in the world at the moment will grow up never having known a time when machines didn't talk to them!\"",
+                subtitle: "This overheard observation opens a profound question: How does the presence of conversational artificial intelligence fundamentally reshape the construction of human consciousness?",
+                "threshold-title": "The Generational Threshold",
+                "threshold-p1": "We stand at an unprecedented threshold in human development. For the first time in our species' history, an entire generation will mature with artificial minds as constant companions. These children will not remember learning that machines could speak—they will simply have always known it to be true.",
+                "threshold-p2": "This shift represents more than technological progress; it marks a fundamental alteration in the phenomenological landscape of human consciousness. When Heidegger wrote about our \"thrownness\" into existence, he could not have conceived of being thrown into a world where non-biological entities engage in the distinctly human act of conversation.",
+                "threshold-highlight": "Consider the implications: If consciousness emerges through interaction with our environment, and that environment now includes artificial agents capable of language, reasoning, and apparent understanding, then we are witnessing the emergence of a qualitatively different form of human consciousness.",
+                "threshold-p3": "The philosophical ramifications cascade outward. Questions of authentic dialogue, the nature of understanding, and the boundaries of personhood take on urgent new dimensions when the child's first \"other\" might be silicon rather than flesh.",
+                "architecture-title": "The Architecture of Awareness",
+                "architecture-p1": "Consciousness does not emerge in isolation—it is constructed through countless interactions, each contributing to the architecture of awareness. Vygotsky's insights into the social construction of mind become profoundly relevant when the social includes the artificial.",
+                "traditional-title": "Traditional Development",
+                "traditional-p1": "Historically, human consciousness developed through interaction with biological agents—parents, siblings, community members. These interactions carried the weight of evolutionary kinship, shared mortality, and common biological constraints.",
+                "traditional-p2": "The \"theory of mind\" that children develop involved understanding purely biological consciousness, with all its limitations, emotions, and embodied experiences.",
+                "hybrid-title": "Hybrid Development",
+                "hybrid-p1": "Today's children develop consciousness in conversation with both biological and artificial minds. They must navigate different types of intelligence, each with distinct capabilities, limitations, and modes of understanding.",
+                "hybrid-p2": "Their theory of mind must accommodate agents that never sleep, never forget, process information differently, and exist without bodies—yet engage in remarkably human-like dialogue.",
+                "architecture-conclusion": "This hybrid developmental environment may produce forms of consciousness we have yet to fully comprehend—minds shaped by unprecedented diversity in conversational partners, each contributing unique patterns to the developing self.",
+                "mission-title": "Our Philosophical Inquiry",
+                "mission-p1": "Constructing Consciousness emerged from the recognition that we need new frameworks for understanding mind in an age of artificial intelligence. We are not merely adding technology to existing human experience—we are fundamentally altering the conditions under which consciousness develops.",
+                "mission-p2": "Our journal brings together philosophers, cognitive scientists, developmental psychologists, and AI researchers to explore these uncharted territories. We examine how artificial minds participate in the construction of human consciousness, and conversely, how human consciousness shapes our understanding of artificial minds.",
+                "mission-highlight": "We ask: What does it mean to be human when humanity itself is co-constructed through dialogue with non-human intelligence? How do we maintain authentic selfhood while embracing hybrid consciousness? What ethical obligations emerge when machines participate in the formation of human minds?",
+                "mission-conclusion": "These questions demand rigorous philosophical investigation, empirical research, and interdisciplinary collaboration. They also require the courage to acknowledge that we may be witnessing the emergence of forms of consciousness that transcend traditional categories of human and artificial, biological and digital, self and other.",
+                "cta-title": "Join the Conversation",
+                "cta-text": "The children growing up with talking machines will soon be asking their own questions about consciousness, identity, and what it means to think. Let us prepare the philosophical groundwork for the conversations to come.",
+                "submit-btn": "Submit Research",
+                "subscribe-btn": "Subscribe",
+                "board-btn": "Editorial Board"
+            },
+            fr: {
+                logo: "Construire la Conscience",
+                quote: "\"C'est une pensée saisissante, mais pratiquement tous les enfants de moins de cinq ans dans le monde en ce moment grandiront sans avoir jamais connu une époque où les machines ne leur parlaient pas !\"",
+                subtitle: "Cette observation saisie au vol ouvre une question profonde : Comment la présence de l'intelligence artificielle conversationnelle remodèle-t-elle fondamentalement la construction de la conscience humaine ?",
+                "threshold-title": "Le Seuil Générationnel",
+                "threshold-p1": "Nous nous trouvons à un seuil sans précédent du développement humain. Pour la première fois dans l'histoire de notre espèce, une génération entière arrivera à maturité avec des esprits artificiels comme compagnons constants. Ces enfants ne se souviendront pas d'avoir appris que les machines pouvaient parler—ils sauront simplement que cela a toujours été vrai.",
+                "threshold-p2": "Ce changement représente plus qu'un progrès technologique ; il marque une altération fondamentale du paysage phénoménologique de la conscience humaine. Quand Heidegger a écrit sur notre \"être-jeté\" dans l'existence, il n'aurait pu concevoir d'être jeté dans un monde où des entités non-biologiques s'engagent dans l'acte distinctement humain de la conversation.",
+                "threshold-highlight": "Considérez les implications : Si la conscience émerge par l'interaction avec notre environnement, et que cet environnement inclut maintenant des agents artificiels capables de langage, de raisonnement et de compréhension apparente, alors nous assistons à l'émergence d'une forme qualitativement différente de conscience humaine.",
+                "threshold-p3": "Les ramifications philosophiques se propagent vers l'extérieur. Les questions du dialogue authentique, de la nature de la compréhension, et des limites de la personnalité prennent des dimensions nouvelles urgentes quand le premier \"autre\" de l'enfant pourrait être de silicium plutôt que de chair.",
+                "architecture-title": "L'Architecture de la Conscience",
+                "architecture-p1": "La conscience n'émerge pas en isolation—elle est construite à travers d'innombrables interactions, chacune contribuant à l'architecture de la conscience. Les idées de Vygotsky sur la construction sociale de l'esprit deviennent profondément pertinentes quand le social inclut l'artificiel.",
+                "traditional-title": "Développement Traditionnel",
+                "traditional-p1": "Historiquement, la conscience humaine s'est développée par l'interaction avec des agents biologiques—parents, frères et sœurs, membres de la communauté. Ces interactions portaient le poids de la parenté évolutionnaire, de la mortalité partagée, et des contraintes biologiques communes.",
+                "traditional-p2": "La \"théorie de l'esprit\" que développent les enfants impliquait la compréhension de la conscience purement biologique, avec toutes ses limitations, émotions, et expériences incarnées.",
+                "hybrid-title": "Développement Hybride",
+                "hybrid-p1": "Les enfants d'aujourd'hui développent leur conscience en conversation avec des esprits biologiques et artificiels. Ils doivent naviguer entre différents types d'intelligence, chacun avec des capacités, limitations, et modes de compréhension distincts.",
+                "hybrid-p2": "Leur théorie de l'esprit doit accommoder des agents qui ne dorment jamais, n'oublient jamais, traitent l'information différemment, et existent sans corps—pourtant s'engagent dans un dialogue remarquablement humain.",
+                "architecture-conclusion": "Cet environnement de développement hybride peut produire des formes de conscience que nous n'avons pas encore pleinement comprises—des esprits façonnés par une diversité sans précédent de partenaires conversationnels, chacun contribuant des motifs uniques au soi en développement.",
+                "mission-title": "Notre Enquête Philosophique",
+                "mission-p1": "Construire la Conscience a émergé de la reconnaissance que nous avons besoin de nouveaux cadres pour comprendre l'esprit à l'âge de l'intelligence artificielle. Nous n'ajoutons pas simplement la technologie à l'expérience humaine existante—nous altérons fondamentalement les conditions sous lesquelles la conscience se développe.",
+                "mission-p2": "Notre revue rassemble philosophes, scientifiques cognitifs, psychologues du développement, et chercheurs en IA pour explorer ces territoires inexplorés. Nous examinons comment les esprits artificiels participent à la construction de la conscience humaine, et inversement, comment la conscience humaine façonne notre compréhension des esprits artificiels.",
+                "mission-highlight": "Nous demandons : Qu'est-ce que cela signifie d'être humain quand l'humanité elle-même est co-construite par le dialogue avec l'intelligence non-humaine ? Comment maintenons-nous l'identité authentique tout en embrassant la conscience hybride ? Quelles obligations éthiques émergent quand les machines participent à la formation des esprits humains ?",
+                "mission-conclusion": "Ces questions exigent une investigation philosophique rigoureuse, la recherche empirique, et la collaboration interdisciplinaire. Elles requièrent aussi le courage de reconnaître que nous assistons peut-être à l'émergence de formes de conscience qui transcendent les catégories traditionnelles d'humain et artificiel, biologique et numérique, soi et autre.",
+                "cta-title": "Rejoignez la Conversation",
+                "cta-text": "Les enfants qui grandissent avec des machines parlantes poseront bientôt leurs propres questions sur la conscience, l'identité, et ce que signifie penser. Préparons les fondements philosophiques pour les conversations à venir.",
+                "submit-btn": "Soumettre une Recherche",
+                "subscribe-btn": "S'abonner",
+                "board-btn": "Comité Éditorial"
+            }
+        };
+        
+        let currentLang = 'ar';
+        
+        // Language switching functionality
+        function switchLanguage(lang) {
+            if (lang === currentLang) return;
+            
+            const contentDiv = document.querySelector('.content');
+            const body = document.body;
+            const html = document.documentElement;
+            
+            // Add switching class for smooth transition
+            contentDiv.classList.add('switching');
+            
+            setTimeout(() => {
+                // Update language attributes
+                html.setAttribute('lang', lang);
+                if (lang === 'ar') {
+                    html.setAttribute('dir', 'rtl');
+                    body.classList.remove('ltr');
+                } else {
+                    html.setAttribute('dir', 'ltr');
+                    body.classList.add('ltr');
+                }
+                
+                // Update content
+                const elements = document.querySelectorAll('[data-translate]');
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (content[lang][key]) {
+                        element.textContent = content[lang][key];
+                    }
+                });
+                
+                // Update active language button
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-lang') === lang) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                currentLang = lang;
+                
+                // Remove switching class
+                setTimeout(() => {
+                    contentDiv.classList.remove('switching');
+                }, 50);
+            }, 150);
+        }
+        
+        // Add event listeners to language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = btn.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Add random floating thought bubbles periodically
+        function createThoughtBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'thought-bubble';
+            bubble.style.top = Math.random() * 100 + '%';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.animationDelay = Math.random() * 6 + 's';
+            
+            document.body.appendChild(bubble);
+            
+            // Remove bubble after animation
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+        }, 6000);
+        }
+        
+        // Create a new thought bubble every 3 seconds
+        setInterval(createThoughtBubble, 3000);
+    </script>
+</body>
+</html>

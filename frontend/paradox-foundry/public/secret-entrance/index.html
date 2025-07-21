@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Paradox Engine: A Strategic Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE STYLES & DARK MODE PALETTE --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080810; /* Near-black background */
+            color: #e0e0e0; /* Light grey text for readability */
+        }
+        /* Our signature gold palette */
+        .text-gold { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .border-gold { border-color: #d4af37; }
+        .text-gold-accent { color: #b89b3e; }
+
+        /* Card styling for dark mode */
+        .card {
+            background-color: #1a1a1a;
+            border-radius: 0.75rem;
+            border: 1px solid #2a2a2a;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        /* KPI styling */
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #d4af37;
+        }
+
+        /* Flow arrow styling for dark mode */
+        .flow-arrow {
+            position: relative;
+            text-align: center;
+            font-size: 2rem;
+            color: #b89b3e;
+            padding: 1rem 0;
+        }
+        .flow-arrow::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #444;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        /* Chart container for Chart.js */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+        }
+
+        /* --- HEADER & ANIMATION STYLES --- */
+        .animation-header {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+        }
+        #mobiusCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7; /* Make it slightly more subtle */
+        }
+        .header-overlay {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="text-slate-300">
+
+    <!-- The new header with our Möbius animation -->
+    <header class="animation-header text-white text-center py-16 px-4">
+        <canvas id="mobiusCanvas"></canvas>
+        <div class="header-overlay">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gold">The Paradox Engine</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-slate-300">A new model for regenerative technology, grounded in ancient wisdom and designed for human flourishing.</p>
+        </div>
+    </header>
+
+    <main class="py-12 md:py-20">
+        
+        <section id="innovation" class="container mx-auto px-4 mb-16">
+            <h2 class="text-3xl font-bold text-center text-gold mb-2">The Core Innovation</h2>
+            <p class="text-center max-w-3xl mx-auto text-lg mb-12">We move beyond 'smart' AI to build 'wise' systems. Instead of treating contradiction as an error, we use it as a generative rule, creating a perpetual engine for narrative and insight.</p>
+            
+            <div class="card md:col-span-2">
+                <h3 class="text-xl font-bold text-gold-accent mb-4 text-center">From Duality to Unity: The Generative Process</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4 text-center">
+                    <div class="p-4 bg-slate-800 rounded-lg border-2 border-dashed border-gold">
+                        <p class="font-bold text-gold">He Tu</p>
+                        <p class="text-sm">Primordial Order</p>
+                    </div>
+                    <div class="text-4xl font-light text-gold-accent">⟷</div>
+                    <div class="p-4 bg-slate-700 rounded-lg border-2 border-gold-accent">
+                        <p class="font-bold text-gold-accent">Phase Modulation</p>
+                        <p class="text-sm">(Paradox Folding)</p>
+                    </div>
+                    <div class="text-4xl font-light text-gold-accent">⟷</div>
+                     <div class="p-4 bg-slate-800 rounded-lg border-2 border-dashed border-gold">
+                        <p class="font-bold text-gold">Lo Shu</p>
+                        <p class="text-sm">Worldly Order</p>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="flow-arrow -mt-1 -mb-1">↓</div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <div class="p-3 bg-gold/10 rounded-lg text-center"><p class="font-semibold text-gold-accent">Trigrams (Bagua)</p></div>
+                    <div class="p-3 bg-gold/10 rounded-lg text-center"><p class="font-semibold text-gold-accent">Emergent States</p></div>
+                    <div class="p-3 bg-gold/10 rounded-lg text-center"><p class="font-semibold text-gold-accent">Adaptive Circuits</p></div>
+                    <div class="p-3 bg-gold/10 rounded-lg text-center"><p class="font-semibold text-gold-accent">Game Mechanics</p></div>
+                </div>
+                 <div class="flex justify-center">
+                    <div class="flow-arrow -mt-1 -mb-1">↓</div>
+                </div>
+                <div class="p-4 bg-gold text-black rounded-lg text-center">
+                    <p class="font-bold text-xl">The Paradox Engine</p>
+                    <p class="text-sm opacity-80">An Infinite Game for Narrative & Consciousness Development</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecosystem" class="container mx-auto px-4 mb-16">
+            <h2 class="text-3xl font-bold text-center text-gold mb-2">A Regenerative Ecosystem</h2>
+            <p class="text-center max-w-3xl mx-auto text-lg mb-12">Our structure is a self-sustaining loop where research, technology, community, and social impact reinforce each other.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card lg:col-span-3">
+                    <h3 class="text-xl font-bold text-gold-accent mb-4 text-center">Entity Interrelation</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-start">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-full p-4 border-2 border-purple-400/50 rounded-lg bg-purple-900/20">
+                                <p class="font-bold text-purple-300">PhD at Sussex</p>
+                                <p class="text-xs">Core R&D and Formal Validation</p>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                             <div class="w-full p-4 border-2 border-emerald-400/50 rounded-lg bg-emerald-900/20">
+                                <p class="font-bold text-emerald-300">Paradox Foundry</p>
+                                <p class="text-xs">Commercial R&D Hub & IP Development</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center text-center"><div class="text-4xl text-slate-600 mt-16 hidden lg:block">→</div></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-full p-4 border-2 border-gold rounded-lg bg-gold/10">
+                                <p class="font-bold text-gold">The Paradox Engine</p>
+                                <p class="text-xs">Core Technology Artifact</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center text-center"><div class="text-4xl text-slate-600 mt-16 hidden lg:block">→</div></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-full p-4 border-2 border-amber-400/50 rounded-lg bg-amber-900/20">
+                                <p class="font-bold text-amber-300">DAO IZM</p>
+                                <p class="text-xs">Governance & Community Funding</p>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="w-full p-4 border-2 border-rose-400/50 rounded-lg bg-rose-900/20">
+                                <p class="font-bold text-rose-300">Mariem's Heart CIC</p>
+                                <p class="text-xs">Social Impact & Real-World Application</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="container mx-auto px-4 mb-16">
+            <h2 class="text-3xl font-bold text-center text-gold mb-12">The 4-Year Strategic Roadmap</h2>
+            <div class="relative wrap overflow-hidden p-10 h-full">
+                <div class="border-2-2 absolute border-opacity-20 border-gold-accent h-full border" style="left: 50%"></div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-slate-800 shadow-xl w-12 h-12 rounded-full border-2 border-gold"><h1 class="mx-auto font-semibold text-lg text-white">Y1</h1></div>
+                    <div class="order-1 card w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gold-accent text-xl">Foundation & Prototyping</h3>
+                        <p class="text-sm leading-snug tracking-wide text-slate-400">Secure PhD place & initial grants. Build Zoan! MVP and Lo Shu visualiser. Launch student internships.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-slate-800 shadow-xl w-12 h-12 rounded-full border-2 border-gold"><h1 class="mx-auto text-white font-semibold text-lg">Y2</h1></div>
+                    <div class="order-1 card w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gold-accent text-xl">Acceleration & Alpha</h3>
+                        <p class="text-sm leading-snug tracking-wide text-slate-400">Secure major grants (Innovate UK). Develop Engine Alpha. Host first community Story Jam and begin FuseBox residency.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-slate-800 shadow-xl w-12 h-12 rounded-full border-2 border-gold"><h1 class="mx-auto font-semibold text-lg text-white">Y3</h1></div>
+                    <div class="order-1 card w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gold-accent text-xl">Beta & Community Governance</h3>
+                        <p class="text-sm leading-snug tracking-wide text-slate-400">Launch public beta and DAO IZM for reputation funding. Begin core thesis writing. Showcase at Wired Sussex.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-slate-800 shadow-xl w-12 h-12 rounded-full border-2 border-gold"><h1 class="mx-auto text-white font-semibold text-lg">Y4</h1></div>
+                    <div class="order-1 card w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-gold-accent text-xl">Spin-Out & Scale</h3>
+                        <p class="text-sm leading-snug tracking-wide text-slate-400">Finalise PhD. Launch production-ready engine. Secure £400k seed round via Sussex Innovation Centre for Paradox Foundry.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="funding" class="container mx-auto px-4 mb-16">
+            <h2 class="text-3xl font-bold text-center text-gold mb-2">A Braided Funding Strategy</h2>
+            <p class="text-center max-w-3xl mx-auto text-lg mb-12">We de-risk development by weaving together academic, public, community, and private funding sources at each stage.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-gold-accent mb-4">Total 4-Year Target: ~£560k</h3>
+                    <div class="chart-container">
+                        <canvas id="fundingChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="card">
+                        <h4 class="font-bold text-gold-accent">Phase 1-3: Research & Development</h4>
+                        <p class="text-slate-400 mt-1"><strong class="text-gold">~£160k</strong> from UKRI scholarships, Arts Council England, Innovate UK, and Algorand Foundation grants to fund PhD research and prototype development without dilution.</p>
+                    </div>
+                    <div class="card">
+                        <h4 class="font-bold text-gold-accent">Phase 4: Commercial Scale-Up</h4>
+                        <p class="text-slate-400 mt-1"><strong class="text-gold">£400k</strong> in pre-seed/seed investment via Sussex Innovation partners to scale Paradox Foundry and the production-ready engine.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gold mb-12">Projected Impact & Outcomes</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="card"><p class="kpi-value">1</p><p class="font-semibold mt-2">Practice-Led PhD</p><p class="text-sm text-slate-500">A foundational contribution to digital humanities & AI.</p></div>
+                <div class="card"><p class="kpi-value">40+</p><p class="font-semibold mt-2">Student Credits</p><p class="text-sm text-slate-500">Via internships, game jams, and credited projects.</p></div>
+                <div class="card"><p class="kpi-value">5+</p><p class="font-semibold mt-2">Open Source Tools</p><p class="text-sm text-slate-500">Including a Digital Yijing Corpus and the Engine Alpha.</p></div>
+                <div class="card"><p class="kpi-value">£400k</p><p class="font-semibold mt-2">Seed Investment</p><p class="text-sm text-slate-500">Launching a new creative-tech venture in Brighton.</p></div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold text-white">Partners & Collaborators</h3>
+            <div class="mt-8 flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
+                <p class="font-semibold">University of Sussex</p>
+                <p class="font-semibold">Sussex Innovation Centre</p>
+                <p class="font-semibold">Cosmos Institute</p>
+                <p class="font-semibold">Unity</p>
+                <p class="font-semibold">Wired Sussex</p>
+            </div>
+            <p class="mt-10 text-sm text-slate-500">Paradox Foundry Ltd. Creating reality from the unbelievable.</p>
+            <p class="mt-4 text-sm text-amber-400">
+              <a
+                href="/secret-entrance/index.html"
+                class="hover:text-amber-500 underline focus:outline-none focus:ring-2 focus:ring-amber-400"
+                title="Dyaxis Protocol Access"
+              >
+                Secret Entrance: Dyaxis
+              </a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // --- CHART.JS SETUP FOR DARK MODE ---
+        const fundingData = {
+            labels: ['PhD Scholarships & Stipends', 'Public & Foundation Grants', 'Seed Investment'],
+            datasets: [{
+                label: 'Funding Amount (£k)',
+                data: [50, 110, 400],
+                backgroundColor: ['#d4af37', '#b89b3e', '#a0873a'],
+                borderColor: '#1a1a1a',
+                borderWidth: 4
+            }]
+        };
+
+        const fundingConfig = {
+            type: 'doughnut',
+            data: fundingData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#94a3b8', font: { family: "'Inter', sans-serif" } }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Funding Sources Breakdown (£k)',
+                        color: '#e2e8f0',
+                        font: { size: 16, weight: 'bold', family: "'Inter', sans-serif" }
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('load', () => {
+            const fundingChartCtx = document.getElementById('fundingChart').getContext('2d');
+            new Chart(fundingChartCtx, fundingConfig);
+        });
+
+        // --- MÖBIUS ANIMATION SCRIPT ---
+        class BinaryBlackHoleFigure8 {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.time = 0;
+                this.animationFrameId = null;
+                
+                this.setup();
+                window.addEventListener('resize', () => this.setup());
+            }
+
+            setup() {
+                if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                this.centerX = this.canvas.width / 2;
+                this.centerY = this.canvas.height / 2;
+                this.scale = Math.min(this.canvas.width, this.canvas.height) * 0.35;
+                
+                this.blackHole1 = { x: this.centerX - this.scale * 0.6, y: this.centerY, radius: 25 };
+                this.blackHole2 = { x: this.centerX + this.scale * 0.6, y: this.centerY, radius: 25 };
+                
+                this.initParticles();
+                this.animate();
+            }
+            
+            figure8Position(t, streamWidth = 0) {
+                const a = this.scale * 0.8;
+                const separation = this.scale * 1.2;
+                const denominator = 1 + Math.sin(t) * Math.sin(t);
+                let x = (separation * Math.cos(t)) / denominator;
+                let y = (a * Math.sin(t) * Math.cos(t)) / denominator;
+                const normal_x = -Math.sin(t);
+                const normal_y = Math.cos(t);
+                x += normal_x * streamWidth;
+                y += normal_y * streamWidth;
+                return { x: this.centerX + x, y: this.centerY + y };
+            }
+            
+            initParticles() {
+                const numStreams = 8;
+                const particlesPerStream = 200;
+                this.particles = [];
+                for (let stream = 0; stream < numStreams; stream++) {
+                    const streamWidth = (stream - numStreams/2) * 8;
+                    for (let i = 0; i < particlesPerStream; i++) {
+                        const t = (i / particlesPerStream) * Math.PI * 2;
+                        const pos = this.figure8Position(t, streamWidth);
+                        this.particles.push({ t, streamWidth, x: pos.x, y: pos.y, speed: 0.008 + Math.random() * 0.004, size: 0.5 + Math.random() * 1.5, opacity: 0.3 + Math.random() * 0.7, phase: Math.random() * Math.PI * 2, baseStreamWidth: streamWidth, brightness: Math.random() });
+                    }
+                }
+            }
+            
+            updateParticles() {
+                for (let p of this.particles) {
+                    p.t = (p.t + p.speed) % (Math.PI * 2);
+                    const pos = this.figure8Position(p.t, p.streamWidth);
+                    p.x = pos.x; p.y = pos.y;
+                    const dist1 = Math.hypot(p.x - this.blackHole1.x, p.y - this.blackHole1.y);
+                    const dist2 = Math.hypot(p.x - this.blackHole2.x, p.y - this.blackHole2.y);
+                    const minDist = Math.min(dist1, dist2);
+                    p.brightness = p.opacity * (1 + 100 / (minDist + 20));
+                }
+            }
+            
+            drawBlackHoles() {
+                [this.blackHole1, this.blackHole2].forEach(bh => {
+                    const gradient = this.ctx.createRadialGradient(bh.x, bh.y, 0, bh.x, bh.y, bh.radius * 3);
+                    gradient.addColorStop(0, 'rgba(212, 175, 55, 0.6)');
+                    gradient.addColorStop(0.4, 'rgba(212, 175, 55, 0.2)');
+                    gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+                    this.ctx.fillStyle = gradient; this.ctx.beginPath(); this.ctx.arc(bh.x, bh.y, bh.radius * 3, 0, Math.PI * 2); this.ctx.fill();
+                    this.ctx.fillStyle = '#000000'; this.ctx.beginPath(); this.ctx.arc(bh.x, bh.y, bh.radius, 0, Math.PI * 2); this.ctx.fill();
+                    this.ctx.strokeStyle = `rgba(212, 175, 55, ${0.4 + Math.sin(this.time * 0.02) * 0.3})`;
+                    this.ctx.lineWidth = 2; this.ctx.beginPath(); this.ctx.arc(bh.x, bh.y, bh.radius + 8, 0, Math.PI * 2); this.ctx.stroke();
+                });
+            }
+            
+            drawParticles() {
+                for (let p of this.particles) {
+                    const alpha = Math.min(1, p.brightness);
+                    // Use shades of gold for particles
+                    this.ctx.fillStyle = `rgba(212, 175, 55, ${alpha * 0.7})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+            }
+            
+            animate() {
+                this.time++;
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Fading trail effect
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                this.updateParticles();
+                this.drawParticles();
+                this.drawBlackHoles();
+                this.animationFrameId = requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new BinaryBlackHoleFigure8('mobiusCanvas');
+        });
+    </script>
+</body>
+</html>
