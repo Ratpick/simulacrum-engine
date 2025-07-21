@@ -56,7 +56,7 @@ Paradox Foundry serves as:
 - pnpm install
 - pnpm dev
 - Visit http://localhost:3000
-- Start from: /src/pages/engine.tsx – entry point for The Paradox Engine
+- Start exploring from /src/components/NavBar.tsx or /src/components/TestComponent.tsx
 - Explore /public/secret-entrance/index.html – accessed via the Secret tab in the nav bar
 
 ---
