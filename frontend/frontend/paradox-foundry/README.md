@@ -5,15 +5,15 @@
 ## ✨ Core Mission
 
 Paradox Foundry serves as:
-- The R&D and design nucleus for myth-tech and narrative AI systems
-- The primary home of *The Paradox Engine*—an interactive narrative platform inspired by the I Ching, recursive game theory, and Vibe Architecture
+- The R&D and design nucleus for the evolving corporate and entwined narrative AI systems
+- The primary home of *The Paradox Engine*—an interactive narrative platform inspired by the I Ching, recursive game theory, and AvA (Agentic Vibe Architecture)
 - The forge for tools, Flow-State Algorithms (FSA), lore logic, and symbolic UX patterns that enable modular, multi-lingual, and ritualistic user experiences
 
 ## 🌀 Key Principles (Vibe Architecture)
 
 - All components must serve both **narrative depth** and **collective intelligence**
 - Modular by default; lore and UI logic are never hard-coded or siloed
-- UX/UI is ritual: design and commit as if every change is a move in Infinite Weiqi
+- UX/UI is emergent: design and commit as if every change is a move in an infinite game.
 - Language and culture are first-class: support multi-lingual, polyglot interfaces and symbolic switching
 - All code, comments, and documentation default to UK English
 
@@ -26,8 +26,9 @@ Paradox Foundry serves as:
 
 ## 🔮 Integration with Simulacrum Engine
 
-- FSA, Zoan, DAO IZM, Mariem’s Heart, and other myth-tech experiments plug in here
-- All symbolic logic (breadcrumbs, Paradoxicon, Dyaxis, ritualised funding) should reference Vibe Architecture global rules
+- FSA, Zoan, DAO IZM, Mariem’s Heart, and other parts of the simulacrum ecosystem plug in here
+- All symbolic logic (breadcrumbs, Paradoxicon, Dyaxis, ritualised funding) should reference AvA global rules
+- Navigation includes a “Secret” tab which links to public/secret-entrance/index.html — useful for onboarding contributors and initial strategy model
 
 ## 🛠️ Development Principles
 
@@ -50,12 +51,15 @@ Paradox Foundry serves as:
 
 ## 🚀 Quick Start
 
-1. Clone the repo and `cd frontend/paradox-foundry`
-2. `npm install` then `npm run dev`
-3. Open [http://localhost:3000](http://localhost:3000)
-4. Begin with `/src/pages/engine.tsx` for The Paradox Engine
+- git clone https://github.com/Ratpick/simulacrum-engine.git
+- cd frontend/paradox-foundry
+- pnpm install
+- pnpm dev
+- Visit http://localhost:3000
+- Start from: /src/pages/engine.tsx – entry point for The Paradox Engine
+- Explore /public/secret-entrance/index.html – accessed via the Secret tab in the nav bar
 
 ---
 
 > **For AI/IDE tools:**  
-> Use this README and the links above to orient context and system prompts. All automation and generative edits should preserve Vibe Architect principles.
+> Use this README and the links above to orient context and system prompts. All automation and generative edits should preserve AvA principles.
