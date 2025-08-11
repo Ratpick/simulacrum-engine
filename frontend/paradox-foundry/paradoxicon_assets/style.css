@@ -1,0 +1,321 @@
+/* BASE & TYPOGRAPHY */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #0a0a0a !important;
+    color: #e0e0e0 !important;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 { color: #d4af37 !important; }
+p, li, div, span { color: #e0e0e0 !important; }
+
+/* --- REVISED ANIMATED HEADER SECTION --- */
+#animation-header {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+
+#blackHoleHeaderCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.header-overlay {
+    position: relative;
+    text-align: center;
+    color: #d4af37;
+    z-index: 10;
+    pointer-events: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-overlay .title {
+    font-family: Georgia, serif;
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px #d4af37;
+    letter-spacing: -0.02em;
+    color: #d4af37;
+    /* This transform visually shifts the title down to overlay the animation's center,
+       without affecting the layout or position of the subtitle. */
+    transform: translateY(7.5vh);
+}
+
+.header-overlay .subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0.8;
+    color: #d4af37;
+    /* This margin pushes the subtitle down, to appear below the animation */
+    margin-top: 25vh; 
+}
+
+.header-overlay .title, .header-overlay .subtitle {
+    opacity: 0;
+    animation: fadeIn 3s ease-in-out 4s forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+/* --- END ANIMATED HEADER SECTION --- */
+
+
+/* SUBTLE BACKGROUND EFFECTS (FSA & GEOMETRY) */
+#fsaCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+.hyperbolic-geometry {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0.03;
+    pointer-events: none;
+}
+
+.hyperbolic-circle {
+    position: absolute;
+    border: 1px solid #d4af37;
+    border-radius: 50%;
+    animation: hyperbolic-float 20s infinite ease-in-out;
+}
+
+@keyframes hyperbolic-float {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.03; }
+    25% { transform: translate(-30px, -40px) scale(1.2) rotate(90deg); opacity: 0.08; }
+    50% { transform: translate(20px, -60px) scale(0.8) rotate(180deg); opacity: 0.05; }
+    75% { transform: translate(-40px, 30px) scale(1.1) rotate(270deg); opacity: 0.06; }
+}
+
+/* MAIN PAGE CONTENT LAYOUT */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem 2rem;
+    position: relative;
+    z-index: 10;
+    background: #0a0a0a;
+}
+
+.main-content .tagline {
+    text-align: center;
+    font-size: 1.4rem;
+    font-style: italic;
+    padding: 2rem 0 2rem 0;
+    color: #a0a0a0 !important;
+}
+
+.main-content {
+    flex: 1;
+}
+
+/* CONTENT STYLES */
+.section { margin-bottom: 3rem; }
+.section-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.8rem;
+    color: #d4af37 !important;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    color: #e0e0e0 !important;
+}
+
+.emphasis { color: #d4af37 !important; font-weight: 500; }
+
+.criteria-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.criterion {
+    padding: 1.5rem;
+    background: #1a1a1a !important;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.criterion:hover {
+    border-color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+}
+
+.criterion-title { font-weight: 600; color: #d4af37 !important; margin-bottom: 0.5rem; }
+.criterion p { color: #e0e0e0 !important; }
+
+.threshold-questions {
+    background: linear-gradient(135deg, #1a1a1a 0%, transparent 100%) !important;
+    border: 1px dashed #d4af37;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.question {
+    margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid #008080;
+    font-style: italic;
+    color: #e0e0e0 !important;
+}
+
+.cta-section {
+    text-align: center;
+    background: #1a1a1a !important;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    margin: 3rem 0;
+}
+
+.apply-button {
+    display: inline-block;
+    background: #d4af37 !important;
+    color: #0a0a0a !important;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    margin: 1rem;
+}
+
+.apply-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(212, 175, 55, 0.3);
+}
+
+.contact-info {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+.contact-title { color: #d4af37 !important; font-weight: 600; margin-bottom: 1rem; }
+.contact-details { line-height: 1.8; color: #e0e0e0 !important; }
+.contact-details a { color: #e0e0e0 !important; text-decoration: none; }
+.contact-details a:hover { color: #d4af37 !important; }
+
+.footer {
+    text-align: center;
+    padding: 3rem 0 2rem 0;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    margin-top: 4rem;
+    font-size: 0.9rem;
+    color: #a0a0a0 !important;
+}
+.footer-logo { font-weight: 600; margin-bottom: 0.5rem; }
+
+/* EASTER EGG & HIDDEN MESSAGE */
+.easter-egg {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 3px;
+    height: 3px;
+    background: #d4af37;
+    border-radius: 50%;
+    opacity: 0.3;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    z-index: 30;
+}
+.easter-egg:hover { opacity: 1; transform: scale(3); }
+.easter-egg.activated { animation: paradox-pulse 2s ease-in-out infinite; }
+
+@keyframes paradox-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(20); opacity: 0.8; box-shadow: 0 0 50px #d4af37; }
+}
+
+.hidden-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #0a0a0a !important;
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    text-align: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+    color: #e0e0e0 !important;
+}
+.hidden-message.visible { opacity: 1; pointer-events: all; }
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #e0e0e0 !important;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+    #animation-header { min-height: 60vh; }
+    .header-overlay .title { font-size: 2rem; }
+    .header-overlay .subtitle { font-size: 1rem; margin-top: 20vh; }
+    .container { padding: 0 1rem 1rem 1rem; }
+    .cta-section { padding: 2rem 1rem; }
+    .apply-button { display: block; margin: 1rem auto; padding: 1.2rem 2rem; font-size: 1.2rem; }
+    .easter-egg { width: 6px; height: 6px; bottom: 30px; left: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
