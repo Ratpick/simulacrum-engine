@@ -1,124 +1,92 @@
 /**
- * BinaryBlackHoleFigure8 Class for the header animation.
+ * Möbius header variant + existing page systems (FSA, geometry, easter egg)
+ * Load via ?variant=mobius (handled by dynamic loader in paradoxicon.html)
  */
-class BinaryBlackHoleFigure8 {
-    constructor() {
-        this.canvas = document.getElementById('blackHoleHeaderCanvas');
-        if (!this.canvas) return;
-        this.ctx = this.canvas.getContext('2d');
-        this.particles = [];
-        this.time = 0;
-        
-        this.resizeCanvas();
-        this.initParticles();
-        this.animate();
-        
-        window.addEventListener('resize', () => this.resizeCanvas());
-    }
-    
-    resizeCanvas() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = this.canvas.parentElement.offsetHeight;
-        this.centerX = this.canvas.width / 2;
-        this.centerY = this.canvas.height / 2;
-        // Adjusted scale calculation to better fit the central animation
-        this.scale = Math.min(this.canvas.width, this.canvas.height) * 0.3;
-        
-        // Recenter the animation slightly higher up to make space for the subtitle below
-        this.centerY -= this.canvas.height * 0.1;
 
-        this.blackHole1 = { x: this.centerX - this.scale * 0.6, y: this.centerY, radius: 25 };
-        this.blackHole2 = { x: this.centerX + this.scale * 0.6, y: this.centerY, radius: 25 };
+// === Mobius / Black-hole header animation ===
+(function(){
+  let rafId;
+  function project(point, w, h){
+    const fov = 280;
+    const scale = fov / (fov + point.z);
+    return { x: w/2 + point.x * scale, y: h/2 + point.y * scale };
+  }
+  function mobius(u, v, radius){
+    // u ∈ [0, 2π), v ∈ [-1, 1]
+    const half = v * 0.5;
+    const x = (radius + half * Math.cos(u/2)) * Math.cos(u);
+    const y = (radius + half * Math.cos(u/2)) * Math.sin(u);
+    const z = half * Math.sin(u/2) * radius * 0.6;
+    return {x, y, z};
+  }
+  function initBlackHoleHeader(){
+    const canvas = document.getElementById('blackHoleHeaderCanvas');
+    const header = document.getElementById('animation-header');
+    if(!canvas || !header){ return; }
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    function resize(){
+      const rect = header.getBoundingClientRect();
+      canvas.width  = Math.max(1, Math.floor(rect.width * DPR));
+      canvas.height = Math.max(1, Math.floor(rect.height * DPR));
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
     }
-    
-    figure8Position(t, streamWidth = 0) {
-        const a = this.scale * 0.8;
-        const separation = this.scale * 1.2;
-        const denominator = 1 + Math.sin(t) * Math.sin(t);
-        let x = (separation * Math.cos(t)) / denominator;
-        let y = (a * Math.sin(t) * Math.cos(t)) / denominator;
-        const normal_x = -Math.sin(t);
-        const normal_y = Math.cos(t);
-        x += normal_x * streamWidth;
-        y += normal_y * streamWidth;
-        return { x: this.centerX + x, y: this.centerY + y };
+    resize();
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(rafId);
+      resize();
+      animate();
+    }, { passive:true });
+
+    const COUNT = 800;
+    let t = 0;
+    function animate(){
+      const w = canvas.width, h = canvas.height;
+      const radius = Math.min(w, h) * 0.22;
+      ctx.clearRect(0,0,w,h);
+
+      // soft vignette
+      const g = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, Math.max(w,h)*0.6);
+      g.addColorStop(0, 'rgba(0,0,0,0.0)');
+      g.addColorStop(1, 'rgba(0,0,0,0.9)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+
+      // particle pass
+      ctx.globalCompositeOperation = 'lighter';
+      for(let i=0;i<COUNT;i++){
+        const u = ((i / COUNT) * Math.PI * 2 + t*0.002) % (Math.PI*2);
+        const v = (Math.random() * 2 - 1) * 0.9;
+        const m = mobius(u, v, radius);
+        const p = project(m, w, h);
+        const alpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(u*3 + t*0.002));
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(212,175,55,${alpha})`;
+        const size = 1 + 1.5 * alpha * (window.devicePixelRatio||1);
+        ctx.arc(p.x, p.y, size, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+
+      t += 1;
+      rafId = requestAnimationFrame(animate);
     }
-    
-    initParticles() {
-        const numStreams = 8;
-        const particlesPerStream = 200;
-        this.particles = [];
-        for (let stream = 0; stream < numStreams; stream++) {
-            const streamWidth = (stream - numStreams/2) * 8;
-            for (let i = 0; i < particlesPerStream; i++) {
-                const t = (i / particlesPerStream) * Math.PI * 2;
-                const pos = this.figure8Position(t, streamWidth);
-                this.particles.push({ t, streamWidth, x: pos.x, y: pos.y, speed: 0.008 + Math.random() * 0.004, size: 0.5 + Math.random() * 1.5, opacity: 0.3 + Math.random() * 0.7, phase: Math.random() * Math.PI * 2, baseStreamWidth: streamWidth, brightness: Math.random() });
-            }
-        }
-        for (let i = 0; i < 300; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const radius = this.scale * (1.5 + Math.random() * 0.8);
-            this.particles.push({ t: Math.random() * Math.PI * 2, streamWidth: (Math.random() - 0.5) * 60, x: this.centerX + Math.cos(angle) * radius, y: this.centerY + Math.sin(angle) * radius, speed: 0.002 + Math.random() * 0.003, size: 0.3 + Math.random() * 1, opacity: 0.1 + Math.random() * 0.4, phase: Math.random() * Math.PI * 2, baseStreamWidth: (Math.random() - 0.5) * 60, brightness: Math.random() * 0.5, chaotic: true });
-        }
-    }
-    
-    updateParticles() {
-        for (let p of this.particles) {
-            p.t = (p.t + p.speed) % (Math.PI * 2);
-            const oscillation = Math.sin(this.time * 0.01 + p.phase) * 5;
-            p.streamWidth = p.baseStreamWidth + oscillation;
-            const pos = this.figure8Position(p.t, p.streamWidth);
-            p.x = pos.x; p.y = pos.y;
-            const dist1 = Math.hypot(p.x - this.blackHole1.x, p.y - this.blackHole1.y);
-            const dist2 = Math.hypot(p.x - this.blackHole2.x, p.y - this.blackHole2.y);
-            const minDist = Math.min(dist1, dist2);
-            p.brightness = p.opacity * (1 + 100 / (minDist + 20));
-            if (minDist < 30) {
-                const newT = Math.random() * Math.PI * 2;
-                const newPos = this.figure8Position(newT, p.baseStreamWidth);
-                p.t = newT; p.x = newPos.x; p.y = newPos.y;
-            }
-        }
-    }
-    
-    drawBlackHoles() {
-        [this.blackHole1, this.blackHole2].forEach(bh => {
-            const gradient = this.ctx.createRadialGradient(bh.x, bh.y, 0, bh.x, bh.y, bh.radius * 3);
-            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
-            gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.4)');
-            gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.1)');
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            this.ctx.fillStyle = gradient; this.ctx.beginPath(); this.ctx.arc(bh.x, bh.y, bh.radius * 3, 0, Math.PI * 2); this.ctx.fill();
-            this.ctx.fillStyle = '#000000'; this.ctx.beginPath(); this.ctx.arc(bh.x, bh.y, bh.radius, 0, Math.PI * 2); this.ctx.fill();
-            this.ctx.strokeStyle = `rgba(255, 255, 255, ${0.6 + Math.sin(this.time * 0.02) * 0.3})`; this.ctx.lineWidth = 2; this.ctx.beginPath(); this.ctx.arc(bh.x, bh.y, bh.radius + 8, 0, Math.PI * 2); this.ctx.stroke();
-        });
-    }
-    
-    drawParticles() {
-        for (let p of this.particles) {
-            const alpha = Math.min(1, p.brightness);
-            this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`; this.ctx.beginPath(); this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); this.ctx.fill();
-            if (alpha > 0.7) {
-                this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.2})`; this.ctx.beginPath(); this.ctx.arc(p.x, p.y, p.size * 4, 0, Math.PI * 2); this.ctx.fill();
-            }
-        }
-    }
-    
-    animate() {
-        this.time++;
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.updateParticles();
-        this.drawParticles();
-        this.drawBlackHoles();
-        requestAnimationFrame(() => this.animate());
-    }
-}
+    animate();
+  }
+
+  // boot when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlackHoleHeader, { once:true });
+  } else {
+    initBlackHoleHeader();
+  }
+  window.initBlackHoleHeader = initBlackHoleHeader;
+})();
 
 /**
  * FSA System - for detecting user flow state.
- * Currently a placeholder, to be fully implemented as per the Execution Plan.
+ * (copied from current script.js)
  */
 class FlowStateDetector {
     constructor(){this.startTime=Date.now();this.scrollDepth=0;this.flowScore=0;this.isInFlow=!1;this.initTracking()}
@@ -130,7 +98,7 @@ class FlowStateDetector {
 
 /**
  * FSAParticleSystem - for the subtle background dust effect.
- * Currently a placeholder, to be fully implemented as per the Execution Plan.
+ * (copied from current script.js)
  */
 class FSAParticleSystem{constructor(e){this.canvas=e,this.ctx=e.getContext("2d"),this.particles=[],this.flowScore=0,this.mouse={x:window.innerWidth/2,y:window.innerHeight/2},this.resizeCanvas(),this.createParticles(),this.animate(),window.addEventListener("resize",()=>this.resizeCanvas()),document.addEventListener("mousemove",e=>{this.mouse.x=e.clientX,this.mouse.y=e.clientY})}
 resizeCanvas(){this.canvas.width=window.innerWidth,this.canvas.height=window.innerHeight}
@@ -141,31 +109,27 @@ drawParticles(){this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height),thi
 animate(){this.updateParticles(),this.drawParticles(),requestAnimationFrame(()=>this.animate())}}
 
 /**
- * Miscellaneous page functions
+ * Misc page utilities (copied from current script.js)
  */
 function createGeometry(){const e=document.getElementById("geometryBg");if(!e)return;const t=window.innerWidth<768?8:15;for(let i=0;i<t;i++){const o=document.createElement("div");o.className="hyperbolic-circle";const s=200*Math.random()+50;o.style.width=s+"px",o.style.height=s+"px",o.style.left=Math.random()*window.innerWidth+"px",o.style.top=Math.random()*window.innerHeight+"px",o.style.animationDelay=20*Math.random()+"s",e.appendChild(o)}}
 let easterEggActivated=!1;function activateEasterEgg(){easterEggActivated||(easterEggActivated=!0,document.querySelector(".easter-egg").classList.add("activated"),document.getElementById("hiddenMessage").classList.add("visible"))}
 function closeEasterEgg(){document.getElementById("hiddenMessage").classList.remove("visible"),setTimeout(()=>{easterEggActivated=!1,document.querySelector(".easter-egg").classList.remove("activated")},500)}
 
 /**
- * Initializer that runs when the DOM is fully loaded.
+ * Initializer
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize ALL animations and interactive elements
-    new BinaryBlackHoleFigure8(); // For the new header
+    // start Möbius header
+    if (typeof initBlackHoleHeader === 'function') initBlackHoleHeader();
+    // re-use the rest of the systems
     createGeometry();
-    
     const canvas = document.getElementById('fsaCanvas');
     if (canvas) {
         window.fsaDetector = new FlowStateDetector();
         window.fsaParticles = new FSAParticleSystem(canvas);
     }
-    
     window.addEventListener('resize', () => {
         const geometryBg = document.getElementById('geometryBg');
-        if (geometryBg) {
-            geometryBg.innerHTML = '';
-            createGeometry();
-        }
+        if (geometryBg) { geometryBg.innerHTML = ''; createGeometry(); }
     });
 });
