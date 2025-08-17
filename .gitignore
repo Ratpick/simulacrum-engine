@@ -5,3 +5,7 @@ dist/
 .vscode/
 node_modules/
 frontend/paradox-foundry/node_modules/
+
+# legacy transitions filename (prefer hex_transitions_full.json)
+public/data/hexagrams_transitions.json
+data/build/hexagrams_transitions.json
