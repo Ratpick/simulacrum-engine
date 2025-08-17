@@ -1,135 +1,150 @@
-/**
- * Möbius header variant + existing page systems (FSA, geometry, easter egg)
- * Load via ?variant=mobius (handled by dynamic loader in paradoxicon.html)
- */
+<file name=NavBar.tsx path=/Users/patricktreloar/Documents/GitHub/simulacrum-engine/frontend/paradox-foundry/src/components>
+const navLinks = [
+  // ... other links ...
+  {
+    name: { en: "Secret" },
+    href: "/zoan.html"
+  },
+  // ... other links ...
+];
+</file>
 
-// === Mobius / Black-hole header animation ===
-(function(){
-  let rafId;
-  function project(point, w, h){
-    const fov = 280;
-    const scale = fov / (fov + point.z);
-    return { x: w/2 + point.x * scale, y: h/2 + point.y * scale };
-  }
-  function mobius(u, v, radius){
-    // u ∈ [0, 2π), v ∈ [-1, 1]
-    const half = v * 0.5;
-    const x = (radius + half * Math.cos(u/2)) * Math.cos(u);
-    const y = (radius + half * Math.cos(u/2)) * Math.sin(u);
-    const z = half * Math.sin(u/2) * radius * 0.6;
-    return {x, y, z};
-  }
-  function initBlackHoleHeader(){
-    const canvas = document.getElementById('blackHoleHeaderCanvas');
-    const header = document.getElementById('animation-header');
-    if(!canvas || !header){ return; }
-    const ctx = canvas.getContext('2d', { alpha: true });
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    function resize(){
-      const rect = header.getBoundingClientRect();
-      canvas.width  = Math.max(1, Math.floor(rect.width * DPR));
-      canvas.height = Math.max(1, Math.floor(rect.height * DPR));
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
+<file name=zoan.html path=/Users/patricktreloar/Documents/GitHub/simulacrum-engine/frontend/paradox-foundry/public>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Zoan! — Paradoxicon Recruitment Portal</title>
+  <style>
+    :root { --gold: #d4af37; }
+    html, body { margin:0; padding:0; background:#0a0a0a; color:#e6e6e6; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif; }
+    a { color: var(--gold); text-decoration:none; }
+    .header { position:relative; width:100%; height:58vh; min-height:340px; overflow:hidden; background: radial-gradient(60% 60% at 50% 50%, #0a0a0a 0%, #000 100%); }
+    #blackHoleHeaderCanvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+    .overlay {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
+      padding:2rem; background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.35) 100%);
     }
-    resize();
-    window.addEventListener('resize', () => {
-      cancelAnimationFrame(rafId);
-      resize();
-      animate();
-    }, { passive:true });
+    .title { font-size: clamp(28px, 5vw, 56px); font-weight:800; letter-spacing:0.02em; color:var(--gold); text-shadow:0 2px 18px rgba(212,175,55,0.25); margin:0 0 0.35rem; }
+    .subtitle { font-size: clamp(14px, 1.6vw, 18px); opacity:0.9; margin:0; }
+    .chipbar { position:fixed; right:16px; top:14px; z-index:20; font-size:12px; background:rgba(0,0,0,0.35); border:1px solid rgba(212,175,55,0.35); border-radius:999px; padding:6px 10px; }
+    .chipbar a { color:#bcbcbc; margin-right:8px; }
+    .chipbar a.active { color:var(--gold); }
+    .container { max-width: 980px; margin: 28px auto 60px; padding: 0 16px; line-height:1.6; }
+    .cta { display:inline-block; margin-top:18px; border:1px solid rgba(212,175,55,0.4); padding:10px 16px; border-radius:10px; }
+    .back { position:fixed; left:16px; top:14px; z-index:20; font-size:12px; background:rgba(0,0,0,0.35); border:1px solid rgba(212,175,55,0.35); border-radius:999px; padding:6px 10px; }
+  </style>
+</head>
+<body>
+  <a class="back" href="/">← Back to site</a>
+  <div class="chipbar">
+    <a id="fig8Link" href="?variant=figure8">Figure‑8</a>
+    <a id="mobiusLink" class="active" href="?variant=mobius">Möbius</a>
+  </div>
 
-    const COUNT = 800;
-    let t = 0;
-    function animate(){
-      const w = canvas.width, h = canvas.height;
-      const radius = Math.min(w, h) * 0.22;
-      ctx.clearRect(0,0,w,h);
+  <header id="animation-header" class="header" role="img" aria-label="Möbius black‑hole header animation">
+    <canvas id="blackHoleHeaderCanvas"></canvas>
+    <div class="overlay">
+      <div>
+        <h1 class="title">Enter the Zoan</h1>
+        <p class="subtitle">Level None: a coin‑toss into He Tu / Lo Shu. Make the first paradox fold.</p>
+        <a class="cta" href="#seed">Begin the experiment</a>
+      </div>
+    </div>
+  </header>
 
-      // soft vignette
-      const g = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, Math.max(w,h)*0.6);
-      g.addColorStop(0, 'rgba(0,0,0,0.0)');
-      g.addColorStop(1, 'rgba(0,0,0,0.9)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,w,h);
+  <main class="container">
+    <h2 id="seed">Level None — Seed Trial</h2>
+    <p>This is the simplest viable entry. On merge, we’ll attach a Yin/Yang coin‑toss that routes to He Tu or Lo Shu and logs resonance (no backend required).</p>
+    <ul>
+      <li>Tier 0: coin toss (yin/yang) → He Tu / Lo Shu visual route.</li>
+      <li>Tier 1: Bagua UI sketch with Weiqi stones as counters.</li>
+      <li>Tier 2: King Wen sequence visualiser (non‑interactive baseline).</li>
+    </ul>
+    <p>For A/B: add <code>?variant=mobius</code> (this page) or <code>?variant=figure8</code> (falls back to current script if present).</p>
+  </main>
 
-      // particle pass
-      ctx.globalCompositeOperation = 'lighter';
-      for(let i=0;i<COUNT;i++){
-        const u = ((i / COUNT) * Math.PI * 2 + t*0.002) % (Math.PI*2);
-        const v = (Math.random() * 2 - 1) * 0.9;
-        const m = mobius(u, v, radius);
-        const p = project(m, w, h);
-        const alpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(u*3 + t*0.002));
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(212,175,55,${alpha})`;
-        const size = 1 + 1.5 * alpha * (window.devicePixelRatio||1);
-        ctx.arc(p.x, p.y, size, 0, Math.PI*2);
-        ctx.fill();
+  <script>
+    (function(){
+      var params = new URLSearchParams(location.search);
+      var variant = params.get('variant');
+
+      // Default to Möbius (we include it inline). If ?variant=figure8 and /paradoxicon_assets/script.js exists, try to load it.
+      if (variant === 'figure8') {
+        var s = document.createElement('script');
+        s.src = '/paradoxicon_assets/script.js';
+        s.defer = true;
+        s.onerror = function(){ /* silently fall back to inline Möbius */ initBlackHoleHeader && initBlackHoleHeader(); };
+        s.onload  = function(){ /* figure‑8 script is expected to self‑boot */ };
+        document.head.appendChild(s);
       }
-      ctx.globalCompositeOperation = 'source-over';
+    })();
+  </script>
 
-      t += 1;
-      rafId = requestAnimationFrame(animate);
-    }
-    animate();
-  }
+  <script>
+    // === Möbius / Black‑hole header (inline) ===
+    (function(){
+      let rafId;
+      function project(point, w, h){
+        const fov = 280;
+        const scale = fov / (fov + point.z);
+        return { x: w/2 + point.x * scale, y: h/2 + point.y * scale };
+      }
+      function mobius(u, v, radius){
+        const half = v * 0.5;
+        const x = (radius + half * Math.cos(u/2)) * Math.cos(u);
+        const y = (radius + half * Math.cos(u/2)) * Math.sin(u);
+        const z = half * Math.sin(u/2) * radius * 0.6;
+        return {x, y, z};
+      }
+      function initBlackHoleHeader(){
+        const canvas = document.getElementById('blackHoleHeaderCanvas');
+        const header = document.getElementById('animation-header');
+        if(!canvas || !header){ return; }
+        const ctx = canvas.getContext('2d', { alpha: true });
+        const DPR = Math.min(window.devicePixelRatio || 1, 2);
+        function resize(){
+          const rect = header.getBoundingClientRect();
+          canvas.width  = Math.max(1, Math.floor(rect.width * DPR));
+          canvas.height = Math.max(1, Math.floor(rect.height * DPR));
+          canvas.style.width = rect.width + 'px';
+          canvas.style.height = rect.height + 'px';
+        }
+        resize();
+        window.addEventListener('resize', () => { cancelAnimationFrame(rafId); resize(); animate(); }, { passive:true });
 
-  // boot when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBlackHoleHeader, { once:true });
-  } else {
-    initBlackHoleHeader();
-  }
-  window.initBlackHoleHeader = initBlackHoleHeader;
-})();
-
-/**
- * FSA System - for detecting user flow state.
- * (copied from current script.js)
- */
-class FlowStateDetector {
-    constructor(){this.startTime=Date.now();this.scrollDepth=0;this.flowScore=0;this.isInFlow=!1;this.initTracking()}
-    initTracking(){let e;window.addEventListener("scroll",()=>{this.scrollDepth=Math.max(this.scrollDepth,window.scrollY/(document.body.scrollHeight-window.innerHeight)*100),clearTimeout(e),e=setTimeout(()=>this.calculateFlow(),1e3)})}
-    calculateFlow(){const e=(Date.now()-this.startTime)/1e3;if(e>10){const t=this.scrollDepth/e;let i=0;t>=.5&&t<=2&&(i=1-Math.abs(t-1.25)/0.75);const o=Math.min(e/120,1);this.flowScore=.6*i+.4*o;const s=this.isInFlow;this.isInFlow=this.flowScore>.65,this.isInFlow&&!s&&this.onFlowEntered(),window.fsaParticles&&window.fsaParticles.updateFlow(this.flowScore)}}
-    onFlowEntered(){setTimeout(()=>{this.isInFlow&&this.revealZoan()},12e4)}
-    revealZoan(){const e=document.createElement("div");e.style.cssText="position:fixed;top:20px;right:20px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);color:#d4af37;padding:1rem;border-radius:8px;font-size:0.8rem;max-width:250px;z-index:1000;opacity:0;transition:opacity 1s",e.innerHTML='<div style="font-weight:600;margin-bottom:0.5rem;">The Zoan Recognition</div><div style="font-size:0.75rem;">You\'ve experienced adaptive technology.</div>',document.body.appendChild(e),setTimeout(()=>e.style.opacity="1",100),setTimeout(()=>{e.style.opacity="0",setTimeout(()=>e.remove(),1e3)},1e4)}
-}
-
-/**
- * FSAParticleSystem - for the subtle background dust effect.
- * (copied from current script.js)
- */
-class FSAParticleSystem{constructor(e){this.canvas=e,this.ctx=e.getContext("2d"),this.particles=[],this.flowScore=0,this.mouse={x:window.innerWidth/2,y:window.innerHeight/2},this.resizeCanvas(),this.createParticles(),this.animate(),window.addEventListener("resize",()=>this.resizeCanvas()),document.addEventListener("mousemove",e=>{this.mouse.x=e.clientX,this.mouse.y=e.clientY})}
-resizeCanvas(){this.canvas.width=window.innerWidth,this.canvas.height=window.innerHeight}
-createParticles(){const e=window.innerWidth<768?15:25;this.particles=[];for(let t=0;t<e;t++)this.particles.push({x:Math.random()*this.canvas.width,y:Math.random()*this.canvas.height,vx:.2*(Math.random()-.5),vy:.2*(Math.random()-.5),size:1.5*Math.random()+.5,opacity:.2*Math.random()+.05,baseOpacity:.2*Math.random()+.05,coherence:0})}
-updateFlow(e){this.flowScore=e}
-updateParticles(){this.particles.forEach(e=>{this.flowScore>.65?(e.coherence=Math.min(1,e.coherence+.01),e.opacity=Math.min(2.5*e.baseOpacity,e.opacity+.003)):(e.vx+=.002*(Math.random()-.5),e.vy+=.002*(Math.random()-.5),e.coherence=Math.max(0,e.coherence-.005),e.opacity=Math.max(.5*e.baseOpacity,e.opacity-.002)),e.vx*=.995,e.vy*=.995,e.x+=e.vx,e.y+=e.vy,e.x<-10&&(e.x=this.canvas.width+10),e.x>this.canvas.width+10&&(e.x=-10),e.y<-10&&(e.y=this.canvas.height+10),e.y>this.canvas.height+10&&(e.y=-10)})}
-drawParticles(){this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height),this.particles.forEach(e=>{const t=45+15*e.coherence,i=20+30*e.coherence,o=40+25*e.coherence;this.ctx.fillStyle=`hsla(${t}, ${i}%, ${o}%, ${e.opacity})`,this.ctx.beginPath(),this.ctx.arc(e.x,e.y,e.size,0,2*Math.PI),this.ctx.fill()})}
-animate(){this.updateParticles(),this.drawParticles(),requestAnimationFrame(()=>this.animate())}}
-
-/**
- * Misc page utilities (copied from current script.js)
- */
-function createGeometry(){const e=document.getElementById("geometryBg");if(!e)return;const t=window.innerWidth<768?8:15;for(let i=0;i<t;i++){const o=document.createElement("div");o.className="hyperbolic-circle";const s=200*Math.random()+50;o.style.width=s+"px",o.style.height=s+"px",o.style.left=Math.random()*window.innerWidth+"px",o.style.top=Math.random()*window.innerHeight+"px",o.style.animationDelay=20*Math.random()+"s",e.appendChild(o)}}
-let easterEggActivated=!1;function activateEasterEgg(){easterEggActivated||(easterEggActivated=!0,document.querySelector(".easter-egg").classList.add("activated"),document.getElementById("hiddenMessage").classList.add("visible"))}
-function closeEasterEgg(){document.getElementById("hiddenMessage").classList.remove("visible"),setTimeout(()=>{easterEggActivated=!1,document.querySelector(".easter-egg").classList.remove("activated")},500)}
-
-/**
- * Initializer
- */
-document.addEventListener('DOMContentLoaded', function() {
-    // start Möbius header
-    if (typeof initBlackHoleHeader === 'function') initBlackHoleHeader();
-    // re-use the rest of the systems
-    createGeometry();
-    const canvas = document.getElementById('fsaCanvas');
-    if (canvas) {
-        window.fsaDetector = new FlowStateDetector();
-        window.fsaParticles = new FSAParticleSystem(canvas);
-    }
-    window.addEventListener('resize', () => {
-        const geometryBg = document.getElementById('geometryBg');
-        if (geometryBg) { geometryBg.innerHTML = ''; createGeometry(); }
-    });
-});
+        const COUNT = 800; let t = 0;
+        function animate(){
+          const w = canvas.width, h = canvas.height;
+          const radius = Math.min(w, h) * 0.22;
+          ctx.clearRect(0,0,w,h);
+          const g = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, Math.max(w,h)*0.6);
+          g.addColorStop(0, 'rgba(0,0,0,0.0)'); g.addColorStop(1, 'rgba(0,0,0,0.9)');
+          ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+          ctx.globalCompositeOperation = 'lighter';
+          for(let i=0;i<COUNT;i++){
+            const u = ((i / COUNT) * Math.PI * 2 + t*0.002) % (Math.PI*2);
+            const v = (Math.random() * 2 - 1) * 0.9;
+            const m = mobius(u, v, radius);
+            const p = project(m, w, h);
+            const alpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(u*3 + t*0.002));
+            ctx.beginPath();
+            ctx.fillStyle = `rgba(212,175,55,${alpha})`;
+            const size = 1 + 1.5 * alpha * (window.devicePixelRatio||1);
+            ctx.arc(p.x, p.y, size, 0, Math.PI*2);
+            ctx.fill();
+          }
+          ctx.globalCompositeOperation = 'source-over';
+          t += 1; rafId = requestAnimationFrame(animate);
+        }
+        animate();
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBlackHoleHeader, { once:true });
+      } else { initBlackHoleHeader(); }
+      window.initBlackHoleHeader = initBlackHoleHeader;
+    })();
+  </script>
+</body>
+</html>

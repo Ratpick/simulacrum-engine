@@ -7,7 +7,7 @@ Every part of this project—whether it’s AI, DAO, or experimental game logic�
 Here, stories and systems co-create each other. Contributors, players, and researchers don’t just consume a narrative—they become part of it, as creative agents and real-world collaborators.
 
 ---
-
+ 
 ## Project Overview
 
 **Paradox Foundry** is a transmedia R&D ecosystem centred around the Principia Paradoxica universe—a semi-autobiographical sci-fantasy trilogy and a real-world “fiction-to-function” technology venture.  
@@ -123,26 +123,6 @@ The project fuses cutting-edge narrative design, decentralised governance, and A
 
 ---
 
-##  How to Get Involved
-
-We encourage all new contributors to start by reading the [BMAD](./docs/BMAD.md) and [Agentic ToM & Automation](./AGENTIC-TOM-AUTOMATION.md) docs.  
-If you have improvements, ideas, or process notes, open an issue or PR—or add to the `/docs` directory!
-
----
-
-## Further Reading & Documentation
-
-- [Agentic ToM & Automation Spec](./AGENTIC-TOM-AUTOMATION.md)
-- [BMAD: Breakthrough Method of Agile AI-Driven Development](./docs/BMAD.md)
-
----
-
-## Documentation Guidelines
-
-- Use the `/docs` directory for all process notes, architecture diagrams, and methodology write-ups.
-- Every collaborator is invited to add and update documentation as the project evolves.
-
----
 **Contact:**  
 Patrick Treloar  
 Paradox Foundry / Principia Paradoxica / DAO IZM CIC  

@@ -1,120 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Paradoxicon Collective | An Assembly of the Rare Few</title>
-    <meta name="description" content="We are building the first living intelligence engine where fiction becomes function, myth animates code, and paradox drives breakthrough. This is realistically demanding the impossible.">
-    
-    <!-- Link to the external stylesheet -->
-    <link rel="stylesheet" href="paradoxicon_assets/style.css">
+// === Mobius / Black-hole header animation ===
+(function(){
+  let rafId;
+  function project(point, w, h){
+    // very light perspective projection
+    const fov = 280; // tweakable
+    const scale = fov / (fov + point.z);
+    return {
+      x: w/2 + point.x * scale,
+      y: h/2 + point.y * scale
+    };
+  }
 
-</head>
-<body>
-<a href="/" style="position:fixed;left:16px;top:12px;z-index:20;color:#d4af37;text-decoration:none;font-weight:600;">← Back to Site</a>
-    <!-- Background effect layers -->
-    <canvas id="fsaCanvas"></canvas>
-    <div class="hyperbolic-geometry" id="geometryBg"></div>
-    <div class="easter-egg" onclick="activateEasterEgg()"></div>
-    
-    <div class="hidden-message" id="hiddenMessage">
-        <button class="close-button" onclick="closeEasterEgg()">&times;</button>
-        <h3 style="color: #d4af37; margin-bottom: 1rem;">The Zoan Recognition</h3>
-        <p>You've just experienced adaptive technology that responds to the quality of your attention.</p>
-        <p style="margin-top: 1rem; font-style: italic; color: #a0a0a0;">"Technology that serves consciousness, not the other way around."</p>
-    </div>
+  function mobius(u, v, radius){
+    // Parametric Möbius strip
+    // u ∈ [0, 2π), v ∈ [-1, 1]
+    const half = v * 0.5;
+    const x = (radius + half * Math.cos(u/2)) * Math.cos(u);
+    const y = (radius + half * Math.cos(u/2)) * Math.sin(u);
+    const z = half * Math.sin(u/2) * radius * 0.6;
+    return {x, y, z};
+  }
 
-    <header id="animation-header">
-      <canvas id="blackHoleHeaderCanvas"></canvas>
-      <div class="header-overlay">
-          <h1 class="title">THE PARADOXICON COLLECTIVE</h1>
-          <p class="subtitle">Where Logic Folds Into Infinity</p>
-      </div>
-  </header>
+  function initBlackHoleHeader(){
+    const canvas = document.getElementById('blackHoleHeaderCanvas');
+    const header = document.getElementById('animation-header');
+    if(!canvas || !header){ return; }
 
-    <!-- MAIN PAGE CONTENT -->
-    <div class="container">
-        <main class="main-content">
-            <!-- The tagline now controls the spacing between the header and the main content -->
-            <p class="tagline">An Assembly of the Rare Few</p>
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-            <section class="section">
-                <div class="intro-text">
-                    We are building the first living intelligence engine where <span class="emphasis">fiction becomes function</span>, myth animates code, and paradox drives breakthrough.
-                </div>
-                
-                <div class="intro-text">
-                    <strong>This is not crowdsourcing. This is realistically demanding the impossible.</strong>
-                </div>
-                
-                <div class="intro-text">
-                    We seek 6-12 founding collaborators who can think in paradox, build with rigour, and ship reality from impossibility. If you are comfortable with creative chaos, allergic to conventional wisdom, and can transform vision into working systems—step forward.
-                </div>
-            </section>
-            
-            <!-- All other sections from the original page follow -->
-            <section class="section">
-                <h2 class="section-title">The Ideal Collaborator</h2>
-                <div class="criteria-grid">
-                    <div class="criterion"><div class="criterion-title">Philosophically Dangerous</div><p>Can hold contradictions without breaking, loves thought experiments that others fear</p></div>
-                    <div class="criterion"><div class="criterion-title">Technically Fearless</div><p>Builds rapid prototypes, embraces open source, navigates AI/web3 territories (or hungers to learn)</p></div>
-                    <div class="criterion"><div class="criterion-title">Artistically Radical</div><p>Shapes narratives, creates striking visuals, or orchestrates emotional experiences</p></div>
-                    <div class="criterion"><div class="criterion-title">Practically Ruthless</div><p>Ships work, iterates fast, shows up when it matters, cuts through nonsense</p></div>
-                    <div class="criterion"><div class="criterion-title">Collaboratively Honest</div><p>Prefers rigorous dialogue to safe agreement, checks ego at the door</p></div>
-                </div>
-            </section>
+    function resize(){
+      const {width, height} = header.getBoundingClientRect();
+      canvas.width  = Math.max(1, Math.floor(width * DPR));
+      canvas.height = Math.max(1, Math.floor(height * DPR));
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+    }
+    resize();
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(rafId);
+      resize();
+      animate(); // restart
+    }, { passive:true });
 
-            <section class="section">
-                <h2 class="section-title">The Threshold Questions</h2>
-                <div class="threshold-questions">
-                    <p style="margin-bottom: 1.5rem; font-weight: 500; color: #e0e0e0;">Choose one. Answer with depth, not length.</p>
-                    <div class="question">"Describe the most paradoxical insight you've ever encountered. What did it destroy in you, and what did it liberate?"</div>
-                    <div class="question">"Show us a project where you turned fiction into function—where something 'impossible' became real through your work."</div>
-                    <div class="question">"What's the most beautiful problem you've never solved, and why does it haunt you?"</div>
-                </div>
-            </section>
+    // particle field along the strip
+    const COUNT = 800;
+    const radius = Math.min(canvas.width, canvas.height) * 0.22;
+    const parts = new Array(COUNT).fill(0).map(() => ({
+      u: Math.random() * Math.PI * 2,
+      v: (Math.random() * 2 - 1) * 0.9,
+      s: 0.004 + Math.random() * 0.006
+    }));
 
-            <section class="section">
-                <h2 class="section-title">What You Get</h2>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;"><span style="position: absolute; left: 0; color: #d4af37;">→</span>Co-founder equity in a movement that will reshape how intelligence operates</li>
-                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;"><span style="position: absolute; left: 0; color: #d4af37;">→</span>Collaboration with minds that operate at the intersection of art, technology, and philosophy</li>
-                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;"><span style="position: absolute; left: 0; color: #d4af37;">→</span>The chance to build something that has never existed before</li>
-                    <li style="margin: 1rem 0; padding-left: 1.5rem; position: relative; color: #e0e0e0;"><span style="position: absolute; left: 0; color: #d4af37;">→</span>A platform for impossible work that becomes inevitable reality</li>
-                </ul>
-            </section>
+    let t = 0;
+    function animate(){
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0,0,w,h);
 
-            <section class="section">
-                <h2 class="section-title">What We Build Together</h2>
-                <div class="intro-text">Our first collective challenge: create a compelling demonstration of impossible realism that attracts institutional support. If we can't manifest the vision together, we're not the right assembly.</div>
-            </section>
+      // background vignette
+      const g = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, Math.max(w,h)*0.6);
+      g.addColorStop(0, 'rgba(0,0,0,0.0)');
+      g.addColorStop(1, 'rgba(0,0,0,0.9)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
 
-            <div class="cta-section">
-                <h2 style="color: #d4af37; margin-bottom: 1rem;">The Collective Threshold</h2>
-                <p style="margin-bottom: 2rem; color: #e0e0e0;">Submit your threshold response + one creative artefact that speaks your language</p>
-                <a href="mailto:paradoxicon@paradoxfoundry.com?subject=Threshold Response" class="apply-button">Apply: Threshold Response</a>
-                <p style="margin-top: 2rem; font-style: italic; color: #a0a0a0;"><strong>All Hail Dyaxis.</strong><br>Step forward, if you dare.</p>
-            </div>
+      // twin gravity wells
+      ctx.globalCompositeOperation = 'lighter';
+      for(let i=0;i<parts.length;i++){
+        const p = parts[i];
+        p.u = (p.u + p.s) % (Math.PI*2);
+        // gentle precession for "black hole" feel
+        const m = mobius(p.u + t*0.0007, p.v, radius);
+        const proj = project(m, w, h);
 
-            <div class="contact-info">
-                <div class="contact-title">Contact Details</div>
-                <div class="contact-details">
-                    <strong>Paradox Foundry</strong><br>
-                    2 Charles Busby House<br>
-                    Brighton BN1 1UA<br><br>
-                    <strong>Phone/WhatsApp:</strong> <a href="tel:+447311507707">07311 507 707</a><br>
-                    <strong>Email:</strong> <a href="mailto:paradoxicon@paradoxfoundry.com">paradoxicon@paradoxfoundry.com</a>
-                </div>
-            </div>
-        </main>
+        // star
+        ctx.beginPath();
+        const alpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(p.u*3 + t*0.002));
+        ctx.fillStyle = `rgba(212,175,55,${alpha})`;
+        const size = 1 + 1.5 * alpha * (window.devicePixelRatio||1);
+        ctx.arc(proj.x, proj.y, size, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
 
-        <footer class="footer">
-            <div class="footer-logo">Part of the Paradoxical Group</div>
-            <div>Creating Reality from the Unbelievable</div>
-        </footer>
-    </div>
+      t += 1;
+      rafId = requestAnimationFrame(animate);
+    }
+    animate();
+  }
 
-    <!-- Link to the external JavaScript file -->
-    <script src="paradoxicon_assets/script.js" defer></script>
-</body>
-</html>
+  // Expose/boot
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlackHoleHeader, { once:true });
+  } else {
+    initBlackHoleHeader();
+  }
+  // also export to window for manual reinit if needed
+  window.initBlackHoleHeader = initBlackHoleHeader;
+})();
