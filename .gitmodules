@@ -1,0 +1,3 @@
+[submodule "external/poml"]
+	path = external/poml
+	url = https://github.com/Ratpick/poml
