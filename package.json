@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/merge-iching.mjs",
-    "verify:transitions": "node scripts/verify-transitions.mjs"
+    "verify:transitions": "node scripts/verify-transitions.mjs",
+    "check:json": "node -e \"JSON.parse(require(\\\"fs\\\").readFileSync(\\\"data/min/hexagrams_min.json\\\",\\\"utf8\\\")); console.log(\\\"min JSON OK\\\")\""
   },
   "dependencies": {
     "axios": "^1.6.0",

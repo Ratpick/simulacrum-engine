@@ -1,113 +1,30 @@
-{
-  "schema_version": "0.1.0",
-  "fields": {
-    "id": "int (King Wen number)",
-    "unicode": "str (Yijing hexagram symbol U+4DC0..U+4DFF)",
-    "name_en": "str",
-    "name_zh": "str",
-    "pinyin": "str",
-    "lower_trigram": {
-      "en": "str",
-      "zh": "str"
-    },
-    "upper_trigram": {
-      "en": "str",
-      "zh": "str"
-    },
-    "binary_bottom_to_top": "str (e.g., 111000)",
-    "lines_bottom_to_top": "str (comma-separated, e.g., yang,yang,yang,yin,yin,yin)",
-    "inverse_of": "int or null",
-    "texts": {
-      "judgment_pd_legge": "str",
-      "image_pd_legge": "str",
-      "lines_pd_legge": [
-        "str",
-        "str",
-        "str",
-        "str",
-        "str",
-        "str"
-      ],
-      "judgment_other": "str (licensed)",
-      "image_other": "str (licensed)"
-    },
-    "notes": "str",
-    "sources": [
-      "str"
-    ]
+[
+  {
+    "id": 11,
+    "title": "11 · Tai (Peace)",
+    "pattern": "111000",
+    "lower_trigram": "Qian",
+    "upper_trigram": "Kun"
   },
-  "examples": [
-    {
-      "id": 11,
-      "unicode": "䷊",
-      "name_en": "Peace",
-      "name_zh": "泰",
-      "pinyin": "Tài",
-      "lower_trigram": {
-        "en": "Heaven",
-        "zh": "乾"
-      },
-      "upper_trigram": {
-        "en": "Earth",
-        "zh": "坤"
-      },
-      "binary_bottom_to_top": "111000",
-      "lines_bottom_to_top": "yang,yang,yang,yin,yin,yin",
-      "inverse_of": 12,
-      "texts": {
-        "judgment_pd_legge": "",
-        "image_pd_legge": "",
-        "lines_pd_legge": [
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
-        "judgment_other": "",
-        "image_other": ""
-      },
-      "notes": "Heaven below Earth; channels open.",
-      "sources": [
-        "https://sacred-texts.com/ich/"
-      ]
-    },
-    {
-      "id": 12,
-      "unicode": "䷋",
-      "name_en": "Standstill",
-      "name_zh": "否",
-      "pinyin": "Pǐ",
-      "lower_trigram": {
-        "en": "Earth",
-        "zh": "坤"
-      },
-      "upper_trigram": {
-        "en": "Heaven",
-        "zh": "乾"
-      },
-      "binary_bottom_to_top": "000111",
-      "lines_bottom_to_top": "yin,yin,yin,yang,yang,yang",
-      "inverse_of": 11,
-      "texts": {
-        "judgment_pd_legge": "",
-        "image_pd_legge": "",
-        "lines_pd_legge": [
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
-        "judgment_other": "",
-        "image_other": ""
-      },
-      "notes": "Earth below Heaven; channels clog.",
-      "sources": [
-        "https://sacred-texts.com/ich/"
-      ]
-    }
-  ]
-}
+  {
+    "id": 12,
+    "title": "12 · Pi (Standstill)",
+    "pattern": "000111",
+    "lower_trigram": "Kun",
+    "upper_trigram": "Qian"
+  },
+  {
+    "id": 23,
+    "title": "23 · Bo (Splitting Apart)",
+    "pattern": "000001",
+    "lower_trigram": "Kun",
+    "upper_trigram": "Gen"
+  },
+  {
+    "id": 59,
+    "title": "59 · Huan (Dispersion)",
+    "pattern": "010011",
+    "lower_trigram": "Kan",
+    "upper_trigram": "Dui"
+  }
+]

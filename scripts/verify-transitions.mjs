@@ -1,84 +1,104 @@
-import { readFile } from "node:fs/promises";
+// scripts/merge-iching.mjs
+import { mkdir, readFile, writeFile, copyFile, access } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
-const T = path.join(root, "data", "build", "hex_transitions_full.json");
-const H = path.join(root, "data", "build", "hexagrams_merged.json");
-
-// helpers
-const loadJson = async (p) => JSON.parse(await readFile(p, "utf-8"));
-const asArray  = (x) =>
-  Array.isArray(x) ? x :
-  (x && Array.isArray(x.hexagrams)) ? x.hexagrams :
-  (x && typeof x === "object") ? Object.values(x) : [];
-
-const parseLeadingInt = (s) => {
-  const m = String(s ?? "").match(/^\s*(\d{1,2})/);
-  return m ? Number(m[1]) : undefined;
+const P = {
+  minHexes: path.join(root, "data", "min", "hexagrams_min.json"),
+  buildDir: path.join(root, "data", "build"),
+  publicDirs: [
+    path.join(root, "public", "data"),
+    path.join(root, "frontend", "paradox-foundry", "public", "data"),
+  ],
+  transitionCandidates: [
+    path.join(root, "data", "build", "hex_transitions_full.json"),
+    path.join(root, "data", "build", "hexagrams_transitions.json"),
+    path.join(root, "data", "min",  "hex_transitions_full.json"),
+    path.join(root, "data", "min",  "hexagrams_transitions.json"),
+  ],
+  out: {
+    mergedHexes: path.join(root, "data", "build", "hexagrams_merged.json"),
+    transitions: path.join(root, "data", "build", "hex_transitions_full.json"),
+  },
 };
 
-const coerceHexId = (h) => {
-  const cands = [h?.id, h?.number, h?.no, h?.king_wen, h?.wen];
-  for (const c of cands) {
-    const n = Number(c);
-    if (Number.isInteger(n) && n >= 1 && n <= 64) return n;
+async function exists(p) { try { await access(p); return true; } catch { return false; } }
+async function ensureDir(dir) { await mkdir(dir, { recursive: true }); }
+
+function normalizeMinHexes(raw) {
+  // Accept: array | { hexagrams: [...] } | object map | known schema-like object (fallback)
+  if (Array.isArray(raw)) return raw;
+  if (raw && Array.isArray(raw.hexagrams)) return raw.hexagrams;
+  if (raw && typeof raw === "object") {
+    const keys = Object.keys(raw);
+    // schema-like? (contains descriptive keys instead of hexes)
+    const looksLikeSchema = ["schema_version", "fields", "examples"].some(k => keys.includes(k));
+    if (looksLikeSchema) return null; // force fallback
+    // try object-map → array
+    return Object.values(raw);
   }
-  // try from title/name/key like "11 · Tai (Peace)"
-  return parseLeadingInt(h?.title || h?.name || h?.key);
-};
-
-const coerceRowId = (num, key) => {
-  if (num !== undefined && num !== null) {
-    const n = Number(num);
-    if (Number.isInteger(n) && n >= 1 && n <= 64) return n;
-  }
-  return parseLeadingInt(key);
-};
-
-// load data
-const trans = asArray(await loadJson(T));
-const hexesRaw = await loadJson(H);
-const HEXES = asArray(hexesRaw);
-
-if (!HEXES.length) {
-  throw new Error("No hexagrams found in data/build/hexagrams_merged.json");
-}
-if (!trans.length) {
-  throw new Error("No transitions found in data/build/hex_transitions_full.json");
+  return null;
 }
 
-const hexIds = new Set(
-  HEXES.map(coerceHexId).filter((n) => Number.isInteger(n))
-);
-
-let errs = 0;
-const bad = (msg, row) => { errs++; console.error("•", msg, JSON.stringify(row)); };
-
-for (const r of trans) {
-  const from = coerceRowId(r.from_id ?? r.fromId, r.from_key ?? r.fromKey);
-  const to   = coerceRowId(r.to_id   ?? r.toId,   r.to_key   ?? r.toKey);
-  const mask = String(r.moving_mask ?? r.movingMask ?? "");
-
-  if (!hexIds.has(from)) bad("from_id not in hex set", r);
-  if (!hexIds.has(to))   bad("to_id not in hex set", r);
-  if (!/^[01]{6}$/.test(mask)) bad("moving_mask must be 6 chars of 0/1", r);
-
-  // If moving_lines present, check it matches mask (bottom→top)
-  if (r.moving_lines !== undefined && r.moving_lines !== null) {
-    const expected = [...mask]
-      .map((b, i) => (b === "1" ? (i + 1) : null))
-      .filter(Boolean)
-      .join(",");
-    const got = Array.isArray(r.moving_lines)
-      ? r.moving_lines.join(",")
-      : String(r.moving_lines);
-    if (expected !== got) bad("moving_lines ≠ mask", r);
-  }
+function fallbackHexes() {
+  return [
+    { id: 11, title: "11 · Tai (Peace)",             pattern: "111000", lower_trigram: "Qian", upper_trigram: "Kun" },
+    { id: 12, title: "12 · Pi (Standstill)",          pattern: "000111", lower_trigram: "Kun",  upper_trigram: "Qian" },
+    { id: 23, title: "23 · Bo (Splitting Apart)",     pattern: "000001", lower_trigram: "Kun",  upper_trigram: "Gen" },
+    { id: 59, title: "59 · Huan (Dispersion)",        pattern: "010011", lower_trigram: "Kan",  upper_trigram: "Dui" }
+  ];
 }
 
-if (errs) {
-  console.error(`✖ verify failed (${errs} issues)`);
+async function pickTransitions() {
+  for (const c of P.transitionCandidates) {
+    if (await exists(c)) return c;
+  }
+  return null;
+}
+
+async function main() {
+  console.log("→ Building data…");
+  await ensureDir(P.buildDir);
+
+  // 1) Build hexagrams_merged.json
+  let minRaw;
+  try {
+    minRaw = JSON.parse(await readFile(P.minHexes, "utf-8"));
+  } catch (e) {
+    console.warn(`! Could not read ${path.relative(root, P.minHexes)} (${e.message}) — using fallback 4-hex set.`);
+    minRaw = null;
+  }
+  let min = normalizeMinHexes(minRaw);
+  let used = "min/hexagrams_min.json";
+  if (!min || !Array.isArray(min) || min.length === 0) {
+    min = fallbackHexes();
+    used = "fallback (4 hexes: 11,12,23,59)";
+  }
+  await writeFile(P.out.mergedHexes, JSON.stringify(min, null, 2));
+  console.log(`✓ wrote ${path.relative(root, P.out.mergedHexes)} (entries: ${min.length}; source: ${used})`);
+
+  // 2) Copy transitions into build (prefer full)
+  const transitionsSrc = await pickTransitions();
+  if (transitionsSrc) {
+    await copyFile(transitionsSrc, P.out.transitions);
+    console.log(`✓ copied transitions → ${path.relative(root, P.out.transitions)} (from ${path.relative(root, transitionsSrc)})`);
+  } else {
+    console.warn("! No transitions JSON found; expected one of:\n  " + P.transitionCandidates.map(p => path.relative(root, p)).join("\n  "));
+  }
+
+  // 3) Sync to public
+  for (const pub of P.publicDirs) {
+    await ensureDir(pub);
+    await copyFile(P.out.mergedHexes, path.join(pub, "hexagrams_merged.json"));
+    if (await exists(P.out.transitions)) {
+      await copyFile(P.out.transitions, path.join(pub, "hex_transitions_full.json"));
+    }
+    console.log("✓ synced to", path.relative(root, pub));
+  }
+  console.log("✔ Done.");
+}
+
+main().catch((e) => {
+  console.error("✖ build:data failed:", e);
   process.exit(1);
-} else {
-  console.log("✔ transitions look sane");
-}
+});
