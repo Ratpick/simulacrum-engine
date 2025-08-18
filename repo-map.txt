@@ -1,83 +1,1082 @@
 .
-./.github
-./backend
-./backend/api
-./backend/dao-hooks
-./backend/loaf4loaf-tracker
-./data
-./data/build
-./data/min
-./docs
-./docs/data
-./frontend
-./frontend/mhcic-solar-first
-./frontend/mhcic-solar-first/css
-./frontend/mhcic-solar-first/js
-./frontend/mhcic-solar-first/img
-./frontend/mhcic-solar-first/.git
-./frontend/paradox-foundry
-./frontend/paradox-foundry/public
-./frontend/paradox-foundry/public/data
-./frontend/paradox-foundry/public/data/hex_transitions_full.json
-./frontend/paradox-foundry/public/data/hexagrams_merged.json
-./frontend/paradox-foundry/src
-./frontend/paradox-foundry/src/components
-./frontend/paradox-foundry/src/pages
-./frontend/paradox-foundry/src/styles
-./frontend/paradox-foundry/README.md
-./frontend/principia-paradoxica-site
-./frontend/principia-paradoxica-site/glitches
-./frontend/principia-paradoxica-site/hexagram-myth
-./frontend/principia-paradoxica-site/hexagram-myth/index.html
-./frontend/scripts
-./frontend/scripts/Config.sol
-./frontend/simulacrum-ui
-./frontend/simulacrum-ui/src
-./frontend/src
-./frontend/src/components
-./frontend/src/pages
-./public
-./public/assets
-./public/data
-./public/data/hex_transitions_full.json
-./public/data/hexagrams_merged.json
-./packages
-./packages/algorand-experiments
-./packages/DAO_IZM_Algorand_Testnet
-./packages/DAO_IZM_Algorand_Testnet/docs
-./packages/DAO_IZM_Algorand_Testnet/scripts
-./packages/flow-oracle
-./packages/fsa-core
-./packages/fsa-core/specs
-./packages/infinite-weiqi
-./packages/infinite-weiqi/data
-./packages/infinite-weiqi/docs
-./packages/infinite-weiqi/html
-./packages/infinite-weiqi/js
-./packages/infinite-weiqi/styles
-./packages/iq-engine
-./packages/iq-engine/data
-./packages/public
-./packages/story-bible
-./packages/twine-authoring
-./packages/twine-authoring/templates
-./packages/twine-authoring/workflows
-./packages/twine_n8n_scryer
-./packages/twine_n8n_scryer/story-bible
-./packages/twine_n8n_scryer/twine-authoring
-./packages/twine_n8n_scryer/twine-authoring/templates
-./packages/twine_n8n_scryer/twine-authoring/workflows
-./packages/weiqi-map
-./packages/weiqi-map/src
-./research
-./research/attention-vs-flow-notes.md
-./research/dao-governance-models.md
-./research/technofeudalism-notes.md
-./research/yijing-waveform-notes.md
-./scripts
-./scripts/merge-iching.mjs
-./scripts/normalize-min-hexes.mjs
-./scripts/verify-transitions.mjs
-./index.html
-./package.json
-./repo-map.txt
+├── .github
+│   └── workflows
+│       ├── deploy-paradoxica-site.yml
+│       ├── deploy-principia-paradoxica-site.yml
+│       ├── deploy-vibe.yml
+│       └── security-rituals.yml
+├── .gitignore
+├── .gitmodules
+├── AGENTIC-TOM-AUTOMATION.md
+├── backend
+│   ├── api
+│   ├── dao-hooks
+│   │   └── flow-oracle-v0.3.sol
+│   ├── fsa
+│   │   └── fsa.py
+│   └── loaf4loaf-tracker
+│       └── .gitkeep
+├── data
+│   ├── build
+│   │   ├── hex_transitions_full.json
+│   │   └── hexagrams_merged.json
+│   ├── min
+│   │   └── hexagrams_min.json
+│   └── sources
+│       └── iching-wilhelm-dataset-master
+│           ├── .gitignore
+│           ├── create_data.ipynb
+│           ├── data
+│           │   ├── i-ching-basic.js
+│           │   ├── iching_wilhelm_translation.csv
+│           │   ├── iching_wilhelm_translation.js
+│           │   └── iching_willhelm_markdown.md
+│           ├── iching_wheel.jpg
+│           ├── LICENSE
+│           ├── merge_hex_data.rtf
+│           └── README.md
+├── docs
+│   ├── binary-yijing-encoding.md
+│   ├── BMAD.md
+│   ├── DAO-IZM-Stack.md
+│   ├── data
+│   │   └── temporal_narrative_matrix.json
+│   ├── deploy-cheat-sheet.md
+│   ├── dev-onboarding-simulacrum.md
+│   ├── docs_README_index.md
+│   ├── flow-state-algorithm.md
+│   ├── glossary.md
+│   ├── maintenance-nudge.md
+│   ├── manus-epic-board-simulacrum-phase1.json
+│   ├── overview.md
+│   ├── principles.md
+│   ├── README.md
+│   ├── recursive-writing-workflow.md
+│   ├── simulacrum-engine-README.md
+│   ├── simulacrum-engine-v2.md
+│   ├── Simulacrum-Model.md
+│   └── zhouyi-decision-engine.md
+├── external
+│   ├── bmad-method
+│   │   ├── .gitignore
+│   │   ├── .vscode
+│   │   │   ├── extensions.json
+│   │   │   └── settings.json
+│   │   ├── bmad-agent
+│   │   │   ├── checklists
+│   │   │   │   ├── architect-checklist.md
+│   │   │   │   ├── change-checklist.md
+│   │   │   │   ├── frontend-architecture-checklist.md
+│   │   │   │   ├── infrastructure-checklist.md
+│   │   │   │   ├── pm-checklist.md
+│   │   │   │   ├── po-master-checklist.md
+│   │   │   │   ├── story-dod-checklist.md
+│   │   │   │   └── story-draft-checklist.md
+│   │   │   ├── data
+│   │   │   │   ├── bmad-kb.md
+│   │   │   │   └── technical-preferences.md
+│   │   │   ├── ide-bmad-orchestrator.cfg.md
+│   │   │   ├── ide-bmad-orchestrator.md
+│   │   │   ├── personas
+│   │   │   │   ├── analyst.md
+│   │   │   │   ├── architect.md
+│   │   │   │   ├── bmad.md
+│   │   │   │   ├── design-architect.md
+│   │   │   │   ├── dev.ide.md
+│   │   │   │   ├── devops-pe.ide.md
+│   │   │   │   ├── pm.md
+│   │   │   │   ├── po.md
+│   │   │   │   ├── sm.ide.md
+│   │   │   │   └── sm.md
+│   │   │   ├── tasks
+│   │   │   │   ├── advanced-elicitation.md
+│   │   │   │   ├── checklist-mappings.yml
+│   │   │   │   ├── checklist-run-task.md
+│   │   │   │   ├── core-dump.md
+│   │   │   │   ├── correct-course.md
+│   │   │   │   ├── create-ai-frontend-prompt.md
+│   │   │   │   ├── create-architecture.md
+│   │   │   │   ├── create-deep-research-prompt.md
+│   │   │   │   ├── create-doc-from-template.md
+│   │   │   │   ├── create-frontend-architecture.md
+│   │   │   │   ├── create-infrastructure-architecture.md
+│   │   │   │   ├── create-next-story-task.md
+│   │   │   │   ├── create-platform-infrastructure.md
+│   │   │   │   ├── create-prd.md
+│   │   │   │   ├── create-uxui-spec.md
+│   │   │   │   ├── doc-sharding-task.md
+│   │   │   │   ├── library-indexing-task.md
+│   │   │   │   ├── review-infrastructure.md
+│   │   │   │   └── validate-infrastructure.md
+│   │   │   ├── templates
+│   │   │   │   ├── architecture-tmpl.md
+│   │   │   │   ├── doc-sharding-tmpl.md
+│   │   │   │   ├── front-end-architecture-tmpl.md
+│   │   │   │   ├── front-end-spec-tmpl.md
+│   │   │   │   ├── infrastructure-architecture-tmpl.md
+│   │   │   │   ├── prd-tmpl.md
+│   │   │   │   ├── project-brief-tmpl.md
+│   │   │   │   ├── story-tmpl.md
+│   │   │   │   └── template-format.md
+│   │   │   ├── web-bmad-orchestrator-agent.cfg.md
+│   │   │   └── web-bmad-orchestrator-agent.md
+│   │   ├── build-web-agent.cfg.js
+│   │   ├── build-web-agent.js
+│   │   ├── docs
+│   │   │   ├── CONTRIBUTING.md
+│   │   │   ├── ide-setup.md
+│   │   │   ├── images
+│   │   │   │   └── gem-setup.png
+│   │   │   ├── instruction.md
+│   │   │   ├── LICENSE
+│   │   │   ├── readme.md
+│   │   │   ├── recommended-ide-plugins.md
+│   │   │   └── workflow-diagram.md
+│   │   ├── README.md
+│   │   └── web-build-sample
+│   │       ├── agent-config.txt
+│   │       ├── agent-prompt.txt
+│   │       ├── checklists.txt
+│   │       ├── data.txt
+│   │       ├── personas.txt
+│   │       ├── tasks.txt
+│   │       └── templates.txt
+│   ├── iching-wilhelm
+│   │   ├── .gitignore
+│   │   ├── create_data.ipynb
+│   │   ├── data
+│   │   │   ├── i-ching-basic.js
+│   │   │   ├── iching_wilhelm_translation.csv
+│   │   │   ├── iching_wilhelm_translation.js
+│   │   │   └── iching_willhelm_markdown.md
+│   │   ├── iching_wheel.jpg
+│   │   ├── LICENSE
+│   │   └── README.md
+│   └── poml
+│       ├── .env.azure-pipelines
+│       ├── .eslintrc.js
+│       ├── .github
+│       │   └── workflows
+│       │       ├── check-version.yml
+│       │       ├── docs.yml
+│       │       ├── models.yml
+│       │       ├── publish-npm.yml
+│       │       ├── publish-pypi.yml
+│       │       ├── publish-vscode.yml
+│       │       ├── publish.yml
+│       │       └── test.yml
+│       ├── .gitignore
+│       ├── .npmrc
+│       ├── .prettierrc
+│       ├── .vscode
+│       │   ├── extensions.json
+│       │   ├── launch.json
+│       │   ├── settings.json
+│       │   └── tasks.json
+│       ├── .vscode-test.mjs
+│       ├── .vscodeignore
+│       ├── AGENTS.md
+│       ├── azure-pipelines.yml
+│       ├── bump-version.js
+│       ├── CODE_OF_CONDUCT.md
+│       ├── docs
+│       │   ├── index.md
+│       │   ├── language
+│       │   │   ├── components.md
+│       │   │   ├── ir.md
+│       │   │   ├── meta.md
+│       │   │   ├── proposals
+│       │   │   │   └── poml_extended.md
+│       │   │   ├── quickstart.md
+│       │   │   └── standalone.md
+│       │   ├── media
+│       │   │   ├── logo-16-purple.png
+│       │   │   ├── logo-64-white.png
+│       │   │   ├── vscode-diagnosis.png
+│       │   │   ├── vscode-evaluate.png
+│       │   │   ├── vscode-manual-install.png
+│       │   │   └── vscode-test.png
+│       │   ├── python
+│       │   │   ├── core.md
+│       │   │   ├── index.md
+│       │   │   └── integration.md
+│       │   ├── typescript
+│       │   │   └── index.md
+│       │   └── vscode
+│       │       ├── configuration.md
+│       │       ├── features.md
+│       │       └── index.md
+│       ├── examples
+│       │   ├── _generate_expects.py
+│       │   ├── 101_explain_character.poml
+│       │   ├── 102_render_xml.poml
+│       │   ├── 103_word_todos.poml
+│       │   ├── 104_financial_analysis.poml
+│       │   ├── 105_write_blog_post.poml
+│       │   ├── 106_research.poml
+│       │   ├── 107_read_report_pdf.poml
+│       │   ├── 201_orders_qa.poml
+│       │   ├── 202_arc_agi.poml
+│       │   ├── 301_generate_poml.poml
+│       │   ├── assets
+│       │   │   ├── 101_jerry_mouse.jpg
+│       │   │   ├── 101_tom_and_jerry.docx
+│       │   │   ├── 101_tom_cat.jpg
+│       │   │   ├── 101_tom_introduction.txt
+│       │   │   ├── 103_prompt_wizard.docx
+│       │   │   ├── 104_chart_normalized_price.png
+│       │   │   ├── 104_chart_price.png
+│       │   │   ├── 104_mag7.xlsx
+│       │   │   ├── 107_usenix_paper.pdf
+│       │   │   ├── 201_order_instructions.json
+│       │   │   ├── 201_orderlines.csv
+│       │   │   ├── 201_orders.csv
+│       │   │   └── 202_arc_agi_data.json
+│       │   ├── expects
+│       │   │   ├── 101_explain_character.txt
+│       │   │   ├── 102_render_xml.txt
+│       │   │   ├── 103_word_todos.txt
+│       │   │   ├── 104_financial_analysis.txt
+│       │   │   ├── 105_write_blog_post.txt
+│       │   │   ├── 106_research.txt
+│       │   │   ├── 107_read_report_pdf.txt
+│       │   │   ├── 201_orders_qa.txt
+│       │   │   ├── 202_arc_agi.txt
+│       │   │   └── 301_generate_poml.txt
+│       │   └── README.md
+│       ├── gallery
+│       │   ├── ask.poml
+│       │   ├── chat.poml
+│       │   ├── edit.poml
+│       │   ├── latex_edit.poml
+│       │   ├── latex_write.poml
+│       │   ├── pdf_understanding.poml
+│       │   ├── table_understanding.poml
+│       │   └── word_understanding.poml
+│       ├── jest.config.js
+│       ├── language-configuration.json
+│       ├── LICENSE
+│       ├── media
+│       │   ├── icon
+│       │   │   ├── poml-icon-128.png
+│       │   │   ├── poml-icon-16.svg
+│       │   │   ├── poml-icon-64.png
+│       │   │   ├── poml-icon-64.svg
+│       │   │   ├── preview-inverse.svg
+│       │   │   ├── preview-right-pane-16x-inverse.svg
+│       │   │   ├── preview-right-pane-16x.svg
+│       │   │   ├── preview.svg
+│       │   │   ├── spml.svg
+│       │   │   ├── view-source-inverse.svg
+│       │   │   └── view-source.svg
+│       │   └── style.css
+│       ├── mkdocs.yml
+│       ├── package-lock.json
+│       ├── package.json
+│       ├── packages
+│       │   ├── poml
+│       │   │   ├── assets
+│       │   │   │   └── componentDocs.json
+│       │   │   ├── base.tsx
+│       │   │   ├── cli.ts
+│       │   │   ├── components
+│       │   │   │   ├── document.tsx
+│       │   │   │   ├── index.ts
+│       │   │   │   ├── instructions.tsx
+│       │   │   │   ├── message.tsx
+│       │   │   │   ├── table.tsx
+│       │   │   │   ├── tree.tsx
+│       │   │   │   ├── utils.tsx
+│       │   │   │   └── webpage.tsx
+│       │   │   ├── essentials.tsx
+│       │   │   ├── file.tsx
+│       │   │   ├── index.ts
+│       │   │   ├── presentation.tsx
+│       │   │   ├── reader
+│       │   │   │   ├── base.tsx
+│       │   │   │   ├── index.tsx
+│       │   │   │   ├── meta.ts
+│       │   │   │   ├── poml.tsx
+│       │   │   │   ├── segment.ts
+│       │   │   │   └── text.tsx
+│       │   │   ├── tests
+│       │   │   │   ├── assets
+│       │   │   │   │   ├── audioThreeSeconds.mp3
+│       │   │   │   │   ├── directory
+│       │   │   │   │   │   ├── .ignoremeplease
+│       │   │   │   │   │   ├── anotherdirectory
+│       │   │   │   │   │   │   ├── 123.jsx
+│       │   │   │   │   │   │   └── 456.cpp
+│       │   │   │   │   │   └── nested1
+│       │   │   │   │   │       └── nested2
+│       │   │   │   │   │           ├── nested3
+│       │   │   │   │   │           │   └── nested5
+│       │   │   │   │   │           │       └── nestedFile.txt
+│       │   │   │   │   │           └── nested4
+│       │   │   │   │   │               └── .ignoreplease
+│       │   │   │   │   ├── galleryTest.json
+│       │   │   │   │   ├── includeChild.poml
+│       │   │   │   │   ├── includeNested.poml
+│       │   │   │   │   ├── includeNumber.poml
+│       │   │   │   │   ├── pdfLatexImage.pdf
+│       │   │   │   │   ├── peopleList.json
+│       │   │   │   │   ├── sampleWebpage.html
+│       │   │   │   │   ├── sampleWord.docx
+│       │   │   │   │   ├── tomCat.jpg
+│       │   │   │   │   ├── wikitqSampleData.csv
+│       │   │   │   │   └── wikitqSampleData.xlsx
+│       │   │   │   ├── base.test.tsx
+│       │   │   │   ├── components.test.tsx
+│       │   │   │   ├── essentials.test.tsx
+│       │   │   │   ├── file.test.tsx
+│       │   │   │   ├── index.test.tsx
+│       │   │   │   ├── instructions.test.tsx
+│       │   │   │   ├── meta.test.tsx
+│       │   │   │   ├── presentation.test.tsx
+│       │   │   │   ├── schema.test.ts
+│       │   │   │   ├── table.test.tsx
+│       │   │   │   ├── tokenCounterImage.test.ts
+│       │   │   │   ├── trace.test.tsx
+│       │   │   │   ├── util.test.tsx
+│       │   │   │   └── writer.test.tsx
+│       │   │   ├── util
+│       │   │   │   ├── audio.ts
+│       │   │   │   ├── fs.ts
+│       │   │   │   ├── image.ts
+│       │   │   │   ├── index.ts
+│       │   │   │   ├── pdf.ts
+│       │   │   │   ├── reactRender.ts
+│       │   │   │   ├── schema.ts
+│       │   │   │   ├── tokenCounterImage.ts
+│       │   │   │   ├── trace.ts
+│       │   │   │   ├── xmlContentAssist.d.ts
+│       │   │   │   └── xmlContentAssist.js
+│       │   │   ├── version.ts
+│       │   │   └── writer.ts
+│       │   ├── poml-build
+│       │   │   ├── package.json
+│       │   │   ├── rollup.config.js
+│       │   │   └── tsconfig.json
+│       │   ├── poml-vscode
+│       │   │   ├── chat
+│       │   │   │   ├── gallery.ts
+│       │   │   │   └── participant.ts
+│       │   │   ├── command
+│       │   │   │   ├── addResources.ts
+│       │   │   │   ├── index.ts
+│       │   │   │   ├── promptGallery.ts
+│       │   │   │   ├── showPreview.ts
+│       │   │   │   ├── showSource.ts
+│       │   │   │   ├── telemetry.ts
+│       │   │   │   └── testCommand.ts
+│       │   │   ├── extension.ts
+│       │   │   ├── lsp
+│       │   │   │   ├── documentFormatter.ts
+│       │   │   │   ├── parseComments.ts
+│       │   │   │   └── server.ts
+│       │   │   ├── panel
+│       │   │   │   ├── content.tsx
+│       │   │   │   ├── manager.ts
+│       │   │   │   ├── panel.ts
+│       │   │   │   └── types.ts
+│       │   │   ├── settings.ts
+│       │   │   ├── test-fixtures
+│       │   │   │   ├── badInclude.poml
+│       │   │   │   ├── badSyntax.poml
+│       │   │   │   ├── badSyntaxLsp.poml
+│       │   │   │   ├── includeMain.poml
+│       │   │   │   └── test.poml
+│       │   │   ├── tests
+│       │   │   │   ├── commands.test.ts
+│       │   │   │   ├── diagnosticsDuplicate.test.ts
+│       │   │   │   ├── extension.test.ts
+│       │   │   │   ├── includeDiagnostics.test.ts
+│       │   │   │   ├── lsp.test.ts
+│       │   │   │   ├── panelAutoAdd.test.ts
+│       │   │   │   ├── panelContent.test.ts
+│       │   │   │   ├── panelContentMapping.test.ts
+│       │   │   │   └── preview.test.ts
+│       │   │   └── util
+│       │   │       ├── commandManager.ts
+│       │   │       ├── dispose.ts
+│       │   │       ├── file.ts
+│       │   │       ├── logger.ts
+│       │   │       ├── telemetryClient.ts
+│       │   │       ├── telemetryServer.ts
+│       │   │       └── topmostLineMonitor.ts
+│       │   └── poml-vscode-webview
+│       │       ├── index.ts
+│       │       ├── scrollSync.ts
+│       │       ├── state.ts
+│       │       ├── tests
+│       │       │   ├── jumpToSource.test.ts
+│       │       │   ├── messageCopy.test.ts
+│       │       │   ├── toolbar.test.ts
+│       │       │   └── util.test.ts
+│       │       ├── toolbar.ts
+│       │       └── util.ts
+│       ├── poml.tmLanguage.json
+│       ├── pyproject.toml
+│       ├── python
+│       │   ├── .gitignore
+│       │   ├── poml
+│       │   │   ├── __init__.py
+│       │   │   ├── __main__.py
+│       │   │   ├── _tags.py
+│       │   │   ├── _version.py
+│       │   │   ├── api.py
+│       │   │   ├── cli.py
+│       │   │   ├── integration
+│       │   │   │   ├── __init__.py
+│       │   │   │   ├── agentops.py
+│       │   │   │   ├── langchain.py
+│       │   │   │   ├── mlflow.py
+│       │   │   │   └── weave.py
+│       │   │   ├── js
+│       │   │   │   └── .gitignore
+│       │   │   └── prompt.py
+│       │   └── tests
+│       │       ├── assets
+│       │       │   └── pdf_latex_image.pdf
+│       │       ├── manual
+│       │       │   ├── example_agentops_original.py
+│       │       │   ├── example_agentops_poml.py
+│       │       │   ├── example_mlflow_langchain_poml.py
+│       │       │   ├── example_mlflow_original.py
+│       │       │   ├── example_mlflow_poml.py
+│       │       │   ├── example_poml.poml
+│       │       │   ├── example_weave_original.py
+│       │       │   └── example_weave_poml.py
+│       │       ├── test_basic.py
+│       │       ├── test_examples.py
+│       │       └── test_poml_formats.py
+│       ├── RAI_README.md
+│       ├── README.md
+│       ├── SECURITY.md
+│       ├── SUPPORT.md
+│       ├── tsconfig.json
+│       ├── typedoc.json
+│       ├── vscodeignore.js
+│       ├── webpack.config.cli.js
+│       ├── webpack.config.extension.js
+│       └── webpack.config.webview.js
+├── frontend
+│   ├── .github
+│   │   └── workflows
+│   │       ├── deploy-paradoxica-site.yml
+│   │       ├── deploy-principia-paradoxica-site.yml
+│   │       ├── deploy-vibe.yml
+│   │       └── security-rituals.yml
+│   ├── .gitignore
+│   ├── backend
+│   │   ├── dao-hooks
+│   │   │   └── flow-oracle-v0.3.sol
+│   │   └── loaf4loaf-tracker
+│   │       └── .gitkeep
+│   ├── components
+│   │   └── interactive-paradoxica-connections.tsx
+│   ├── css
+│   ├── docs
+│   │   ├── binary-yijing-encoding.md
+│   │   ├── DAO-IZM-Stack.md
+│   │   ├── data
+│   │   │   └── temporal_narrative_matrix.json
+│   │   ├── deploy-cheat-sheet.md
+│   │   ├── dev-onboarding-simulacrum.md
+│   │   ├── docs_README_index.md
+│   │   ├── flow-state-algorithm.md
+│   │   ├── glossary.md
+│   │   ├── maintenance-nudge.md
+│   │   ├── manus-epic-board-simulacrum-phase1.json
+│   │   ├── overview.md
+│   │   ├── principles.md
+│   │   ├── README.md
+│   │   ├── recursive-writing-workflow.md
+│   │   ├── simulacrum-engine-README.md
+│   │   ├── simulacrum-engine-v2.md
+│   │   ├── Simulacrum-Model.md
+│   │   └── zhouyi-decision-engine.md
+│   ├── frontend
+│   │   ├── components
+│   │   │   └── interactive-paradoxica-connections.tsx
+│   │   ├── infinite-weiqi
+│   │   │   ├── claude-preferences.md
+│   │   │   ├── css
+│   │   │   │   ├── dao-visualization.css
+│   │   │   │   ├── trigram-demo.css
+│   │   │   │   ├── trigram-enhanced-visualizer.css
+│   │   │   │   ├── trigram-matrix.css
+│   │   │   │   ├── trigram-patterns.css
+│   │   │   │   └── trigram-visualization.css
+│   │   │   ├── data
+│   │   │   │   └── hexagrams.json
+│   │   │   ├── docs
+│   │   │   │   └── claude-primer.md
+│   │   │   ├── FlowDashboard.tsx
+│   │   │   ├── html
+│   │   │   │   ├── trigram-beginner-guide.html
+│   │   │   │   ├── trigram-casting-ritual.html
+│   │   │   │   ├── trigram-demo.html
+│   │   │   │   ├── trigram-narrative-sandbox.html
+│   │   │   │   └── trigram-visualization-test.html
+│   │   │   ├── index.html
+│   │   │   ├── js
+│   │   │   │   ├── app.js
+│   │   │   │   ├── core
+│   │   │   │   │   ├── engine.js
+│   │   │   │   │   ├── iching.js
+│   │   │   │   │   ├── king-wen-sequence.js
+│   │   │   │   │   ├── narrative-bridge.js
+│   │   │   │   │   ├── narrative-examples.js
+│   │   │   │   │   ├── trigram-advanced-patterns.js
+│   │   │   │   │   ├── trigram-analyzer.js
+│   │   │   │   │   ├── trigram-enhanced-visualizer.js
+│   │   │   │   │   ├── trigram-event-system.js
+│   │   │   │   │   ├── trigram-hexagram-engine.js
+│   │   │   │   │   ├── trigram-matrix.js
+│   │   │   │   │   ├── trigram-pattern-analyzer.js
+│   │   │   │   │   ├── trigram-pattern-engine.js
+│   │   │   │   │   ├── trigram-pattern-visualizer.js
+│   │   │   │   │   ├── trigram-patterns.js
+│   │   │   │   │   ├── trigram-relations.js
+│   │   │   │   │   └── trigram-visualizer.js
+│   │   │   │   └── visualization
+│   │   │   │       └── trigram-visualization-engine.js
+│   │   │   ├── Project Focus Update – DAO Engine Visualisation Integration.gdoc
+│   │   │   ├── README.md
+│   │   │   └── styles
+│   │   │       └── main.css
+│   │   ├── mhcic-solar-first
+│   │   ├── paradox-foundry
+│   │   │   ├── .gitignore
+│   │   │   ├── claude-artifacts
+│   │   │   │   ├── demo-constructing-consciousness-test_01.html
+│   │   │   │   ├── demo-constructing-consciousness-test_02.html
+│   │   │   │   └── demo-multilingual-consciousness-journal.html
+│   │   │   ├── mobius_black_holes.html
+│   │   │   ├── next-env.d.ts
+│   │   │   ├── package-lock.json
+│   │   │   ├── package.json
+│   │   │   ├── paradoxicon.html
+│   │   │   ├── postcss.config.js
+│   │   │   ├── PROJECT_MAP.md
+│   │   │   ├── public
+│   │   │   │   └── favicon.ico
+│   │   │   ├── README.md
+│   │   │   ├── src
+│   │   │   │   ├── components
+│   │   │   │   │   ├── Hero.tsx
+│   │   │   │   │   └── NavBar.tsx
+│   │   │   │   ├── pages
+│   │   │   │   │   ├── _app.tsx
+│   │   │   │   │   ├── 404.tsx
+│   │   │   │   │   ├── ecosystem.tsx
+│   │   │   │   │   ├── engage.tsx
+│   │   │   │   │   ├── engine.tsx
+│   │   │   │   │   ├── index.tsx
+│   │   │   │   │   ├── magazine.tsx
+│   │   │   │   │   ├── principia.tsx
+│   │   │   │   │   └── research.tsx
+│   │   │   │   └── styles
+│   │   │   │       └── globals.css
+│   │   │   ├── tailwind.config.js
+│   │   │   └── tsconfig.json
+│   │   ├── principia-paradoxica-site
+│   │   │   ├── glitches
+│   │   │   │   ├── 404-classic-index.html
+│   │   │   │   ├── forbidden-entry-page-x_06.html
+│   │   │   │   ├── forbidden-entry-page-x_07.html
+│   │   │   │   ├── forbidden-entry-x_01.html
+│   │   │   │   ├── forbidden-entry-x_02.html
+│   │   │   │   ├── forbidden-entry-x_03.html
+│   │   │   │   ├── forbidden-entry-x_04.html
+│   │   │   │   ├── forbidden-entry-x_05.html
+│   │   │   │   ├── glitchy-entry-500.html
+│   │   │   │   ├── paradox-folded-error.html
+│   │   │   │   ├── quantum-coherence-404.html
+│   │   │   │   └── terminal-effect-403.html
+│   │   │   └── hexagram-myth
+│   │   │       ├── Audio
+│   │   │       │   ├── Tibetan Overtone_01.mp3.asd
+│   │   │       │   └── tibetan-overtone-01.mp3
+│   │   │       ├── Backups
+│   │   │       │   └── index.html
+│   │   │       ├── FSA_documentation_lovable
+│   │   │       │   ├── FSA_MINIMAL.md
+│   │   │       │   ├── FSA_PRD.md
+│   │   │       │   ├── PROMPT_FOR_AI.txt
+│   │   │       │   └── README.md
+│   │   │       ├── fsa.ts
+│   │   │       ├── hexagram-myth-README.md
+│   │   │       ├── Images
+│   │   │       │   ├── hex-one-principia-bak.jpg
+│   │   │       │   └── hexagram-one-tranny-3.png
+│   │   │       ├── index.html
+│   │   │       └── simulacrum_hexagram_gateway_start_kit
+│   │   │           ├── AudioController.js
+│   │   │           ├── dragonReadings.js
+│   │   │           ├── FSAManager.js
+│   │   │           ├── GlitchExile.js
+│   │   │           ├── HexagramGateway.js
+│   │   │           ├── OnboardingPortal.js
+│   │   │           └── simulacrum_hexagram_gateway_README_GDD.md
+│   │   └── simulacrum-ui
+│   │       ├── .gitignore
+│   │       ├── eslint.config.js
+│   │       ├── index.html
+│   │       ├── package-lock.json
+│   │       ├── package.json
+│   │       ├── public
+│   │       │   └── vite.svg
+│   │       ├── README.md
+│   │       ├── src
+│   │       │   ├── App.css
+│   │       │   ├── App.tsx
+│   │       │   ├── assets
+│   │       │   │   └── react.svg
+│   │       │   ├── index.css
+│   │       │   ├── main.tsx
+│   │       │   └── vite-env.d.ts
+│   │       ├── tsconfig.app.json
+│   │       ├── tsconfig.json
+│   │       ├── tsconfig.node.json
+│   │       └── vite.config.ts
+│   ├── index.html
+│   ├── infinite-weiqi
+│   │   ├── claude-preferences.md
+│   │   ├── css
+│   │   │   ├── dao-visualization.css
+│   │   │   ├── trigram-demo.css
+│   │   │   ├── trigram-enhanced-visualizer.css
+│   │   │   ├── trigram-matrix.css
+│   │   │   ├── trigram-patterns.css
+│   │   │   └── trigram-visualization.css
+│   │   ├── data
+│   │   │   └── hexagrams.json
+│   │   ├── docs
+│   │   │   └── claude-primer.md
+│   │   ├── FlowDashboard.tsx
+│   │   ├── html
+│   │   │   ├── trigram-beginner-guide.html
+│   │   │   ├── trigram-casting-ritual.html
+│   │   │   ├── trigram-demo.html
+│   │   │   ├── trigram-narrative-sandbox.html
+│   │   │   └── trigram-visualization-test.html
+│   │   ├── index.html
+│   │   ├── js
+│   │   │   ├── app.js
+│   │   │   ├── core
+│   │   │   │   ├── engine.js
+│   │   │   │   ├── iching.js
+│   │   │   │   ├── king-wen-sequence.js
+│   │   │   │   ├── narrative-bridge.js
+│   │   │   │   ├── narrative-examples.js
+│   │   │   │   ├── trigram-advanced-patterns.js
+│   │   │   │   ├── trigram-analyzer.js
+│   │   │   │   ├── trigram-enhanced-visualizer.js
+│   │   │   │   ├── trigram-event-system.js
+│   │   │   │   ├── trigram-hexagram-engine.js
+│   │   │   │   ├── trigram-matrix.js
+│   │   │   │   ├── trigram-pattern-analyzer.js
+│   │   │   │   ├── trigram-pattern-engine.js
+│   │   │   │   ├── trigram-pattern-visualizer.js
+│   │   │   │   ├── trigram-patterns.js
+│   │   │   │   ├── trigram-relations.js
+│   │   │   │   └── trigram-visualizer.js
+│   │   │   └── visualization
+│   │   │       └── trigram-visualization-engine.js
+│   │   ├── Project Focus Update – DAO Engine Visualisation Integration.gdoc
+│   │   ├── README.md
+│   │   └── styles
+│   │       └── main.css
+│   ├── js
+│   ├── mhcic-solar-first
+│   │   ├── .gitignore
+│   │   ├── amazigh-impact.html
+│   │   ├── contact.html
+│   │   ├── css
+│   │   │   └── blueprint.css
+│   │   ├── ethics-map.html
+│   │   ├── governance.html
+│   │   ├── img
+│   │   ├── index.html
+│   │   ├── js
+│   │   │   ├── flow-state.js
+│   │   │   └── navigation.js
+│   │   ├── loaf-calculator.html
+│   │   ├── pitch-deck.html
+│   │   ├── plan-agent.md
+│   │   ├── PRD.md
+│   │   └── README.md
+│   ├── next-app
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── packages
+│   │   ├── algorand-experiments
+│   │   │   └── fsa-adapter.ts
+│   │   ├── DAO_IZM_Algorand_Testnet
+│   │   │   ├── README.txt
+│   │   │   └── scripts
+│   │   │       └── create_dao_tokens.py
+│   │   ├── fsa-core
+│   │   │   └── specs
+│   │   │       ├── fsa_io.yaml
+│   │   │       └── fsa_spec.yaml
+│   │   ├── infinite-weiqi
+│   │   │   ├── claude-preferences.md
+│   │   │   ├── css
+│   │   │   │   ├── dao-visualization.css
+│   │   │   │   ├── trigram-demo.css
+│   │   │   │   ├── trigram-enhanced-visualizer.css
+│   │   │   │   ├── trigram-matrix.css
+│   │   │   │   ├── trigram-patterns.css
+│   │   │   │   └── trigram-visualization.css
+│   │   │   ├── data
+│   │   │   │   └── hexagrams.json
+│   │   │   ├── docs
+│   │   │   │   └── claude-primer.md
+│   │   │   ├── html
+│   │   │   │   ├── trigram-beginner-guide.html
+│   │   │   │   ├── trigram-casting-ritual.html
+│   │   │   │   ├── trigram-demo.html
+│   │   │   │   ├── trigram-narrative-sandbox.html
+│   │   │   │   └── trigram-visualization-test.html
+│   │   │   ├── index.html
+│   │   │   ├── js
+│   │   │   │   ├── app.js
+│   │   │   │   ├── core
+│   │   │   │   │   ├── engine.js
+│   │   │   │   │   ├── iching.js
+│   │   │   │   │   ├── king-wen-sequence.js
+│   │   │   │   │   ├── narrative-bridge.js
+│   │   │   │   │   ├── narrative-examples.js
+│   │   │   │   │   ├── trigram-advanced-patterns.js
+│   │   │   │   │   ├── trigram-analyzer.js
+│   │   │   │   │   ├── trigram-enhanced-visualizer.js
+│   │   │   │   │   ├── trigram-event-system.js
+│   │   │   │   │   ├── trigram-hexagram-engine.js
+│   │   │   │   │   ├── trigram-matrix.js
+│   │   │   │   │   ├── trigram-pattern-analyzer.js
+│   │   │   │   │   ├── trigram-pattern-engine.js
+│   │   │   │   │   ├── trigram-pattern-visualizer.js
+│   │   │   │   │   ├── trigram-patterns.js
+│   │   │   │   │   ├── trigram-relations.js
+│   │   │   │   │   └── trigram-visualizer.js
+│   │   │   │   └── visualization
+│   │   │   │       └── trigram-visualization-engine.js
+│   │   │   ├── Project Focus Update – DAO Engine Visualisation Integration.gdoc
+│   │   │   ├── README.md
+│   │   │   └── styles
+│   │   │       └── main.css
+│   │   ├── iq-engine
+│   │   │   ├── data
+│   │   │   │   └── hexagrams_binary.json
+│   │   │   └── flow-utils.ts
+│   │   ├── README.md
+│   │   ├── story-bible
+│   │   │   └── notion_template.json
+│   │   ├── twine_n8n_scryer
+│   │   │   ├── story-bible
+│   │   │   │   └── notion_template.json
+│   │   │   └── twine-authoring
+│   │   │       ├── templates
+│   │   │       │   └── paradox-template.twee
+│   │   │       └── workflows
+│   │   │           ├── notion_to_twine.n8n.json
+│   │   │           └── story_update_to_notion.n8n.json
+│   │   ├── twine-authoring
+│   │   │   ├── templates
+│   │   │   │   └── paradox-template.twee
+│   │   │   └── workflows
+│   │   │       ├── notion_to_twine.n8n.json
+│   │   │       └── story_update_to_notion.n8n.json
+│   │   └── weiqi-map
+│   │       ├── index.html
+│   │       ├── package.json
+│   │       ├── postcss.config.js
+│   │       ├── src
+│   │       │   ├── components
+│   │       │   │   └── ParadoxicalEcosystem.tsx
+│   │       │   ├── index.css
+│   │       │   └── main.tsx
+│   │       ├── tailwind.config.js
+│   │       ├── tsconfig.json
+│   │       └── vite.config.ts
+│   ├── paradox-foundry
+│   │   ├── .env.example
+│   │   ├── .eslintrc.cjs
+│   │   ├── .eslintrc.js
+│   │   ├── .eslintrc.json
+│   │   ├── .gitignore
+│   │   ├── claude-artifacts
+│   │   │   ├── demo-constructing-consciousness-test_01.html
+│   │   │   ├── demo-constructing-consciousness-test_02.html
+│   │   │   └── demo-multilingual-consciousness-journal.html
+│   │   ├── CLAUDE.md
+│   │   ├── eslint
+│   │   │   ├── plugins
+│   │   │   │   └── index.js
+│   │   │   ├── plugins.js
+│   │   │   └── rules
+│   │   │       ├── no-markdown-formatting.js
+│   │   │       └── no-markdown-style.js
+│   │   ├── mobius_black_holes_01.html
+│   │   ├── next-env.d.ts
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── paradoxicon_assets
+│   │   │   ├── script.js
+│   │   │   └── style.css
+│   │   ├── paradoxicon.html
+│   │   ├── pnpm-lock.yaml
+│   │   ├── postcss.config.js
+│   │   ├── PROJECT_MAP.md
+│   │   ├── public
+│   │   │   ├── data
+│   │   │   │   ├── hex_transitions_full.json
+│   │   │   │   └── hexagrams_merged.json
+│   │   │   ├── favicon.ico
+│   │   │   └── secret-entrance
+│   │   │       └── index.html
+│   │   ├── README.md
+│   │   ├── src
+│   │   │   ├── components
+│   │   │   │   ├── Hero.tsx
+│   │   │   │   ├── Layout.tsx
+│   │   │   │   ├── NavBar.tsx
+│   │   │   │   ├── NavBar.tsx.bak
+│   │   │   │   ├── TestComponent.tsx
+│   │   │   │   └── TestMarkdown.tsx
+│   │   │   ├── contexts
+│   │   │   │   └── LanguageContext.tsx
+│   │   │   ├── hocs
+│   │   │   │   └── withLanguage.tsx
+│   │   │   ├── hooks
+│   │   │   │   └── useLanguage.ts
+│   │   │   ├── pages
+│   │   │   │   ├── _app.tsx
+│   │   │   │   ├── _error.tsx
+│   │   │   │   ├── 404.tsx
+│   │   │   │   ├── ecosystem.tsx
+│   │   │   │   ├── engage.tsx
+│   │   │   │   ├── engine.tsx
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── magazine.tsx
+│   │   │   │   ├── principia.tsx
+│   │   │   │   └── research.tsx
+│   │   │   ├── styles
+│   │   │   │   └── globals.css
+│   │   │   ├── types
+│   │   │   │   └── i18n.ts
+│   │   │   └── utils
+│   │   │       └── i18n.ts
+│   │   ├── tailwind.config.js
+│   │   ├── tsconfig.json
+│   │   └── tsconfig.tsbuildinfo
+│   ├── pnpm-lock.yaml
+│   ├── principia-paradoxica-site
+│   │   ├── glitches
+│   │   │   ├── 404-classic-index.html
+│   │   │   ├── forbidden-entry-page-x_06.html
+│   │   │   ├── forbidden-entry-page-x_07.html
+│   │   │   ├── forbidden-entry-x_01.html
+│   │   │   ├── forbidden-entry-x_02.html
+│   │   │   ├── forbidden-entry-x_03.html
+│   │   │   ├── forbidden-entry-x_04.html
+│   │   │   ├── forbidden-entry-x_05.html
+│   │   │   ├── glitchy-entry-500.html
+│   │   │   ├── paradox-folded-error.html
+│   │   │   ├── quantum-coherence-404.html
+│   │   │   └── terminal-effect-403.html
+│   │   ├── hexagram-myth
+│   │   │   ├── Audio
+│   │   │   │   ├── Tibetan Overtone_01.mp3.asd
+│   │   │   │   └── tibetan-overtone-01.mp3
+│   │   │   ├── Backups
+│   │   │   │   └── index.html
+│   │   │   ├── FSA_documentation_lovable
+│   │   │   │   ├── FSA_MINIMAL.md
+│   │   │   │   ├── FSA_PRD.md
+│   │   │   │   ├── PROMPT_FOR_AI.txt
+│   │   │   │   └── README.md
+│   │   │   ├── fsa.ts
+│   │   │   ├── hexagram-myth-README.md
+│   │   │   ├── Images
+│   │   │   │   ├── hex-one-principia-bak.jpg
+│   │   │   │   └── hexagram-one-tranny-3.png
+│   │   │   ├── index.html
+│   │   │   ├── indextest.html
+│   │   │   └── simulacrum_hexagram_gateway_start_kit
+│   │   │       ├── AudioController.js
+│   │   │       ├── dragonReadings.js
+│   │   │       ├── FSAManager.js
+│   │   │       ├── GlitchExile.js
+│   │   │       ├── HexagramGateway.js
+│   │   │       ├── OnboardingPortal.js
+│   │   │       └── simulacrum_hexagram_gateway_README_GDD.md
+│   │   └── hexagram-myth.zip
+│   ├── public
+│   │   └── favicon.ico
+│   ├── README.md
+│   ├── repo-map.txt
+│   ├── research
+│   │   ├── attention-vs-flow-notes.md
+│   │   ├── dao-governance-models.md
+│   │   ├── technofeudalism-notes.md
+│   │   └── yijing-waveform-notes.md
+│   ├── scripts
+│   │   └── Config.sol
+│   ├── simulacrum-ui
+│   │   ├── .gitignore
+│   │   ├── eslint.config.js
+│   │   ├── index.html
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── public
+│   │   │   └── vite.svg
+│   │   ├── README.md
+│   │   ├── src
+│   │   │   ├── App.css
+│   │   │   ├── App.tsx
+│   │   │   ├── assets
+│   │   │   │   └── react.svg
+│   │   │   ├── index.css
+│   │   │   ├── main.tsx
+│   │   │   └── vite-env.d.ts
+│   │   ├── tsconfig.app.json
+│   │   ├── tsconfig.json
+│   │   ├── tsconfig.node.json
+│   │   └── vite.config.ts
+│   └── src
+│       ├── components
+│       │   ├── Hero.tsx
+│       │   └── NavBar.tsx
+│       ├── pages
+│       │   ├── _app.tsx
+│       │   ├── 404.tsx
+│       │   ├── ecosystem.tsx
+│       │   ├── engage.tsx
+│       │   ├── engine.tsx
+│       │   ├── index.tsx
+│       │   ├── magazine.tsx
+│       │   ├── principia.tsx
+│       │   └── research.tsx
+│       └── styles
+│           └── globals.css
+├── index.html
+├── package-lock.json
+├── package.json
+├── packages
+│   ├── algorand-experiments
+│   │   └── fsa-adapter.ts
+│   ├── DAO_IZM_Algorand_Testnet
+│   │   ├── docs
+│   │   ├── README.txt
+│   │   └── scripts
+│   │       └── create_dao_tokens.py
+│   ├── flow-oracle
+│   ├── flowsense-sdk
+│   ├── fsa-core
+│   │   └── specs
+│   │       ├── fsa_io.yaml
+│   │       └── fsa_spec.yaml
+│   ├── infinite-weiqi
+│   │   ├── claude-preferences.md
+│   │   ├── css
+│   │   │   ├── dao-visualization.css
+│   │   │   ├── trigram-demo.css
+│   │   │   ├── trigram-enhanced-visualizer.css
+│   │   │   ├── trigram-matrix.css
+│   │   │   ├── trigram-patterns.css
+│   │   │   └── trigram-visualization.css
+│   │   ├── data
+│   │   │   └── hexagrams.json
+│   │   ├── docs
+│   │   │   └── claude-primer.md
+│   │   ├── html
+│   │   │   ├── trigram-beginner-guide.html
+│   │   │   ├── trigram-casting-ritual.html
+│   │   │   ├── trigram-demo.html
+│   │   │   ├── trigram-narrative-sandbox.html
+│   │   │   └── trigram-visualization-test.html
+│   │   ├── index.html
+│   │   ├── js
+│   │   │   ├── app.js
+│   │   │   ├── core
+│   │   │   │   ├── engine.js
+│   │   │   │   ├── iching.js
+│   │   │   │   ├── king-wen-sequence.js
+│   │   │   │   ├── narrative-bridge.js
+│   │   │   │   ├── narrative-examples.js
+│   │   │   │   ├── trigram-advanced-patterns.js
+│   │   │   │   ├── trigram-analyzer.js
+│   │   │   │   ├── trigram-enhanced-visualizer.js
+│   │   │   │   ├── trigram-event-system.js
+│   │   │   │   ├── trigram-hexagram-engine.js
+│   │   │   │   ├── trigram-matrix.js
+│   │   │   │   ├── trigram-pattern-analyzer.js
+│   │   │   │   ├── trigram-pattern-engine.js
+│   │   │   │   ├── trigram-pattern-visualizer.js
+│   │   │   │   ├── trigram-patterns.js
+│   │   │   │   ├── trigram-relations.js
+│   │   │   │   └── trigram-visualizer.js
+│   │   │   └── visualization
+│   │   │       └── trigram-visualization-engine.js
+│   │   ├── Project Focus Update – DAO Engine Visualisation Integration.gdoc
+│   │   ├── README.md
+│   │   └── styles
+│   │       └── main.css
+│   ├── iq-engine
+│   │   ├── data
+│   │   │   └── hexagrams_binary.json
+│   │   └── flow-utils.ts
+│   ├── public
+│   ├── README.md
+│   ├── story-bible
+│   │   └── notion_template.json
+│   ├── twine_n8n_scryer
+│   │   ├── story-bible
+│   │   │   └── notion_template.json
+│   │   └── twine-authoring
+│   │       ├── templates
+│   │       │   └── paradox-template.twee
+│   │       └── workflows
+│   │           ├── notion_to_twine.n8n.json
+│   │           └── story_update_to_notion.n8n.json
+│   ├── twine-authoring
+│   │   ├── templates
+│   │   │   └── paradox-template.twee
+│   │   └── workflows
+│   │       ├── notion_to_twine.n8n.json
+│   │       └── story_update_to_notion.n8n.json
+│   └── weiqi-map
+│       ├── index.html
+│       ├── package.json
+│       ├── postcss.config.js
+│       ├── src
+│       │   ├── components
+│       │   │   └── ParadoxicalEcosystem.tsx
+│       │   ├── index.css
+│       │   └── main.tsx
+│       ├── tailwind.config.js
+│       ├── tsconfig.json
+│       └── vite.config.ts
+├── public
+│   ├── assets
+│   └── data
+│       ├── hex_transitions_full.json
+│       └── hexagrams_merged.json
+├── README.md
+├── repo-map.txt
+├── research
+│   ├── attention-vs-flow-notes.md
+│   ├── dao-governance-models.md
+│   ├── technofeudalism-notes.md
+│   └── yijing-waveform-notes.md
+└── scripts
+    ├── Config.sol
+    ├── merge-iching.mjs
+    ├── normalize-min-hexes.mjs
+    └── verify-transitions.mjs
+
+240 directories, 840 files
