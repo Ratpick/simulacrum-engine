@@ -1,3 +1,6 @@
 [submodule "external/poml"]
 	path = external/poml
 	url = https://github.com/Ratpick/poml
+[submodule "external/iching-wilhelm"]
+	path = external/iching-wilhelm
+	url = https://github.com/Ratpick/iching-wilhelm-dataset
